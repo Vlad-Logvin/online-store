@@ -50,10 +50,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-xl">
-            <form action="Controller" method="get">
-                <input type="hidden" name="command" value="go_to_main_page">
-                <input class="navbar-brand" type="submit" value="bylogvin"/>
-            </form>
+            <a class="navbar-brand" href="Controller?command=go_to_main_page">bylogvin</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
