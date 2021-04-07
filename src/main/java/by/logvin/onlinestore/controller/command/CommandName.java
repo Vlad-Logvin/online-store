@@ -1,0 +1,21 @@
+package by.logvin.onlinestore.controller.command;
+
+public enum CommandName {
+    SIGN_IN,
+    SIGN_UP,
+    GO_TO_AUTHORIZATION_PAGE,
+    GO_TO_REGISTRATION_PAGE,
+    GO_TO_MAIN_PAGE,
+    LOGOUT,
+    GO_TO_CATEGORY_PAGE,
+    GO_TO_CARD_FORM_PAGE,
+    ADD_CARD,
+    ADD_TO_BASKET,
+    ADD_TO_FAVOURITE,
+    GO_TO_SHOW_PRODUCT_PAGE,
+    GO_TO_BASKET_PAGE,
+    GO_TO_FAVOURITE_PAGE,
+    GO_TO_ORDER_PAGE,
+    ORDER,
+    GO_TO_ERROR_PAGE
+}

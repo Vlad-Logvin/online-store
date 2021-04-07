@@ -1,0 +1,17 @@
+package by.logvin.onlinestore.controller.command.impl;
+
+import by.logvin.onlinestore.controller.command.Command;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
+public class GoToShowProductPage implements Command {
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/showProduct.jsp");
+        requestDispatcher.forward(request, response);
+    }
+}
