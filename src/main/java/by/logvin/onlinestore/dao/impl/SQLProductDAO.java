@@ -67,6 +67,21 @@ public class SQLProductDAO implements ProductDAO {
     }
 
     @Override
+    public boolean add(Product product) throws DAOException {
+        return false;
+    }
+
+    @Override
+    public boolean remove(Product product) throws DAOException {
+        return false;
+    }
+
+    @Override
+    public boolean edit(Product product) throws DAOException {
+        return false;
+    }
+
+    @Override
     public List<Product> takeAll() throws DAOException {
         Connection connection = getConnection();
         Statement statement = null;
@@ -90,6 +105,28 @@ public class SQLProductDAO implements ProductDAO {
     @Override
     public List<Product> take(Criteria criteria) throws DAOException {
         return null;
+    }
+
+    @Override
+    public Product takeByProductID(int productID) throws DAOException {
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Product product = null;
+        try {
+            preparedStatement = connection.prepareStatement(SQLRequest.selectProductByProductID);
+            preparedStatement.setInt(1, productID);
+            resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                throw new DAOException("Error id");
+            }
+            product = getProductFromResultSet(connection, resultSet);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        removeConnection(connection);
+        logger.info(product);
+        return product;
     }
 
     private Product getProductFromResultSet(Connection connection, ResultSet resultSet) throws SQLException, DAOException {

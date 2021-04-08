@@ -11,4 +11,8 @@ public interface ProductDAO {
     List<Product> take(int number) throws DAOException;
     List<Product> takeAll() throws DAOException;
     List<Product> take(Criteria criteria) throws DAOException;
+    Product takeByProductID(int productID) throws DAOException;
+    boolean add(Product product) throws DAOException;
+    boolean remove(Product product) throws DAOException;
+    boolean edit(Product product) throws DAOException;
 }

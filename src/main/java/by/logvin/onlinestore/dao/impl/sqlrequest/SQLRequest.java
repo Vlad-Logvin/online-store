@@ -37,4 +37,8 @@ public class SQLRequest {
     public static final String selectAllProducts =
             "SELECT * " +
                     "FROM products p";
+    public static final String selectProductByProductID =
+            "SELECT * " +
+                    "FROM products p " +
+                    "WHERE p.p_id=?";
 }

@@ -17,6 +17,13 @@ public class Card implements Serializable {
 
     }
 
+    public Card(long number, int validityPeriod, int authenticationCode, String cardholder) {
+        this.number = number;
+        this.validityPeriod = validityPeriod;
+        this.authenticationCode = authenticationCode;
+        this.cardholder = cardholder;
+    }
+
     public Card(int id, long number, int validityPeriod, int authenticationCode, String cardholder) {
         this.id = id;
         this.number = number;

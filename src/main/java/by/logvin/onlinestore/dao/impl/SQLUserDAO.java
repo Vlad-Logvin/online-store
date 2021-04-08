@@ -1,13 +1,12 @@
 package by.logvin.onlinestore.dao.impl;
 
-import by.logvin.onlinestore.bean.Card;
-import by.logvin.onlinestore.bean.RegistrationInfo;
-import by.logvin.onlinestore.bean.User;
+import by.logvin.onlinestore.bean.*;
 import by.logvin.onlinestore.dao.UserDAO;
 import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
 import by.logvin.onlinestore.dao.impl.sqlrequest.SQLRequest;
+import by.logvin.onlinestore.service.BasketService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -50,6 +49,8 @@ public class SQLUserDAO implements UserDAO {
         User user = null;
         int userID = 0;
         List<Card> cards = null;
+        Basket basket = null;
+        Favourite favourite = null;
         try {
             preparedStatement = connection.prepareStatement(SQLRequest.selectUserWithLoginAndPassword);
             preparedStatement.setString(1, login);
@@ -67,9 +68,13 @@ public class SQLUserDAO implements UserDAO {
                     userResultSet.getString("u_first_name"),
                     userResultSet.getString("u_last_name"),
                     userResultSet.getDate("u_date_of_birth"),
-                    cards,
-                    userResultSet.getBoolean("ua.ua_access"),
-                    userResultSet.getString("ur.ur_role")
+                    new UserDetails(
+                            cards,
+                            userResultSet.getBoolean("ua.ua_access"),
+                            userResultSet.getString("ur.ur_role"),
+                            basket,
+                            favourite
+                    )
             );
             logger.info(user);
         } catch (SQLException e) {
@@ -79,6 +84,11 @@ public class SQLUserDAO implements UserDAO {
         removeConnection(connection);
 
         return user;
+    }
+
+    @Override
+    public boolean editUserInfo(User user) throws DAOException {
+        return false;
     }
 
     private List<Card> getCardsByUserID(Connection connection, int userID) throws SQLException {

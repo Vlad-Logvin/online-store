@@ -11,4 +11,8 @@ public interface ProductService {
     List<Product> take(int number) throws ServiceException;
     List<Product> takeAll() throws ServiceException;
     List<Product> take(Criteria criteria) throws ServiceException;
+    Product takeByProductID(int productID) throws ServiceException;
+    boolean add(Product product) throws ServiceException;
+    boolean remove(Product product) throws ServiceException;
+    boolean edit(Product product) throws ServiceException;
 }

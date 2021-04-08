@@ -55,4 +55,9 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    @Override
+    public boolean editUserInfo(User user) throws ServiceException {
+        return false;
+    }
 }

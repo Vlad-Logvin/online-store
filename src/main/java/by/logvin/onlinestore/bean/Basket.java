@@ -55,6 +55,10 @@ public class Basket implements Serializable {
         this.products = products;
     }
 
+    public boolean hasProduct(Product product){
+        return products.contains(product);
+    }
+
     @Override
     public String toString() {
         return "Basket{" +

@@ -11,6 +11,32 @@ import by.logvin.onlinestore.service.exception.ServiceException;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
+    @Override
+    public Product takeByProductID(int productID) throws ServiceException {
+        ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
+        Product product = null;
+        try {
+            product = productDAO.takeByProductID(productID);
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
+        return product;
+    }
+
+    @Override
+    public boolean add(Product product) throws ServiceException {
+        return false;
+    }
+
+    @Override
+    public boolean remove(Product product) throws ServiceException {
+        return false;
+    }
+
+    @Override
+    public boolean edit(Product product) throws ServiceException {
+        return false;
+    }
 
     @Override
     public Product take() throws ServiceException {

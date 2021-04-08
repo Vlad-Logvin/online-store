@@ -15,23 +15,19 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
-    private List<Card> cards;
-    private boolean access;
-    private String role;
+    private UserDetails userDetails;
 
     public User() {
     }
 
-    public User(int id, String email, String password, String firstName, String lastName, Date dateOfBirth, List<Card> cards, boolean access, String role) {
+    public User(int id, String email, String password, String firstName, String lastName, Date dateOfBirth, UserDetails userDetails) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.cards = cards;
-        this.access = access;
-        this.role = role;
+        this.userDetails = userDetails;
     }
 
     public int getId() {
@@ -82,28 +78,12 @@ public class User implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public UserDetails getUserDetails() {
+        return userDetails;
     }
 
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
-    }
-
-    public boolean isAccess() {
-        return access;
-    }
-
-    public void setAccess(boolean access) {
-        this.access = access;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 
     @Override
@@ -111,12 +91,12 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && access == user.access && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(dateOfBirth, user.dateOfBirth) && Objects.equals(cards, user.cards) && Objects.equals(role, user.role);
+        return id == user.id && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(dateOfBirth, user.dateOfBirth) && Objects.equals(userDetails, user.userDetails);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, firstName, lastName, dateOfBirth, cards, access, role);
+        return Objects.hash(id, email, password, firstName, lastName, dateOfBirth, userDetails);
     }
 
     @Override
@@ -128,9 +108,7 @@ public class User implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                ", cards=" + cards +
-                ", access=" + access +
-                ", role='" + role + '\'' +
+                ", userDetails=" + userDetails +
                 '}';
     }
 }

@@ -7,4 +7,5 @@ import by.logvin.onlinestore.service.exception.ServiceException;
 public interface UserService {
     boolean signUp(RegistrationInfo info) throws ServiceException;
     User signIn(String login, String password) throws ServiceException;
+    boolean editUserInfo(User user) throws ServiceException;
 }

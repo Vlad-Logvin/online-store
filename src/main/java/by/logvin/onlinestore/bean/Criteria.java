@@ -9,27 +9,23 @@ public class Criteria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<Product> products;
+    private String category;
     private Map<Attribute, String> criterias;
 
     public Criteria() {
     }
 
-    public Criteria(List<Product> products, Map<Attribute, String> criterias) {
-        this.products = products;
+    public Criteria(String category, Map<Attribute, String> criterias) {
+        this.category = category;
         this.criterias = criterias;
     }
 
-    public void add(Attribute searchCriteria, String criteriaData) {
-        criterias.put(searchCriteria, criteriaData);
+    public String getCategory() {
+        return category;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Map<Attribute, String> getCriterias() {
@@ -41,23 +37,23 @@ public class Criteria implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Criteria{" +
-                "products=" + products +
-                ", criterias=" + criterias +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Criteria criteria = (Criteria) o;
-        return Objects.equals(products, criteria.products) && Objects.equals(criterias, criteria.criterias);
+        return Objects.equals(category, criteria.category) && Objects.equals(criterias, criteria.criterias);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(products, criterias);
+        return Objects.hash(category, criterias);
+    }
+
+    @Override
+    public String toString() {
+        return "Criteria{" +
+                "category='" + category + '\'' +
+                ", criterias=" + criterias +
+                '}';
     }
 }
