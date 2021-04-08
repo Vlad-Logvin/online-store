@@ -12,6 +12,13 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="local" var="loc"/>
 <fmt:message bundle="${loc}" key="local.authorization.sign_in" var="sign_in"/>
+<fmt:message bundle="${loc}" key="local.authorization.sign_up" var="sign_up"/>
+<fmt:message bundle="${loc}" key="local.authorization.successful_registration" var="successful_registration"/>
+<fmt:message bundle="${loc}" key="local.authorization.wrong_email_or_password" var="wrong_email_or_password"/>
+<fmt:message bundle="${loc}" key="local.authorization.email" var="email"/>
+<fmt:message bundle="${loc}" key="local.authorization.password" var="password"/>
+<fmt:message bundle="${loc}" key="local.authorization.please_log_in" var="please_log_in"/>
+
 
 <html>
 <head>
@@ -30,27 +37,27 @@
 
 <form class="form-signin">
     <img class="mb-4" src="img/bylogvin_logotype.png" alt="logotype bylogvin" width="200" height="200">
-    <h1 class="h3 mb-3 font-weight-normal">Пожалуйста войдите</h1>
+    <h1 class="h3 mb-3 font-weight-normal">${please_log_in}</h1>
 
     <c:if test="${param.get('message')=='wrong'}">
-        <font color="red">
-            <c:out value="Not correct email or password"/>
-        </font>
+        <div class="red-text">
+            <c:out value="${wrong_email_or_password}"/>
+        </div>
     </c:if>
 
     <c:if test="${param.get('message')=='correct'}">
-        <font color="green">
-            <c:out value="Correct registration"/>
-        </font>
+        <div class="green-text">
+            <c:out value="${successful_registration}"/>
+        </div>
     </c:if>
 
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="text" name="email" value="" id="inputEmail" class="form-control" placeholder="Email" autofocus="">
-    <label for="inputPassword" class="sr-only">Пароль</label>
-    <input type="password" name="password" value="" id="inputPassword" class="form-control" placeholder="Пароль">
-    <button class="btn btn-lg btn-primary btn-block" name="command" value="sign_in" type="submit">Войти</button>
+    <label for="inputEmail" class="sr-only">${email}</label>
+    <input type="text" name="email" value="" id="inputEmail" class="form-control" placeholder="${email}" autofocus="">
+    <label for="inputPassword" class="sr-only">${password}</label>
+    <input type="password" name="password" value="" id="inputPassword" class="form-control" placeholder="${password}">
+    <button class="btn btn-lg btn-primary btn-block" name="command" value="sign_in" type="submit">${sign_in}</button>
     <button class="btn btn-lg btn-primary btn-block" type="submit"><a class="reg"
-                                                                      href="Controller?command=go_to_registration_page">Зарегистрироваться</a>
+                                                                      href="Controller?command=go_to_registration_page">${sign_up}</a>
     </button>
 
 </form>

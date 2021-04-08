@@ -1,3 +1,8 @@
 .skip-pixels{
     margin-right: 5px;
 }
+
+form {
+    text-align: -webkit-match-parent;
+    margin: initial;
+}

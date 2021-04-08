@@ -239,3 +239,11 @@ img, svg {
     color: white!important;
     text-decoration: none!important;
 }
+
+.red-text {
+    color: red;
+}
+
+.green-text {
+    color: green;
+}

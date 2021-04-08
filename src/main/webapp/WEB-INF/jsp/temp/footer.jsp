@@ -1,3 +1,6 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: vital
@@ -6,6 +9,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="local" var="loc"/>
+<fmt:message bundle="${loc}" key="local.footer.privacy_policy" var="privacy_policy"/>
+<fmt:message bundle="${loc}" key="local.footer.support" var="support"/>
+
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -19,9 +30,8 @@
 <footer class="my-5 pt-5 text-muted text-center text-small">
     <p class="mb-1">© 2021 bylogvin</p>
     <ul class="list-inline">
-        <li class="list-inline-item"><a href="#">Конфиденциальность</a></li>
-        <li class="list-inline-item"><a href="#">Срока</a></li>
-        <li class="list-inline-item"><a href="#">Поддержка</a></li>
+        <li class="list-inline-item"><a href="#">${privacy_policy}</a></li>
+        <li class="list-inline-item"><a href="#">${support}</a></li>
     </ul>
 </footer>
 </body>
