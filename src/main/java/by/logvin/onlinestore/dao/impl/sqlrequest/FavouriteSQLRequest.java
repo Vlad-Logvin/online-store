@@ -6,7 +6,7 @@ public final class FavouriteSQLRequest {
                     "FROM favourites f " +
                     "LEFT JOIN m2m_favourites_products fp " +
                     "ON f.f_id=fp.fp_favourite_id " +
-                    "WHERE f.f_id=?";
+                    "WHERE f.f_user_id=?";
     public static final String insertFavourite =
             "INSERT INTO favourites(f_user_id) " +
                     "VALUES(?)";
