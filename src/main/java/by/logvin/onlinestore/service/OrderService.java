@@ -11,6 +11,8 @@ import java.util.Map;
 
 public interface OrderService {
     boolean makeOrder(Map<Product, Integer> products, Card card, Date date) throws ServiceException;
+
     List<Order> getOrderLog() throws ServiceException;
+
     List<Order> getUserOrders(int userID) throws ServiceException;
 }

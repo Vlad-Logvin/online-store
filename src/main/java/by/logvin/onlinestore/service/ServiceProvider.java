@@ -40,4 +40,14 @@ public class ServiceProvider {
     public OrderService getOrderService() {
         return orderService;
     }
+
+    private final AttributeService attributeService = new AttributeServiceImpl();
+    public AttributeService getAttributeService() {
+        return attributeService;
+    }
+
+    private final CategoryService categoryService = new CategoryServiceImpl();
+    public CategoryService getCategoryService() {
+        return categoryService;
+    }
 }

@@ -12,18 +12,18 @@ public class FavouriteServiceImpl implements FavouriteService {
     }
 
     @Override
-    public boolean addProduct(Favourite favourite, Product product) throws ServiceException {
+    public boolean addProduct(int favouriteID, int productID) throws ServiceException {
         return false;
     }
 
     @Override
-    public boolean removeProduct(Favourite favourite, Product product) throws ServiceException {
+    public boolean removeProduct(int favouriteID, int productID) throws ServiceException {
         return false;
     }
 
     @Override
-    public Favourite deleteFavouriteByUserID(int userID) throws ServiceException {
-        return null;
+    public boolean deleteFavouriteByUserID(int userID) throws ServiceException {
+        return false;
     }
 
     @Override

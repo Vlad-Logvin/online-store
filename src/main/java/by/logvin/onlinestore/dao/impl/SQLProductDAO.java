@@ -8,7 +8,10 @@ import by.logvin.onlinestore.dao.ProductDAO;
 import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
+import by.logvin.onlinestore.dao.impl.sqlrequest.ProductSQLRequest;
 import by.logvin.onlinestore.dao.impl.sqlrequest.SQLRequest;
+import by.logvin.onlinestore.service.ServiceProvider;
+import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -22,62 +25,73 @@ public class SQLProductDAO implements ProductDAO {
     @Override
     public Product take() throws DAOException {
         Connection connection = getConnection();
+        logger.info("Connection established");
         Statement statement = null;
         ResultSet resultSet = null;
         Product product = null;
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(SQLRequest.selectOneProduct);
+            resultSet = statement.executeQuery(ProductSQLRequest.selectOneProduct);
+            logger.info("Request (" + statement.toString() + ") completed");
             if (!resultSet.next()) {
+                logger.info("Throw DAO Exception due to non-existing some product in database");
                 throw new DAOException("There aren't any products in the database");
             }
             product = getProductFromResultSet(connection, resultSet);
         } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during request creation or executing", e);
             throw new DAOException("Error prepared statement creating or setting data", e);
+        } catch (ServiceException e) {
+            throw new DAOException("Service exception");
         }
         removeConnection(connection);
+        logger.info("Connection is broken");
         return product;
     }
 
     @Override
     public List<Product> take(int number) throws DAOException {
         Connection connection = getConnection();
+        logger.info("Connection established");
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Product> product = null;
         try {
-            preparedStatement = connection.prepareStatement(SQLRequest.selectNProducts);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.selectNProducts);
             preparedStatement.setInt(1, number);
-            logger.info("1");
             resultSet = preparedStatement.executeQuery();
-            logger.info("2");
-            while (resultSet.next()){
-                logger.info("3");
-                if(product==null){
+            logger.info("Request (" + preparedStatement.toString() + ") completed");
+            while (resultSet.next()) {
+                if (product == null) {
                     product = new ArrayList<>();
                 }
                 product.add(getProductFromResultSet(connection, resultSet));
-                logger.info("4");
             }
         } catch (SQLException e) {
             throw new DAOException("Error prepared statement creating or setting data", e);
+        } catch (ServiceException e) {
+            throw new DAOException("Service exception");
         }
         removeConnection(connection);
+        logger.info("Connection is broken");
         return product;
     }
 
     @Override
-    public boolean add(Product product) throws DAOException {
+    public boolean add(String name, double price, String description, int quantity, String photoURL, Category category, List<Attribute> attributes) throws DAOException {
+        Connection connection = getConnection();
+        logger.info("Connection established");
+        PreparedStatement preparedStatement = null;
         return false;
     }
 
     @Override
-    public boolean remove(Product product) throws DAOException {
+    public boolean remove(int productID) throws DAOException {
         return false;
     }
 
     @Override
-    public boolean edit(Product product) throws DAOException {
+    public boolean edit(int productID, String name, double price, String description, int quantity, String photoURL, Category category, List<Attribute> attributes) throws DAOException {
         return false;
     }
 
@@ -88,23 +102,20 @@ public class SQLProductDAO implements ProductDAO {
         ResultSet resultSet = null;
         List<Product> product = null;
         try {
-            resultSet = statement.executeQuery(SQLRequest.selectAllProducts);
-            while (resultSet.next()){
-                if(product==null){
+            resultSet = statement.executeQuery(ProductSQLRequest.selectAllProducts);
+            while (resultSet.next()) {
+                if (product == null) {
                     product = new ArrayList<>();
                 }
                 product.add(getProductFromResultSet(connection, resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException("Error prepared statement creating or setting data", e);
+        } catch (ServiceException e) {
+            throw new DAOException("service exception");
         }
         removeConnection(connection);
         return product;
-    }
-
-    @Override
-    public List<Product> take(Criteria criteria) throws DAOException {
-        return null;
     }
 
     @Override
@@ -114,7 +125,7 @@ public class SQLProductDAO implements ProductDAO {
         ResultSet resultSet = null;
         Product product = null;
         try {
-            preparedStatement = connection.prepareStatement(SQLRequest.selectProductByProductID);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.selectProductByProductID);
             preparedStatement.setInt(1, productID);
             resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
@@ -123,22 +134,22 @@ public class SQLProductDAO implements ProductDAO {
             product = getProductFromResultSet(connection, resultSet);
         } catch (SQLException e) {
             throw new DAOException(e);
+        } catch (ServiceException e) {
+            throw new DAOException("Service exception");
         }
         removeConnection(connection);
         logger.info(product);
         return product;
     }
 
-    private Product getProductFromResultSet(Connection connection, ResultSet resultSet) throws SQLException, DAOException {
-        logger.info("5");
+    private Product getProductFromResultSet(Connection connection, ResultSet resultSet) throws SQLException, DAOException, ServiceException {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLRequest.selectCategoryById);
         preparedStatement.setInt(1, resultSet.getInt("p_category_id"));
         ResultSet set = preparedStatement.executeQuery();
+        logger.info("Request (" + set.toString() + ") completed");
         int productID = resultSet.getInt("p_id");
-        if(!set.next()){
-            throw new DAOException("Error with data getting");
-        }
-        Category category = getCategoryById(connection, set, productID);
+        Category category = ServiceProvider.getInstance().getCategoryService().getCategory(resultSet.getInt("p_category"));
+        List<Attribute> attributes = ServiceProvider.getInstance().getAttributeService().getAttributes(productID);
         return new Product(
                 productID,
                 resultSet.getString("p_name"),
@@ -146,34 +157,19 @@ public class SQLProductDAO implements ProductDAO {
                 resultSet.getString("p_description"),
                 resultSet.getInt("p_quantity"),
                 resultSet.getString("p_photo_url"),
-                category
+                category,
+                attributes
         );
     }
 
-    private Category getCategoryById(Connection connection, ResultSet resultSet, int productID) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(SQLRequest.selectAttributesByCategoryAndProductId);
-        preparedStatement.setInt(1, resultSet.getInt("c_id"));
-        preparedStatement.setInt(2, productID);
-        ResultSet set = preparedStatement.executeQuery();
-        List<Attribute> attributes = getAttributeListFromResultSet(set);
-        return new Category(resultSet.getInt("c_id"), resultSet.getString("c_name"), attributes);
-    }
-
-    private List<Attribute> getAttributeListFromResultSet(ResultSet resultSet) throws SQLException {
-        List<Attribute> attributes = new ArrayList<>();
-        while (resultSet.next()) {
-            attributes.add(new Attribute(resultSet.getInt("a_id"),
-                    resultSet.getString("a_name"), resultSet.getString("a_value")));
-        }
-        return attributes;
-    }
-
-    private Connection getConnection() throws DAOException{
+    private Connection getConnection() throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
+            logger.info("Connection is gotten from connection pool");
         } catch (ConnectionPoolException e) {
-            throw new DAOException("Connection pool exception throws while getting connection from pool", e);
+            logger.error("ConnectionPoolException was thrown due to an error during getting connection from connection pool", e);
+            throw new DAOException("Error with getting pool from server", e);
         }
         return connection;
     }

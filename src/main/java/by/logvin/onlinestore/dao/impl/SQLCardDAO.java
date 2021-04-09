@@ -18,17 +18,17 @@ public class SQLCardDAO implements CardDAO {
     }
 
     @Override
-    public boolean addCard(Card card, int userID) throws DAOException {
+    public boolean addCard(long number, int validityPeriod, int authenticationCode, String cardholder, int userID) throws DAOException {
         return false;
     }
 
     @Override
-    public boolean deleteCard(Card card, int userID) throws DAOException {
+    public boolean deleteCard(int cardID) throws DAOException {
         return false;
     }
 
     @Override
-    public boolean editCardInfo(Card card, int userID) throws DAOException {
+    public boolean editCardInfo(int cardID, long number, int validityPeriod, int authenticationCode, String cardholder) throws DAOException {
         return false;
     }
 }

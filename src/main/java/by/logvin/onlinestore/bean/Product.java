@@ -15,11 +15,12 @@ public class Product implements Serializable {
     private int quantity;
     private String photoURL;
     private Category category;
+    private List<Attribute> attributes;
 
     public Product() {
     }
 
-    public Product(int id, String name, double price, String description, int quantity, String photoURL, Category category) {
+    public Product(int id, String name, double price, String description, int quantity, String photoURL, Category category, List<Attribute> attributes) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -27,6 +28,7 @@ public class Product implements Serializable {
         this.quantity = quantity;
         this.photoURL = photoURL;
         this.category = category;
+        this.attributes = attributes;
     }
 
     public int getId() {
@@ -85,18 +87,25 @@ public class Product implements Serializable {
         this.category = category;
     }
 
+    public List<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<Attribute> attributes) {
+        this.attributes = attributes;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return id == product.id && Double.compare(product.price, price) == 0 && quantity == product.quantity && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(photoURL, product.photoURL) && Objects.equals(category, product.category);
+        return id == product.id && Double.compare(product.price, price) == 0 && quantity == product.quantity && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(photoURL, product.photoURL) && Objects.equals(category, product.category) && Objects.equals(attributes, product.attributes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, description, quantity, photoURL, category);
+        return Objects.hash(id, name, price, description, quantity, photoURL, category, attributes);
     }
 
     @Override
@@ -109,6 +118,7 @@ public class Product implements Serializable {
                 ", quantity=" + quantity +
                 ", photoURL='" + photoURL + '\'' +
                 ", category=" + category +
+                ", attributes=" + attributes +
                 '}';
     }
 }

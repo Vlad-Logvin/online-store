@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface CardDAO {
     Card getCardByUserID(int userID) throws DAOException;
+
     List<Card> getCardsByUserID(int userID) throws DAOException;
-    boolean addCard(Card card, int userID) throws DAOException;
-    boolean deleteCard(Card card, int userID) throws DAOException;
-    boolean editCardInfo(Card card, int userID) throws DAOException;
+
+    boolean addCard(long number, int validityPeriod, int authenticationCode, String cardholder, int userID) throws DAOException;
+
+    boolean deleteCard(int cardID) throws DAOException;
+
+    boolean editCardInfo(int cardID, long number, int validityPeriod, int authenticationCode, String cardholder) throws DAOException;
 }

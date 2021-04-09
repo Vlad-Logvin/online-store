@@ -7,27 +7,27 @@ import by.logvin.onlinestore.dao.exception.DAOException;
 
 public class SQLBasketDAO implements BasketDAO {
     @Override
-    public Basket createBasket(int userID) throws DAOException {
-        return null;
-    }
-
-    @Override
     public Basket getBasketByUserID(int userID) throws DAOException {
         return null;
     }
 
     @Override
-    public boolean addProduct(Basket basket, Product product) throws DAOException {
+    public boolean addProduct(int basketID, int productID) throws DAOException {
         return false;
     }
 
     @Override
-    public boolean removeProduct(Basket basket, Product product) throws DAOException {
+    public boolean removeProduct(int basketID, int productID) throws DAOException {
         return false;
     }
 
     @Override
-    public Basket deleteBasketByUserID(int userID) throws DAOException {
+    public boolean deleteBasketByUserID(int userID) throws DAOException {
+        return false;
+    }
+
+    @Override
+    public Basket createBasket(int userID) throws DAOException {
         return null;
     }
 }

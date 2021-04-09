@@ -12,18 +12,18 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public boolean addProduct(Basket basket, Product product) throws ServiceException {
+    public boolean addProduct(int basketID, int productID) throws ServiceException {
         return false;
     }
 
     @Override
-    public boolean removeProduct(Basket basket, Product product) throws ServiceException {
+    public boolean removeProduct(int basketID, int productID) throws ServiceException {
         return false;
     }
 
     @Override
-    public Basket deleteBasketByUserID(int userID) throws ServiceException {
-        return null;
+    public boolean deleteBasketByUserID(int userID) throws ServiceException {
+        return false;
     }
 
     @Override

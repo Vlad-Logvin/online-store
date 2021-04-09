@@ -40,4 +40,14 @@ public final class DAOProvider {
     public FavouriteDAO getFavouriteDAO() {
         return favouriteDAO;
     }
+
+    private final AttributeDAO attributeDAO = new SQLAttributeDAO();
+    public AttributeDAO getAttributeDAO(){
+        return attributeDAO;
+    }
+
+    private final CategoryDAO categoryDAO = new SQLCategoryDAO();
+    public CategoryDAO getCategoryDAO() {
+        return categoryDAO;
+    }
 }

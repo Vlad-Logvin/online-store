@@ -6,8 +6,12 @@ import by.logvin.onlinestore.dao.exception.DAOException;
 
 public interface FavouriteDAO {
     Favourite getFavouriteByUserID(int userID) throws DAOException;
-    boolean addProduct(Favourite favourite, Product product) throws DAOException;
-    boolean removeProduct(Favourite favourite, Product product) throws DAOException;
-    Favourite deleteFavouriteByUserID(int userID) throws DAOException;
+
+    boolean addProduct(int favouriteID, int productID) throws DAOException;
+
+    boolean removeProduct(int favouriteID, int productID) throws DAOException;
+
+    boolean deleteFavouriteByUserID(int userID) throws DAOException;
+
     Favourite createFavourite(int userID) throws DAOException;
 }

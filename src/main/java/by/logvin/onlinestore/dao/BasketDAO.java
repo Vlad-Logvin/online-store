@@ -6,8 +6,12 @@ import by.logvin.onlinestore.dao.exception.DAOException;
 
 public interface BasketDAO {
     Basket getBasketByUserID(int userID) throws DAOException;
-    boolean addProduct(Basket basket, Product product) throws DAOException;
-    boolean removeProduct(Basket basket, Product product) throws DAOException;
-    Basket deleteBasketByUserID(int userID) throws DAOException;
+
+    boolean addProduct(int basketID, int productID) throws DAOException;
+
+    boolean removeProduct(int basketID, int productID) throws DAOException;
+
+    boolean deleteBasketByUserID(int userID) throws DAOException;
+
     Basket createBasket(int userID) throws DAOException;
 }

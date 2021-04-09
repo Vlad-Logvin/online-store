@@ -10,15 +10,13 @@ public class Category implements Serializable {
 
     private int id;
     private String name;
-    private List<Attribute> attributes;
 
     public Category() {
     }
 
-    public Category(int id, String name, List<Attribute> attributes) {
+    public Category(int id, String name) {
         this.id = id;
         this.name = name;
-        this.attributes = attributes;
     }
 
     public int getId() {
@@ -37,12 +35,17 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public List<Attribute> getAttributes() {
-        return attributes;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id == category.id && Objects.equals(name, category.name);
     }
 
-    public void setAttributes(List<Attribute> attributes) {
-        this.attributes = attributes;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -50,20 +53,6 @@ public class Category implements Serializable {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", attributes=" + attributes +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return id == category.id && Objects.equals(name, category.name) && Objects.equals(attributes, category.attributes);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, attributes);
     }
 }

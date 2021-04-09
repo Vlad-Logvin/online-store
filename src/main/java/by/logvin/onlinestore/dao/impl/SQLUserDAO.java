@@ -5,15 +5,12 @@ import by.logvin.onlinestore.dao.UserDAO;
 import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
-import by.logvin.onlinestore.dao.impl.sqlrequest.SQLRequest;
 import by.logvin.onlinestore.dao.impl.sqlrequest.UserSQLRequest;
-import by.logvin.onlinestore.service.BasketService;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SQLUserDAO implements UserDAO {
@@ -63,7 +60,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             userResultSet = preparedStatement.executeQuery();
-            logger.info("Request completed");
+            logger.info("Request (" + preparedStatement.toString() + ") completed");
             if (!userResultSet.next()) {
                 logger.info("User with this email and password was not found");
                 throw new DAOException("Not correct email or password");
@@ -108,7 +105,7 @@ public class SQLUserDAO implements UserDAO {
     }
 
     @Override
-    public boolean editUserInfo(User user) throws DAOException {
+    public boolean editUserInfo(int userID, String email, String password, String firstName, String lastName, java.util.Date dateOfBirth) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;
@@ -116,12 +113,12 @@ public class SQLUserDAO implements UserDAO {
 
         try {
             preparedStatement = connection.prepareStatement(UserSQLRequest.updateUser);
-            preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getFirstName());
-            preparedStatement.setString(4, user.getLastName());
-            preparedStatement.setDate(5, (Date) user.getDateOfBirth());
-            preparedStatement.setInt(6, user.getId());
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, firstName);
+            preparedStatement.setString(4, lastName);
+            preparedStatement.setDate(5, (Date) dateOfBirth);
+            preparedStatement.setInt(6, userID);
             numberOfUpdateLines = preparedStatement.executeUpdate();
             logger.info("User was updated");
         } catch (SQLException e) {
