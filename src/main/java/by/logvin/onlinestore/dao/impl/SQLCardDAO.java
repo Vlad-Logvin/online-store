@@ -1,13 +1,11 @@
 package by.logvin.onlinestore.dao.impl;
 
 import by.logvin.onlinestore.bean.Card;
-import by.logvin.onlinestore.bean.Category;
 import by.logvin.onlinestore.dao.CardDAO;
 import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
 import by.logvin.onlinestore.dao.impl.sqlrequest.CardSQLRequest;
-import by.logvin.onlinestore.dao.impl.sqlrequest.CategorySQLRequest;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
