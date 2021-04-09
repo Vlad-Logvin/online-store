@@ -6,7 +6,7 @@ import by.logvin.onlinestore.service.exception.ServiceException;
 import java.util.List;
 
 public interface CardService {
-    Card getCardByUserID(int userID) throws ServiceException;
+    Card getCard(int cardID) throws ServiceException;
 
     List<Card> getCardsByUserID(int userID) throws ServiceException;
 

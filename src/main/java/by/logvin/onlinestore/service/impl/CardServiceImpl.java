@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CardServiceImpl implements CardService {
     @Override
-    public Card getCardByUserID(int userID) throws ServiceException {
+    public Card getCard(int cardID) throws ServiceException {
         return null;
     }
 

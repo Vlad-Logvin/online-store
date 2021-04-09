@@ -6,7 +6,7 @@ import by.logvin.onlinestore.dao.exception.DAOException;
 import java.util.List;
 
 public interface CardDAO {
-    Card getCardByUserID(int userID) throws DAOException;
+    Card getCard(int cardID) throws DAOException;
 
     List<Card> getCardsByUserID(int userID) throws DAOException;
 
