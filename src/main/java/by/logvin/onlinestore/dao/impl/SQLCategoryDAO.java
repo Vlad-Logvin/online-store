@@ -39,10 +39,11 @@ public class SQLCategoryDAO implements CategoryDAO {
             } catch (SQLException e) {
                 logger.error("Prepared statement has been already closed", e);
             }
-            removeConnection(connection);
-            logger.info("Connection is broken");
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
-
 
         return numberOfUpdateLines != 0;
     }
@@ -69,8 +70,10 @@ public class SQLCategoryDAO implements CategoryDAO {
             } catch (SQLException e) {
                 logger.error("Prepared statement has been already closed", e);
             }
-            removeConnection(connection);
-            logger.info("Connection is broken");
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
 
 
@@ -115,8 +118,10 @@ public class SQLCategoryDAO implements CategoryDAO {
             } catch (SQLException e) {
                 logger.error("Result set has been already closed", e);
             }
-            removeConnection(connection);
-            logger.info("Connection is broken");
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
         return category;
     }

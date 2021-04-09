@@ -49,8 +49,10 @@ public class SQLAttributeDAO implements AttributeDAO {
             } catch (SQLException e) {
                 logger.error("Prepared statement has been already closed", e);
             }
-            removeConnection(connection);
-            logger.info("Connection is broken");
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
 
         return numberOfUpdatedLines != 0;
@@ -78,8 +80,10 @@ public class SQLAttributeDAO implements AttributeDAO {
             } catch (SQLException e) {
                 logger.error("Prepared statement has been already closed", e);
             }
-            removeConnection(connection);
-            logger.info("Connection is broken");
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
 
         return numberOfUpdatedLines != 0;
@@ -122,8 +126,10 @@ public class SQLAttributeDAO implements AttributeDAO {
             } catch (SQLException e) {
                 logger.error("Result set has been already closed", e);
             }
-            removeConnection(connection);
-            logger.info("Connection is broken");
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
         return attributes;
     }
