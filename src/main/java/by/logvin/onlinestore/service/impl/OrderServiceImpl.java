@@ -12,6 +12,11 @@ import java.util.Map;
 
 public class OrderServiceImpl implements OrderService {
     @Override
+    public List<Order> getUserOrders(int userID) throws ServiceException {
+        return null;
+    }
+
+    @Override
     public boolean makeOrder(Map<Product, Integer> products, Card card, Date date) throws ServiceException {
         return false;
     }

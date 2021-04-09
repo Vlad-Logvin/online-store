@@ -9,4 +9,5 @@ public interface FavouriteService {
     boolean addProduct(Favourite favourite, Product product) throws ServiceException;
     boolean removeProduct(Favourite favourite, Product product) throws ServiceException;
     Favourite deleteFavouriteByUserID(int userID) throws ServiceException;
+    Favourite createFavourite(int userID) throws ServiceException;
 }

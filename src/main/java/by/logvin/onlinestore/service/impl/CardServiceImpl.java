@@ -18,17 +18,17 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public boolean addCard(Card card) throws ServiceException {
+    public boolean addCard(Card card, int userID) throws ServiceException {
         return false;
     }
 
     @Override
-    public boolean deleteCard(Card card) throws ServiceException {
+    public boolean deleteCard(Card card, int userID) throws ServiceException {
         return false;
     }
 
     @Override
-    public boolean editCardInfo(Card card) throws ServiceException {
+    public boolean editCardInfo(Card card, int userID) throws ServiceException {
         return false;
     }
 }

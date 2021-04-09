@@ -12,4 +12,5 @@ import java.util.Map;
 public interface OrderDAO {
     boolean makeOrder(Map<Product, Integer> products, Card card, Date date) throws DAOException;
     List<Order> getOrderLog() throws DAOException;
+    List<Order> getUserOrders(int userID) throws DAOException;
 }

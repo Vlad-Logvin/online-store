@@ -12,6 +12,11 @@ import java.util.Map;
 
 public class SQLOrderDAO implements OrderDAO {
     @Override
+    public List<Order> getUserOrders(int userID) throws DAOException {
+        return null;
+    }
+
+    @Override
     public boolean makeOrder(Map<Product, Integer> products, Card card, Date date) throws DAOException {
         return false;
     }

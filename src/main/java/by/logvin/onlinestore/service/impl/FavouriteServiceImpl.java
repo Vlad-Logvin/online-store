@@ -25,4 +25,9 @@ public class FavouriteServiceImpl implements FavouriteService {
     public Favourite deleteFavouriteByUserID(int userID) throws ServiceException {
         return null;
     }
+
+    @Override
+    public Favourite createFavourite(int userID) throws ServiceException {
+        return null;
+    }
 }

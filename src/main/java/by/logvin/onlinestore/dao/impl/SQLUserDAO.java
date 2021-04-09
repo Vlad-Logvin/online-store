@@ -6,13 +6,13 @@ import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
 import by.logvin.onlinestore.dao.impl.sqlrequest.SQLRequest;
+import by.logvin.onlinestore.dao.impl.sqlrequest.UserSQLRequest;
 import by.logvin.onlinestore.service.BasketService;
+import by.logvin.onlinestore.service.ServiceProvider;
+import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,28 +22,34 @@ public class SQLUserDAO implements UserDAO {
     @Override
     public boolean signUp(RegistrationInfo info) throws DAOException {
         Connection connection = getConnection();
+        logger.info("Connection established");
         PreparedStatement preparedStatement = null;
         int numberOfUpdateLines = 0;
+
         try {
-            preparedStatement = connection.prepareStatement(SQLRequest.insertNewUser);
+            preparedStatement = connection.prepareStatement(UserSQLRequest.insertUser);
             preparedStatement.setString(1, info.getEmail());
             preparedStatement.setString(2, info.getPassword());
             preparedStatement.setString(3, info.getFirstName());
             preparedStatement.setString(4, info.getLastName());
             preparedStatement.setString(5, info.getDateOfBirth());
             numberOfUpdateLines = preparedStatement.executeUpdate();
+            logger.info("User was added");
         } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during request creation or execution", e);
             throw new DAOException("Error prepared statement creating or setting data", e);
         }
 
         removeConnection(connection);
+        logger.info("Connection is broken");
 
         return numberOfUpdateLines != 0;
     }
 
     @Override
-    public User signIn(String login, String password) throws DAOException {
+    public User signIn(String email, String password) throws DAOException {
         Connection connection = getConnection();
+        logger.info("Connection established");
         PreparedStatement preparedStatement = null;
         ResultSet userResultSet = null;
         User user = null;
@@ -51,16 +57,26 @@ public class SQLUserDAO implements UserDAO {
         List<Card> cards = null;
         Basket basket = null;
         Favourite favourite = null;
+        List<Order> orders = null;
         try {
-            preparedStatement = connection.prepareStatement(SQLRequest.selectUserWithLoginAndPassword);
-            preparedStatement.setString(1, login);
+            preparedStatement = connection.prepareStatement(UserSQLRequest.selectUserWithLoginAndPassword);
+            preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             userResultSet = preparedStatement.executeQuery();
+            logger.info("Request completed");
             if (!userResultSet.next()) {
-                throw new DAOException("Not correct login or password");
+                logger.info("User with this email and password was not found");
+                throw new DAOException("Not correct email or password");
             }
             userID = userResultSet.getInt("u_id");
-            cards = getCardsByUserID(connection, userID);
+            cards = ServiceProvider.getInstance().getCardService().getCardsByUserID(userID);
+            if ((basket = ServiceProvider.getInstance().getBasketService().getBasketByUserID(userID)) == null) {
+                basket = ServiceProvider.getInstance().getBasketService().createBasket(userID);
+            }
+            if ((favourite = ServiceProvider.getInstance().getFavouriteService().getFavouriteByUserID(userID)) == null) {
+                favourite = ServiceProvider.getInstance().getFavouriteService().createFavourite(userID);
+            }
+            orders = ServiceProvider.getInstance().getOrderService().getUserOrders(userID);
             user = new User(
                     userID,
                     userResultSet.getString("u_email"),
@@ -73,51 +89,60 @@ public class SQLUserDAO implements UserDAO {
                             userResultSet.getBoolean("ua.ua_access"),
                             userResultSet.getString("ur.ur_role"),
                             basket,
-                            favourite
+                            favourite,
+                            orders
                     )
             );
-            logger.info(user);
         } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during request creation or execution", e);
             throw new DAOException("Error prepared statement creating or setting data", e);
+        } catch (ServiceException e) {
+            logger.error("ServiceException was thrown due to an error during cards|basket|favourite|orders creation", e);
+            throw new DAOException("Error getting basket or favourite from ", e);
         }
 
         removeConnection(connection);
+        logger.info("Connection is broken");
 
         return user;
     }
 
     @Override
     public boolean editUserInfo(User user) throws DAOException {
-        return false;
-    }
-
-    private List<Card> getCardsByUserID(Connection connection, int userID) throws SQLException {
+        Connection connection = getConnection();
+        logger.info("Connection established");
         PreparedStatement preparedStatement = null;
-        ResultSet cardsResultSet = null;
-        List<Card> cards = null;
-        preparedStatement = connection.prepareStatement(SQLRequest.selectCardsByUserID);
-        preparedStatement.setInt(1, userID);
-        cardsResultSet = preparedStatement.executeQuery();
-        while (cardsResultSet.next()) {
-            if (cards == null) {
-                cards = new ArrayList<>();
-            }
-            cards.add(new Card(cardsResultSet.getInt("c_id"),
-                    cardsResultSet.getLong("c_number"),
-                    cardsResultSet.getInt("c_validity_period"),
-                    cardsResultSet.getInt("c_authentication_code"),
-                    cardsResultSet.getString("c_cardholder"))
-            );
+        int numberOfUpdateLines = 0;
+
+        try {
+            preparedStatement = connection.prepareStatement(UserSQLRequest.updateUser);
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getFirstName());
+            preparedStatement.setString(4, user.getLastName());
+            preparedStatement.setDate(5, (Date) user.getDateOfBirth());
+            preparedStatement.setInt(6, user.getId());
+            numberOfUpdateLines = preparedStatement.executeUpdate();
+            logger.info("User was updated");
+        } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during request creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
         }
-        return cards;
+
+        removeConnection(connection);
+        logger.info("Connection is broken");
+
+        return numberOfUpdateLines != 0;
     }
 
     private Connection getConnection() throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
+            logger.info("Connection is gotten from connection pool");
         } catch (ConnectionPoolException e) {
-            throw new DAOException("Connection pool exception throws while getting connection from pool", e);
+            logger.error("ConnectionPoolException was thrown due to an error during getting connection from connection pool", e);
+            throw new DAOException("Error with getting pool from server", e);
         }
         return connection;
     }

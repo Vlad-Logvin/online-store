@@ -1,6 +1,7 @@
 package by.logvin.onlinestore.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +15,11 @@ public class Basket implements Serializable {
     private List<Product> products;
 
     public Basket() {
+    }
+
+    public Basket(int id) {
+        this.id = id;
+        products = new ArrayList<>();
     }
 
     public Basket(int id, double totalCost, int productsNumber, List<Product> products) {

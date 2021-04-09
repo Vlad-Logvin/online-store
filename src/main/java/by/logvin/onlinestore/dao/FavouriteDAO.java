@@ -9,4 +9,5 @@ public interface FavouriteDAO {
     boolean addProduct(Favourite favourite, Product product) throws DAOException;
     boolean removeProduct(Favourite favourite, Product product) throws DAOException;
     Favourite deleteFavouriteByUserID(int userID) throws DAOException;
+    Favourite createFavourite(int userID) throws DAOException;
 }

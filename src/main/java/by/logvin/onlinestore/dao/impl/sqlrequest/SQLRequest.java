@@ -1,17 +1,6 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
 public class SQLRequest {
-    public static final String insertNewUser =
-            "INSERT INTO users(u_email, u_password, u_first_name, u_last_name, u_date_of_birth, u_access, u_role) " +
-                    "VALUES (?, ?, ?, ?, ?, 2, 1)";
-    public static final String selectUserWithLoginAndPassword =
-            "SELECT * " +
-                    "FROM users u " +
-                    "JOIN user_accesses ua " +
-                    "ON ua.ua_id=u.u_access " +
-                    "JOIN user_roles ur " +
-                    "ON ur.ur_id=u.u_role " +
-                    "WHERE u.u_email=? AND u.u_password=?";
     public static final String selectCardsByUserID =
             "SELECT * " +
                     "FROM cards c " +

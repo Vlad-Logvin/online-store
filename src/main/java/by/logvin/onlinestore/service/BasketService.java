@@ -9,4 +9,5 @@ public interface BasketService {
     boolean addProduct(Basket basket, Product product) throws ServiceException;
     boolean removeProduct(Basket basket, Product product) throws ServiceException;
     Basket deleteBasketByUserID(int userID) throws ServiceException;
+    Basket createBasket(int userID) throws ServiceException;
 }

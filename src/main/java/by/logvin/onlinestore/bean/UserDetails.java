@@ -13,16 +13,18 @@ public class UserDetails implements Serializable {
     private String role;
     private Basket basket;
     private Favourite favourite;
+    private List<Order> orders;
 
     public UserDetails() {
     }
 
-    public UserDetails(List<Card> cards, boolean access, String role, Basket basket, Favourite favourite) {
+    public UserDetails(List<Card> cards, boolean access, String role, Basket basket, Favourite favourite, List<Order> orders) {
         this.cards = cards;
         this.access = access;
         this.role = role;
         this.basket = basket;
         this.favourite = favourite;
+        this.orders = orders;
     }
 
     public List<Card> getCards() {
@@ -65,17 +67,25 @@ public class UserDetails implements Serializable {
         this.favourite = favourite;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDetails that = (UserDetails) o;
-        return access == that.access && Objects.equals(cards, that.cards) && Objects.equals(role, that.role) && Objects.equals(basket, that.basket) && Objects.equals(favourite, that.favourite);
+        return access == that.access && Objects.equals(cards, that.cards) && Objects.equals(role, that.role) && Objects.equals(basket, that.basket) && Objects.equals(favourite, that.favourite) && Objects.equals(orders, that.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards, access, role, basket, favourite);
+        return Objects.hash(cards, access, role, basket, favourite, orders);
     }
 
     @Override
@@ -86,6 +96,7 @@ public class UserDetails implements Serializable {
                 ", role='" + role + '\'' +
                 ", basket=" + basket +
                 ", favourite=" + favourite +
+                ", orders=" + orders +
                 '}';
     }
 }

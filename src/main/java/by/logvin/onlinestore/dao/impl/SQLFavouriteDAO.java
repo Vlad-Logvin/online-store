@@ -7,6 +7,11 @@ import by.logvin.onlinestore.dao.exception.DAOException;
 
 public class SQLFavouriteDAO implements FavouriteDAO {
     @Override
+    public Favourite createFavourite(int userID) throws DAOException {
+        return null;
+    }
+
+    @Override
     public Favourite getFavouriteByUserID(int userID) throws DAOException {
         return null;
     }

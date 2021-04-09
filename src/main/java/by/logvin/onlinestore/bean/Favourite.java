@@ -1,6 +1,7 @@
 package by.logvin.onlinestore.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,11 @@ public class Favourite implements Serializable {
     private List<Product> products;
 
     public Favourite() {
+    }
+
+    public Favourite(int id){
+        this.id = id;
+        products = new ArrayList<>();
     }
 
     public Favourite(int id, List<Product> products) {

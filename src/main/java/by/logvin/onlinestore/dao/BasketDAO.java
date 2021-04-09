@@ -9,4 +9,5 @@ public interface BasketDAO {
     boolean addProduct(Basket basket, Product product) throws DAOException;
     boolean removeProduct(Basket basket, Product product) throws DAOException;
     Basket deleteBasketByUserID(int userID) throws DAOException;
+    Basket createBasket(int userID) throws DAOException;
 }

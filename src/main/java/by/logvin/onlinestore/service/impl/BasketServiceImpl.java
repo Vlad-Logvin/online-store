@@ -25,4 +25,9 @@ public class BasketServiceImpl implements BasketService {
     public Basket deleteBasketByUserID(int userID) throws ServiceException {
         return null;
     }
+
+    @Override
+    public Basket createBasket(int userID) throws ServiceException {
+        return null;
+    }
 }
