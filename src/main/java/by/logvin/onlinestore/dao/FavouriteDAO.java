@@ -13,5 +13,5 @@ public interface FavouriteDAO {
 
     boolean deleteFavouriteByUserID(int userID) throws DAOException;
 
-    Favourite createFavourite(int userID) throws DAOException;
+    boolean createFavourite(int userID) throws DAOException;
 }
