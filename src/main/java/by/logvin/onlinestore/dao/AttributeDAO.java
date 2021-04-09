@@ -9,7 +9,7 @@ import java.util.Map;
 public interface AttributeDAO {
     boolean addAttributes(int productID, Map<String, String> attributes) throws DAOException;
 
-    boolean updateAttributes(int productID, Map<String, String> attributes) throws DAOException;
-
     List<Attribute> getAttributes(int productID) throws DAOException;
+
+    boolean deleteAttributes(int productID) throws DAOException;
 }

@@ -16,10 +16,16 @@ public class AttributeServiceImpl implements AttributeService {
     @Override
     public boolean updateAttributes(int productID, Map<String, String> attributes) throws ServiceException {
         return false;
+        //собирался вызвать delete у DAO, а потом add
     }
 
     @Override
     public List<Attribute> getAttributes(int productID) throws ServiceException {
         return null;
+    }
+
+    @Override
+    public boolean deleteAttributes(int productID) throws ServiceException {
+        return false;
     }
 }

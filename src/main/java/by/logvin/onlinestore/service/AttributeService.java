@@ -12,4 +12,6 @@ public interface AttributeService {
     boolean updateAttributes(int productID, Map<String, String> attributes) throws ServiceException;
 
     List<Attribute> getAttributes(int productID) throws ServiceException;
+
+    boolean deleteAttributes(int productID) throws ServiceException;
 }
