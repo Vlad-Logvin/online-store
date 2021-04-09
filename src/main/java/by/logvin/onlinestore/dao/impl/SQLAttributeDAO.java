@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -100,6 +101,9 @@ public class SQLAttributeDAO implements AttributeDAO {
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
             while (resultSet.next()) {
+                if (attributes == null) {
+                    attributes = new ArrayList<>();
+                }
                 attributes.add(new Attribute(
                         resultSet.getInt("a_id"),
                         resultSet.getString("a_name"),
