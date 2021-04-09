@@ -2,7 +2,6 @@ package by.logvin.onlinestore.service.validator.impl;
 
 import by.logvin.onlinestore.bean.RegistrationInfo;
 import by.logvin.onlinestore.service.validator.AuthorizationValidator;
-import by.logvin.onlinestore.service.validator.exception.ValidatorException;
 import org.apache.log4j.Logger;
 
 import java.text.DateFormat;
@@ -21,7 +20,7 @@ public class AuthorizationValidatorImpl implements AuthorizationValidator {
     }};
 
     @Override
-    public boolean validate(String email, String password) throws ValidatorException {
+    public boolean validate(String email, String password) {
         if (email == null || password == null) {
             return false;
         }
@@ -29,7 +28,7 @@ public class AuthorizationValidatorImpl implements AuthorizationValidator {
     }
 
     @Override
-    public boolean validate(RegistrationInfo info) throws ValidatorException {
+    public boolean validate(RegistrationInfo info) {
         String email = info.getEmail();
         String password = info.getPassword();
         String firstName = info.getFirstName();
@@ -54,7 +53,7 @@ public class AuthorizationValidatorImpl implements AuthorizationValidator {
     }
 
 
-    private boolean isDateOfBirthValid(String dateOfBirth) throws ValidatorException {
+    private boolean isDateOfBirthValid(String dateOfBirth) {
         try {
             DATE_FORMAT.parse(dateOfBirth);
             return true;
