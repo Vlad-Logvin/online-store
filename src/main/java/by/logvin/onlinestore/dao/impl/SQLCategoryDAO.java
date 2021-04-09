@@ -33,7 +33,9 @@ public class SQLCategoryDAO implements CategoryDAO {
             throw new DAOException("Error prepared statement updating or setting data", e);
         } finally {
             try {
-                preparedStatement.close();
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
             } catch (SQLException e) {
                 logger.error("Prepared statement has been already closed", e);
             }
@@ -59,9 +61,11 @@ public class SQLCategoryDAO implements CategoryDAO {
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
             throw new DAOException("Error prepared statement updating or setting data", e);
-        }finally {
+        } finally {
             try {
-                preparedStatement.close();
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
             } catch (SQLException e) {
                 logger.error("Prepared statement has been already closed", e);
             }
@@ -96,14 +100,18 @@ public class SQLCategoryDAO implements CategoryDAO {
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
             throw new DAOException("Error prepared statement updating or setting data", e);
-        }finally {
+        } finally {
             try {
-                preparedStatement.close();
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
             } catch (SQLException e) {
                 logger.error("Prepared statement has been already closed", e);
             }
             try {
-                resultSet.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
             } catch (SQLException e) {
                 logger.error("Result set has been already closed", e);
             }
