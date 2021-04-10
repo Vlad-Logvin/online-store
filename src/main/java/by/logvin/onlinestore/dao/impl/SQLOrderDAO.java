@@ -115,6 +115,7 @@ public class SQLOrderDAO implements OrderDAO {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         int numberOfUpdatedLines = 0;
         try {
             preparedStatement = connection.prepareStatement(OrderSQLRequest.insertOrder);
@@ -126,7 +127,7 @@ public class SQLOrderDAO implements OrderDAO {
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
             preparedStatement = connection.prepareStatement(OrderSQLRequest.selectLastOrderID);
             preparedStatement.setInt(1, userID);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             int orderID = resultSet.getInt("o_id");
             preparedStatement = connection.prepareStatement(OrderSQLRequest.insertProductToOrder);
             preparedStatement.setInt(1, orderID);
@@ -146,6 +147,13 @@ public class SQLOrderDAO implements OrderDAO {
                 }
             } catch (SQLException e) {
                 logger.error("Prepared statement has been already closed", e);
+            }
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Result set has been already closed");
             }
             if (connection != null) {
                 removeConnection(connection);
