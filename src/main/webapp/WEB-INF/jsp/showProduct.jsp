@@ -40,10 +40,15 @@
                 </div>
             </div>
         </div>
-        <c:if test="${sessionScope.basket.}"
-        <a class="btn btn-outline-secondary enter" href="#">Положить в корзину</a>
+        <c:if test="${sessionScope.user.userDetails.basket.products.contains(product.id)}">
+            <a class="btn btn-outline-secondary enter" href="#">Удалить из корзины</a>
+        </c:if>
+        <c:if test="${!sessionScope.user.userDetails.basket.products.contains(product.id)}">
+            <a class="btn btn-outline-secondary enter" href="#">Положить в корзину</a>
+        </c:if>
+
         <a class="btn btn-outline-secondary enter" href="#">Добавить в избранные</a>
-        <c:if test="${sessionScope.user.role=='admin'}">
+        <c:if test="${sessionScope.user.userDetails.role=='admin'}">
             <a class="btn btn-outline-secondary enter" href="#">Редактировать</a>
             <a class="btn btn-outline-secondary enter" href="#">Дозаказать</a>
             <a class="btn btn-outline-secondary enter" href="#">Удалить</a>
