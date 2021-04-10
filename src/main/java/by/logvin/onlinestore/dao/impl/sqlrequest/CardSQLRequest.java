@@ -1,5 +1,6 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
+// FIXME: 11.04.2021
 public final class CardSQLRequest {
     public static final String selectCardByID =
             "SELECT * " +
@@ -9,7 +10,7 @@ public final class CardSQLRequest {
     public static final String selectCardsByUserID =
             "SELECT * " +
                     "FROM cards c " +
-                    "WHERE c.user_id=?";
+                    "WHERE c.c_user_id=?";
     public static final String insertCard =
             "INSERT INTO cards(c_user_id, c_number, c_validity_period, c_authentication_code, c_cardholder) " +
                     "VALUES(?,?,?,?,?)";

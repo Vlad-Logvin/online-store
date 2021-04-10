@@ -1,5 +1,6 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
+// FIXME: 11.04.2021
 public final class UserSQLRequest {
     public static final String insertUser =
             "INSERT INTO users(u_email, u_password, u_first_name, u_last_name, u_date_of_birth, u_access, u_role) " +

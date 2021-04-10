@@ -1,5 +1,6 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
+// FIXME: 11.04.2021
 public final class FavouriteSQLRequest {
     public static final String selectFavouriteByUserID =
             "SELECT * " +
