@@ -128,6 +128,7 @@ public class SQLOrderDAO implements OrderDAO {
             preparedStatement = connection.prepareStatement(OrderSQLRequest.selectLastOrderID);
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
             int orderID = resultSet.getInt("o_id");
             preparedStatement = connection.prepareStatement(OrderSQLRequest.insertProductToOrder);
             preparedStatement.setInt(1, orderID);

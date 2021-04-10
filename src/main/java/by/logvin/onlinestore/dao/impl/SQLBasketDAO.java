@@ -45,10 +45,12 @@ public class SQLBasketDAO implements BasketDAO {
                 }
                 products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("pb_product_id")));
             }
-            basket = new Basket(
-                    basketID,
-                    products
-            );
+            if (basketID != 0) {
+                basket = new Basket(
+                        basketID,
+                        products
+                );
+            }
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
             throw new DAOException("Error prepared statement updating or setting data", e);

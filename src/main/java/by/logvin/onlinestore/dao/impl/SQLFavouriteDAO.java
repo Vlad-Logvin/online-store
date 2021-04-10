@@ -44,10 +44,12 @@ public class SQLFavouriteDAO implements FavouriteDAO {
                 }
                 products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("fp_product_id")));
             }
-            favourite = new Favourite(
-                    favouriteID,
-                    products
-            );
+            if (favouriteID != 0) {
+                favourite = new Favourite(
+                        favouriteID,
+                        products
+                );
+            }
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
             throw new DAOException("Error prepared statement updating or setting data", e);

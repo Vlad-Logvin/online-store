@@ -33,7 +33,7 @@ public class SQLCardDAO implements CardDAO {
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
             if (!resultSet.next()) {
                 logger.info("Card with this id was not found");
-                throw new DAOException("Error card id");
+                return null;
             }
             card = new Card(
                     resultSet.getInt("c_id"),

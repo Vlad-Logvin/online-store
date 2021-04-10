@@ -31,14 +31,23 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setString(4, info.getLastName());
             preparedStatement.setString(5, info.getDateOfBirth());
             numberOfUpdateLines = preparedStatement.executeUpdate();
-            logger.info("User was added");
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during request creation or execution", e);
             throw new DAOException("Error prepared statement creating or setting data", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
-
-        removeConnection(connection);
-        logger.info("Connection is broken");
 
         return numberOfUpdateLines != 0;
     }
@@ -63,7 +72,7 @@ public class SQLUserDAO implements UserDAO {
             logger.info("Request (" + preparedStatement.toString() + ") completed");
             if (!userResultSet.next()) {
                 logger.info("User with this email and password was not found");
-                throw new DAOException("Not correct email or password");
+                return null;
             }
             userID = userResultSet.getInt("u_id");
             cards = ServiceProvider.getInstance().getCardService().getCardsByUserID(userID);
@@ -91,15 +100,31 @@ public class SQLUserDAO implements UserDAO {
                     )
             );
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during request creation or execution", e);
-            throw new DAOException("Error prepared statement creating or setting data", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
         } catch (ServiceException e) {
-            logger.error("ServiceException was thrown due to an error during cards|basket|favourite|orders creation", e);
-            throw new DAOException("Error getting basket or favourite from ", e);
+            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            throw new DAOException("Error product information by product id", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            try {
+                if (userResultSet != null) {
+                    userResultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Result set has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
-
-        removeConnection(connection);
-        logger.info("Connection is broken");
 
         return user;
     }
@@ -122,12 +147,21 @@ public class SQLUserDAO implements UserDAO {
             numberOfUpdateLines = preparedStatement.executeUpdate();
             logger.info("User was updated");
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during request creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
             throw new DAOException("Error prepared statement updating or setting data", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
-
-        removeConnection(connection);
-        logger.info("Connection is broken");
 
         return numberOfUpdateLines != 0;
     }

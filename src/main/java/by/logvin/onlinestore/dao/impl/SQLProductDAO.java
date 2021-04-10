@@ -33,10 +33,10 @@ public class SQLProductDAO implements ProductDAO {
             resultSet = statement.executeQuery(ProductSQLRequest.selectOneProduct);
             logger.info("Request (" + statement.toString() + ") completed");
             if (!resultSet.next()) {
-                logger.info("Throw DAO Exception due to non-existing some product in database");
-                throw new DAOException("There aren't any products in the database");
+                logger.info("Not found product in database");
+                return null;
             }
-            product = getProductFromResultSet(connection, resultSet);
+            product = getProductFromResultSet(resultSet);
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
             throw new DAOException("Error prepared statement updating or setting data", e);
@@ -82,7 +82,7 @@ public class SQLProductDAO implements ProductDAO {
                 if (products == null) {
                     products = new ArrayList<>();
                 }
-                products.add(getProductFromResultSet(connection, resultSet));
+                products.add(getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
@@ -135,6 +135,7 @@ public class SQLProductDAO implements ProductDAO {
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, categoryID);
             resultSet = preparedStatement.executeQuery();
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
             if (!resultSet.next()) {
                 logger.info("DAOException thrown due to an error with name and category id");
                 throw new DAOException("Error with name or category id");
@@ -252,11 +253,12 @@ public class SQLProductDAO implements ProductDAO {
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(ProductSQLRequest.selectAllProducts);
+            logger.info("Request (" + statement.toString() + ") was completed");
             while (resultSet.next()) {
                 if (product == null) {
                     product = new ArrayList<>();
                 }
-                product.add(getProductFromResultSet(connection, resultSet));
+                product.add(getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
@@ -298,10 +300,12 @@ public class SQLProductDAO implements ProductDAO {
             preparedStatement = connection.prepareStatement(ProductSQLRequest.selectProductByProductID);
             preparedStatement.setInt(1, productID);
             resultSet = preparedStatement.executeQuery();
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
             if (!resultSet.next()) {
-                throw new DAOException("Error id");
+                logger.info("Not found product with such product id");
+                return null;
             }
-            product = getProductFromResultSet(connection, resultSet);
+            product = getProductFromResultSet(resultSet);
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
             throw new DAOException("Error prepared statement updating or setting data", e);
@@ -331,7 +335,7 @@ public class SQLProductDAO implements ProductDAO {
         return product;
     }
 
-    private Product getProductFromResultSet(Connection connection, ResultSet resultSet) throws SQLException, ServiceException {
+    private Product getProductFromResultSet(ResultSet resultSet) throws SQLException, ServiceException {
         int productID = resultSet.getInt("p_id");
         Category category = ServiceProvider.getInstance().getCategoryService().getCategory(resultSet.getInt("p_category_id"));
         List<Attribute> attributes = ServiceProvider.getInstance().getAttributeService().getAttributes(productID);

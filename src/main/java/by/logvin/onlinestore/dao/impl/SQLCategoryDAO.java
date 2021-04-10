@@ -94,7 +94,7 @@ public class SQLCategoryDAO implements CategoryDAO {
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
             if (!resultSet.next()) {
                 logger.info("Category with this id was not found");
-                throw new DAOException("Error category id");
+                return null;
             }
             category = new Category(
                     resultSet.getInt("c_id"),
