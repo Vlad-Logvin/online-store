@@ -77,10 +77,12 @@ public class SQLUserDAO implements UserDAO {
             userID = userResultSet.getInt("u_id");
             cards = ServiceProvider.getInstance().getCardService().getCardsByUserID(userID);
             if ((basket = ServiceProvider.getInstance().getBasketService().getBasketByUserID(userID)) == null) {
-                basket = ServiceProvider.getInstance().getBasketService().createBasket(userID);
+                ServiceProvider.getInstance().getBasketService().createBasket(userID);
+                basket = ServiceProvider.getInstance().getBasketService().getBasketByUserID(userID);
             }
             if ((favourite = ServiceProvider.getInstance().getFavouriteService().getFavouriteByUserID(userID)) == null) {
-                favourite = ServiceProvider.getInstance().getFavouriteService().createFavourite(userID);
+                ServiceProvider.getInstance().getFavouriteService().createFavourite(userID);
+                favourite = ServiceProvider.getInstance().getFavouriteService().getFavouriteByUserID(userID);
             }
             orders = ServiceProvider.getInstance().getOrderService().getUserOrders(userID);
             user = new User(
@@ -130,7 +132,7 @@ public class SQLUserDAO implements UserDAO {
     }
 
     @Override
-    public boolean editUserInfo(int userID, String email, String password, String firstName, String lastName, java.util.Date dateOfBirth) throws DAOException {
+    public boolean editUserInfo(int userID, String email, String password, String firstName, String lastName, String dateOfBirth) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;
@@ -142,7 +144,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, firstName);
             preparedStatement.setString(4, lastName);
-            preparedStatement.setDate(5, (Date) dateOfBirth);
+            preparedStatement.setString(5, dateOfBirth);
             preparedStatement.setInt(6, userID);
             numberOfUpdateLines = preparedStatement.executeUpdate();
             logger.info("User was updated");

@@ -11,5 +11,5 @@ public interface UserDAO {
 
     User signIn(String email, String password) throws DAOException;
 
-    boolean editUserInfo(int userID, String email, String password, String firstName, String lastName, Date dateOfBirth) throws DAOException;
+    boolean editUserInfo(int userID, String email, String password, String firstName, String lastName, String dateOfBirth) throws DAOException;
 }
