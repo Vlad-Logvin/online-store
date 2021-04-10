@@ -15,7 +15,7 @@ public final class UserSQLRequest {
                     "WHERE u.u_email=? AND u.u_password=?";
     public static String updateUser =
             "UPDATE users u " +
-                    "SET u.u_email=? AND u.u_password=? AND u.u_first_name AND u.u_last_name AND u.u_date_of_birth " +
+                    "SET u.u_email=?, u.u_password=?, u.u_first_name, u.u_last_name, u.u_date_of_birth " +
                     "WHERE u.u_id=?";
 
 

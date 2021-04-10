@@ -2,14 +2,12 @@ package by.logvin.onlinestore.dao.impl;
 
 import by.logvin.onlinestore.bean.Attribute;
 import by.logvin.onlinestore.bean.Category;
-import by.logvin.onlinestore.bean.Criteria;
 import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.dao.ProductDAO;
 import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
 import by.logvin.onlinestore.dao.impl.sqlrequest.ProductSQLRequest;
-import by.logvin.onlinestore.dao.impl.sqlrequest.SQLRequest;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
@@ -17,6 +15,7 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SQLProductDAO implements ProductDAO {
 
@@ -39,13 +38,31 @@ public class SQLProductDAO implements ProductDAO {
             }
             product = getProductFromResultSet(connection, resultSet);
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during request creation or executing", e);
-            throw new DAOException("Error prepared statement creating or setting data", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
         } catch (ServiceException e) {
-            throw new DAOException("Service exception");
+            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            throw new DAOException("Error product information by product id", e);
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Result set has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
-        removeConnection(connection);
-        logger.info("Connection is broken");
         return product;
     }
 
@@ -55,53 +72,185 @@ public class SQLProductDAO implements ProductDAO {
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Product> product = null;
+        List<Product> products = null;
         try {
             preparedStatement = connection.prepareStatement(ProductSQLRequest.selectNProducts);
             preparedStatement.setInt(1, number);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") completed");
             while (resultSet.next()) {
-                if (product == null) {
-                    product = new ArrayList<>();
+                if (products == null) {
+                    products = new ArrayList<>();
                 }
-                product.add(getProductFromResultSet(connection, resultSet));
+                products.add(getProductFromResultSet(connection, resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Error prepared statement creating or setting data", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
         } catch (ServiceException e) {
-            throw new DAOException("Service exception");
+            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            throw new DAOException("Error product information by product id", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Result set has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
-        removeConnection(connection);
-        logger.info("Connection is broken");
-        return product;
+        return products;
     }
 
     @Override
-    public boolean add(String name, double price, String description, int quantity, String photoURL, Category category, List<Attribute> attributes) throws DAOException {
+    public boolean add(String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;
-        return false;
+        ResultSet resultSet = null;
+        int numberOfUpdatedLines = 0;
+        int productID = 0;
+        try {
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.insertProduct);
+            preparedStatement.setString(1, name);
+            preparedStatement.setDouble(2, price);
+            preparedStatement.setInt(3, quantity);
+            preparedStatement.setString(4, description);
+            preparedStatement.setInt(5, categoryID);
+            preparedStatement.setString(6, photoURL);
+            numberOfUpdatedLines = preparedStatement.executeUpdate();
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.selectProductIDByNameAndCategory);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, categoryID);
+            resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                logger.info("DAOException thrown due to an error with name and category id");
+                throw new DAOException("Error with name or category id");
+            }
+            productID = resultSet.getInt("p.p_id");
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
+            ServiceProvider.getInstance().getAttributeService().addAttributes(productID, attributes);
+        } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
+        } catch (ServiceException e) {
+            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            throw new DAOException("Error product information by product id", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Result set has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
+        }
+        return numberOfUpdatedLines != 0;
     }
 
     @Override
     public boolean remove(int productID) throws DAOException {
-        return false;
+        Connection connection = getConnection();
+        logger.info("Connection established");
+        PreparedStatement preparedStatement = null;
+        int numberOfUpdatedLines = 0;
+        try {
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.deleteProductByID);
+            preparedStatement.setInt(1, productID);
+            numberOfUpdatedLines = preparedStatement.executeUpdate();
+            logger.info("Request (" + preparedStatement.toString() + ") completed");
+
+        } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
+        }
+        return numberOfUpdatedLines != 0;
     }
 
     @Override
-    public boolean edit(int productID, String name, double price, String description, int quantity, String photoURL, Category category, List<Attribute> attributes) throws DAOException {
-        return false;
+    public boolean edit(int productID, String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws DAOException {
+        Connection connection = getConnection();
+        logger.info("Connection established");
+        PreparedStatement preparedStatement = null;
+        int numberOfUpdatedLines = 0;
+        try {
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.updateProductByID);
+            preparedStatement.setString(1, name);
+            preparedStatement.setDouble(2, price);
+            preparedStatement.setInt(3, quantity);
+            preparedStatement.setString(4, description);
+            preparedStatement.setInt(5, categoryID);
+            preparedStatement.setString(6, photoURL);
+            preparedStatement.setInt(7, productID);
+            numberOfUpdatedLines = preparedStatement.executeUpdate();
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
+            ServiceProvider.getInstance().getAttributeService().updateAttributes(productID, attributes);
+        } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
+        } catch (ServiceException e) {
+            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            throw new DAOException("Error product information by product id", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
+        }
+        return numberOfUpdatedLines != 0;
     }
 
     @Override
     public List<Product> takeAll() throws DAOException {
         Connection connection = getConnection();
+        logger.info("Connection established");
         Statement statement = null;
         ResultSet resultSet = null;
         List<Product> product = null;
         try {
+            statement = connection.createStatement();
             resultSet = statement.executeQuery(ProductSQLRequest.selectAllProducts);
             while (resultSet.next()) {
                 if (product == null) {
@@ -110,17 +259,38 @@ public class SQLProductDAO implements ProductDAO {
                 product.add(getProductFromResultSet(connection, resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Error prepared statement creating or setting data", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
         } catch (ServiceException e) {
-            throw new DAOException("service exception");
+            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            throw new DAOException("Error product information by product id", e);
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Result set has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
-        removeConnection(connection);
         return product;
     }
 
     @Override
     public Product takeByProductID(int productID) throws DAOException {
         Connection connection = getConnection();
+        logger.info("Connection established");
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Product product = null;
@@ -133,22 +303,37 @@ public class SQLProductDAO implements ProductDAO {
             }
             product = getProductFromResultSet(connection, resultSet);
         } catch (SQLException e) {
-            throw new DAOException(e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
         } catch (ServiceException e) {
-            throw new DAOException("Service exception");
+            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            throw new DAOException("Error product information by product id", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Result set has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
         }
-        removeConnection(connection);
-        logger.info(product);
         return product;
     }
 
-    private Product getProductFromResultSet(Connection connection, ResultSet resultSet) throws SQLException, DAOException, ServiceException {
-        PreparedStatement preparedStatement = connection.prepareStatement(SQLRequest.selectCategoryById);
-        preparedStatement.setInt(1, resultSet.getInt("p_category_id"));
-        ResultSet set = preparedStatement.executeQuery();
-        logger.info("Request (" + set.toString() + ") completed");
+    private Product getProductFromResultSet(Connection connection, ResultSet resultSet) throws SQLException, ServiceException {
         int productID = resultSet.getInt("p_id");
-        Category category = ServiceProvider.getInstance().getCategoryService().getCategory(resultSet.getInt("p_category"));
+        Category category = ServiceProvider.getInstance().getCategoryService().getCategory(resultSet.getInt("p_category_id"));
         List<Attribute> attributes = ServiceProvider.getInstance().getAttributeService().getAttributes(productID);
         return new Product(
                 productID,
