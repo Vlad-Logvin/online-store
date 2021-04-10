@@ -12,5 +12,5 @@ public interface BasketService {
 
     boolean deleteBasketByUserID(int userID) throws ServiceException;
 
-    Basket createBasket(int userID) throws ServiceException;
+    boolean createBasket(int userID) throws ServiceException;
 }

@@ -12,5 +12,5 @@ public interface FavouriteService {
 
     boolean deleteFavouriteByUserID(int userID) throws ServiceException;
 
-    Favourite createFavourite(int userID) throws ServiceException;
+    boolean createFavourite(int userID) throws ServiceException;
 }

@@ -11,5 +11,5 @@ public interface UserService {
 
     User signIn(String login, String password) throws ServiceException;
 
-    boolean editUserInfo(int userID, String email, String password, String firstName, String lastName, Date dateOfBirth) throws ServiceException;
+    boolean editUserInfo(int userID, String email, String password, String firstName, String lastName, String dateOfBirth) throws ServiceException;
 }

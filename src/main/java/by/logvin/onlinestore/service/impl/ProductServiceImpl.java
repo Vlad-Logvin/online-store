@@ -1,7 +1,5 @@
 package by.logvin.onlinestore.service.impl;
 
-import by.logvin.onlinestore.bean.Attribute;
-import by.logvin.onlinestore.bean.Category;
 import by.logvin.onlinestore.bean.Criteria;
 import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.dao.DAOProvider;
@@ -11,35 +9,69 @@ import by.logvin.onlinestore.service.ProductService;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import by.logvin.onlinestore.service.util.ProductFilter;
 import by.logvin.onlinestore.service.util.impl.CriteriaFilter;
+import org.apache.log4j.Logger;
 
 import java.util.List;
+import java.util.Map;
 
 public class ProductServiceImpl implements ProductService {
+
+    private final static Logger logger = Logger.getLogger(ProductServiceImpl.class);
+
     @Override
     public Product takeByProductID(int productID) throws ServiceException {
         ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
         Product product = null;
         try {
             product = productDAO.takeByProductID(productID);
-        } catch (DAOException e){
-            throw new ServiceException(e);
+            logger.info("Product takes: " + product);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during take product by it id", e);
+            throw new ServiceException("Error during take product by it id", e);
         }
         return product;
     }
 
     @Override
-    public boolean add(String name, double price, String description, int quantity, String photoURL, Category category, List<Attribute> attributes) throws ServiceException {
-        return false;
+    public boolean add(String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws ServiceException {
+        ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
+        boolean isAdd = false;
+        try {
+            isAdd = productDAO.add(name, price, description, quantity, photoURL, categoryID, attributes);
+            logger.info("Product adds: " + isAdd);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during product adding", e);
+            throw new ServiceException("Error during product adding", e);
+        }
+        return isAdd;
     }
 
     @Override
     public boolean remove(int productID) throws ServiceException {
-        return false;
+        ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
+        boolean isRemove = false;
+        try {
+            isRemove = productDAO.remove(productID);
+            logger.info("Product removes: " + isRemove);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during product removing", e);
+            throw new ServiceException("Error during product removing", e);
+        }
+        return isRemove;
     }
 
     @Override
-    public boolean edit(int productID, String name, double price, String description, int quantity, String photoURL, Category category, List<Attribute> attributes) throws ServiceException {
-        return false;
+    public boolean edit(int productID, String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws ServiceException {
+        ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
+        boolean isEdit = false;
+        try {
+            isEdit = productDAO.add(name, price, description, quantity, photoURL, categoryID, attributes);
+            logger.info("Product edits: " + isEdit);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during product editing", e);
+            throw new ServiceException("Error during product editing", e);
+        }
+        return isEdit;
     }
 
     @Override
@@ -48,8 +80,10 @@ public class ProductServiceImpl implements ProductService {
         Product product = null;
         try {
             product = productDAO.take();
+            logger.info("Product takes: " + product);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            logger.error("DAOException was thrown during product taking", e);
+            throw new ServiceException("Error during product taking", e);
         }
         return product;
     }
@@ -60,8 +94,10 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = null;
         try {
             products = productDAO.take(number);
+            logger.info("Products take: " + products);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            logger.error("DAOException was thrown during product taking", e);
+            throw new ServiceException("Error during product taking", e);
         }
         return products;
     }
@@ -72,8 +108,10 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = null;
         try {
             products = productDAO.takeAll();
+            logger.info("Products take: " + products);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            logger.error("DAOException was thrown during product taking", e);
+            throw new ServiceException("Error during product taking", e);
         }
         return products;
     }
@@ -86,8 +124,10 @@ public class ProductServiceImpl implements ProductService {
             products = productDAO.takeAll();
             ProductFilter productFilter = new CriteriaFilter();
             products = productFilter.filter(products, criteria);
+            logger.info("Products take: " + products);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            logger.error("DAOException was thrown during product taking", e);
+            throw new ServiceException("Error during product taking", e);
         }
         return products;
     }

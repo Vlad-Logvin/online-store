@@ -7,6 +7,7 @@ import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.service.exception.ServiceException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductService {
     Product take() throws ServiceException;
@@ -19,9 +20,9 @@ public interface ProductService {
 
     Product takeByProductID(int productID) throws ServiceException;
 
-    boolean add(String name, double price, String description, int quantity, String photoURL, Category category, List<Attribute> attributes) throws ServiceException;
+    boolean add(String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws ServiceException;
 
     boolean remove(int productID) throws ServiceException;
 
-    boolean edit(int productID, String name, double price, String description, int quantity, String photoURL, Category category, List<Attribute> attributes) throws ServiceException;
+    boolean edit(int productID, String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws ServiceException;
 }

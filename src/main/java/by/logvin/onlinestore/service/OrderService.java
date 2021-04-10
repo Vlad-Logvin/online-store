@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface OrderService {
-    boolean makeOrder(Map<Product, Integer> products, Card card, Date date) throws ServiceException;
+    boolean makeOrder(int userID, Map<Product, Integer> products, int cardID, Date dateOfPurchase) throws ServiceException;
 
     List<Order> getOrderLog() throws ServiceException;
 
