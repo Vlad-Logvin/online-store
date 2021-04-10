@@ -33,6 +33,7 @@ public class SignIn implements Command {
         HttpSession session = null;
         try {
             user = userService.signIn(email, password);
+            logger.info(user);
             if (user == null) {
                 redirectURL = "Controller?command=go_to_authorization_page&message=wrong";
             } else {
@@ -42,8 +43,10 @@ public class SignIn implements Command {
             }
         } catch (ServiceException e) {
             logger.info("ServiceException", e);
-            redirectURL = "Controller?command=go_to_authorization_page&message=wrong";
+            redirectURL = "Controller?command=go_to_error_page";
         }
+
+        logger.info(user);
 
 
         response.sendRedirect(redirectURL);
