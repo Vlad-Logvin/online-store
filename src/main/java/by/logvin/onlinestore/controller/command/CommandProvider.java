@@ -1,6 +1,7 @@
 package by.logvin.onlinestore.controller.command;
 
 import by.logvin.onlinestore.controller.command.impl.*;
+import by.logvin.onlinestore.controller.command.impl.gotopage.*;
 
 import java.util.HashMap;
 import java.util.Map;

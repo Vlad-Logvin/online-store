@@ -1,4 +1,4 @@
-package by.logvin.onlinestore.controller.command.impl;
+package by.logvin.onlinestore.controller.command.impl.gotopage;
 
 import by.logvin.onlinestore.controller.command.Command;
 import jakarta.servlet.RequestDispatcher;

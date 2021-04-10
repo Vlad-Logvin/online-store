@@ -1,9 +1,8 @@
-package by.logvin.onlinestore.controller.command.impl;
+package by.logvin.onlinestore.controller.command.impl.gotopage;
 
 import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.controller.command.Command;
 
-import by.logvin.onlinestore.service.ProductService;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import jakarta.servlet.*;
