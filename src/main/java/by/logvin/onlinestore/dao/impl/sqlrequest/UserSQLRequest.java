@@ -19,26 +19,6 @@ public final class UserSQLRequest {
                     "WHERE u.u_id=?";
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private UserSQLRequest(){}
+    private UserSQLRequest() {
+    }
 }
