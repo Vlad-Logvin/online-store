@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: vital
@@ -6,12 +6,15 @@
   Time: 18:58
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html;
+    charset=utf-8"
+         pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Online store</title>
+    <link rel="stylesheet" href="css/main.css" type="text/css">
 </head>
-<link rel="stylesheet" href="css/main.css" type="text/css">
 <body>
 
 <c:import url="temp/header.jsp"/>
@@ -64,7 +67,7 @@
                                             <input type="submit" class="btn btn-sm btn-outline-secondary"
                                                    value="В избранное"/>
                                         </form>
-                                        <c:if test="${sessionScope.get('user').role=='admin'}">
+                                        <c:if test="${sessionScope.user.userDetails.role=='admin'}">
                                             <form action="Controller" method="get">
                                                 <input type="hidden" name="command"
                                                        value="go_to_edit_product_form_page"/>

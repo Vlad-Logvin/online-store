@@ -5,7 +5,10 @@
   Time: 19:02
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page language="java" contentType="text/html;
+    charset=utf-8"
+         pageEncoding="utf-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
@@ -35,16 +38,16 @@
 
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
     <title>header</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-          integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/header.css" type="text/css">
+          integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/header.css" type="text/css"/>
 </head>
 <body>
 <header>
@@ -165,7 +168,6 @@
                                        href="Controller?command=go_to_registration_page">${signUp}</a>
                                 </li>
                             </c:if>
-
                             <c:if test="${user!=null}">
                                 <li>
                                     <a class="dropdown-item" href="Controller?command=go_to_orders_page">
@@ -174,8 +176,7 @@
                                 </li>
                                 <li><a class="dropdown-item"
                                        href="Controller?command=go_to_user_page"><c:out value="${user.firstName}"/>
-                                    <c:out
-                                            value="${user.lastName}"/></a>
+                                    <c:out value="${user.lastName}"/></a>
                                 </li>
                                 <li><a class="dropdown-item"
                                        href="Controller?command=logout">${logout}</a>
