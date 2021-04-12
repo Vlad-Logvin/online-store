@@ -1,0 +1,13 @@
+.max-height-div{
+    height: 256px;
+}
+
+.max-height-p {
+    max-height: 3rem;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+}
+
+body {
+    background: url("../img/main_back.png");
+}

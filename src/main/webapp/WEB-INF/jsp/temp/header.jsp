@@ -8,7 +8,7 @@
 
 <%@ page language="java" contentType="text/html;
     charset=utf-8"
-         pageEncoding="utf-8"%>
+         pageEncoding="utf-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
@@ -35,6 +35,9 @@
 <fmt:message bundle="${loc}" key="local.header.orders" var="orders"/>
 <fmt:message bundle="${loc}" key="local.header.basket" var="basket"/>
 <fmt:message bundle="${loc}" key="local.header.favourites" var="favourites"/>
+<fmt:message bundle="${loc}" key="local.header.add_product" var="add_product"/>
+<fmt:message bundle="${loc}" key="local.header.users" var="users"/>
+<fmt:message bundle="${loc}" key="local.header.all_orders" var="all_orders"/>
 
 <html>
 <head>
@@ -73,22 +76,22 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=smartphone">${smartphones}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=1">${smartphones}</a>
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=headphone">${headphones}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=2">${headphones}</a>
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=powerbank">${powerbanks}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=3">${powerbanks}</a>
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=smartWatch">${smartWatch}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=4">${smartWatch}</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=smartphonesAndGadgetsOther">${other}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=5">${other}</a>
                             </li>
                         </ul>
                     </li>
@@ -100,22 +103,22 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=ledTV">${ledTV}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=6">${ledTV}</a>
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=oledTV">${oledTV}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=7">${oledTV}</a>
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=smartTV">${smartTV}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=8">${smartTV}</a>
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=ultraTV">${ultraTV}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=9">${ultraTV}</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=TV-setsOther">${other}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=10">${other}</a>
                             </li>
                         </ul>
                     </li>
@@ -127,16 +130,16 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=laptop">${laptops}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=11">${laptops}</a>
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=computer">${computers}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=12">${computers}</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item"
-                                   href="Controller?command=go_to_category_product_page&category=laptopsAndComputersOther">${other}</a>
+                                   href="Controller?command=go_to_category_page&categoryID=13">${other}</a>
                             </li>
                         </ul>
                     </li>
@@ -169,9 +172,31 @@
                                 </li>
                             </c:if>
                             <c:if test="${user!=null}">
+                                <c:if test="${user.userDetails.role=='admin'}">
+                                    <li>
+                                        <a class="dropdown-item" href="Controller?command=go_to_add_product_form_page">
+                                                ${add_product}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="Controller?command=go_to_show_user_page">
+                                                ${users}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="Controller?command=go_to_order_page&order=0">
+                                                ${all_orders}
+                                        </a>
+                                    </li>
+                                </c:if>
                                 <li>
-                                    <a class="dropdown-item" href="Controller?command=go_to_orders_page">
+                                    <a class="dropdown-item" href="Controller?command=go_to_orders_page&order=${user.id}">
                                             ${orders}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="Controller?command=go_to_add_card_form_page&userID=${user.id}">
+                                            Добавить карту
                                     </a>
                                 </li>
                                 <li><a class="dropdown-item"
