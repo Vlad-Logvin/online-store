@@ -35,6 +35,10 @@ public class Basket implements Serializable {
         this.products = products;
     }
 
+    public boolean isProductContains(Product product) {
+        return products == null ? products.contains(product) : false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

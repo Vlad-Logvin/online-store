@@ -1,5 +1,6 @@
 package by.logvin.onlinestore.service.impl;
 
+import by.logvin.onlinestore.bean.Category;
 import by.logvin.onlinestore.bean.Criteria;
 import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.dao.DAOProvider;
@@ -110,8 +111,8 @@ public class ProductServiceImpl implements ProductService {
             products = productDAO.takeAll();
             logger.info("Products take: " + products);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during product taking", e);
-            throw new ServiceException("Error during product taking", e);
+            logger.error("DAOException was thrown during products taking", e);
+            throw new ServiceException("Error during products taking", e);
         }
         return products;
     }
@@ -128,6 +129,20 @@ public class ProductServiceImpl implements ProductService {
         } catch (DAOException e) {
             logger.error("DAOException was thrown during product taking", e);
             throw new ServiceException("Error during product taking", e);
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> take(Category category) throws ServiceException {
+        ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
+        List<Product> products = null;
+        try {
+            products = productDAO.take(category);
+            logger.info("Products take: " + products);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during products taking", e);
+            throw new ServiceException("Error during products taking", e);
         }
         return products;
     }

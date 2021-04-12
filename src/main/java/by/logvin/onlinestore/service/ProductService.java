@@ -18,6 +18,8 @@ public interface ProductService {
 
     List<Product> take(Criteria criteria) throws ServiceException;
 
+    List<Product> take(Category category) throws ServiceException;
+
     Product takeByProductID(int productID) throws ServiceException;
 
     boolean add(String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws ServiceException;

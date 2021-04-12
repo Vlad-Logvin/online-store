@@ -16,6 +16,8 @@ public interface ProductDAO {
 
     List<Product> takeAll() throws DAOException;
 
+    List<Product> take(Category category) throws DAOException;
+
     Product takeByProductID(int productID) throws DAOException;
 
     boolean add(String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws DAOException;

@@ -20,6 +20,7 @@ public class CommandProvider {
         commands.put(CommandName.DELETE_CARD, new DeleteCard());
         commands.put(CommandName.DELETE_PRODUCT, new DeleteProduct());
         commands.put(CommandName.EDIT_CARD, new EditCard());
+        commands.put(CommandName.EDIT_PRODUCT, new EditProduct());
         commands.put(CommandName.EDIT_PROFILE, new EditProfile());
         commands.put(CommandName.ISSUE_ADMIN, new IssueAdmin());
         commands.put(CommandName.LOGOUT, new Logout());
@@ -45,14 +46,9 @@ public class CommandProvider {
         commands.put(CommandName.GO_TO_REGISTRATION_PAGE, new GoToRegistrationPage());
         commands.put(CommandName.GO_TO_SHOW_PRODUCT_PAGE, new GoToShowProductPage());
         commands.put(CommandName.GO_TO_SHOW_USER_PAGE, new GoToShowUserPage());
+        commands.put(CommandName.GO_TO_USER_PAGE, new GoToUserPage());
     }
 
-/*
-    GO_TO_ORDER_PAGE,
-    GO_TO_REGISTRATION_PAGE,
-    GO_TO_SHOW_PRODUCT_PAGE,
-    GO_TO_SHOW_USER_PAGE
- */
     public Command takeCommand(String name) {
         CommandName commandName = CommandName.valueOf(name.toUpperCase());
         return commands.get(commandName);

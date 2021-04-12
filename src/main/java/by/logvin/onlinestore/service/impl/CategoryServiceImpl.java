@@ -8,6 +8,8 @@ import by.logvin.onlinestore.service.CategoryService;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 public class CategoryServiceImpl implements CategoryService {
 
     private final static Logger logger = Logger.getLogger(CategoryServiceImpl.class);
@@ -46,6 +48,34 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = null;
         try {
             category = categoryDAO.getCategory(categoryID);
+            logger.info("Category gets: " + category);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during category getting", e);
+            throw new ServiceException("Error during category getting", e);
+        }
+        return category;
+    }
+
+    @Override
+    public List<Category> getCategories() throws ServiceException {
+        CategoryDAO categoryDAO = DAOProvider.getInstance().getCategoryDAO();
+        List<Category> categories = null;
+        try {
+            categories = categoryDAO.getCategories();
+            logger.info("Categories get: " + categories);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during categories getting", e);
+            throw new ServiceException("Error during categories getting", e);
+        }
+        return categories;
+    }
+
+    @Override
+    public Category getCategory(String name) throws ServiceException {
+        CategoryDAO categoryDAO = DAOProvider.getInstance().getCategoryDAO();
+        Category category = null;
+        try {
+            category = categoryDAO.getCategory(name);
             logger.info("Category gets: " + category);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during category getting", e);

@@ -33,8 +33,6 @@ public class GoToMainPage implements Command {
             forwardURL = "error.jsp";
         }
 
-        logger.info("product1" + products.get(0));
-
         request.setAttribute("products", products);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(forwardURL);

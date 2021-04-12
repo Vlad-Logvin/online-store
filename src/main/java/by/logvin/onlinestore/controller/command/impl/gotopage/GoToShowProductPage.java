@@ -16,13 +16,17 @@ import java.io.IOException;
 
 public class GoToShowProductPage implements Command {
     private final static Logger logger = Logger.getLogger(GoToShowProductPage.class);
+
+    // FIXME: 12.04.2021
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        HttpSession session = request.getSession(true);
-        session.setAttribute("url", "Controller?command=go_to_show_product_page&productID" + request.getParameter("productID"));
-
-        Integer productID = Integer.parseInt(request.getParameter("productID"));
+        int productID = 0;
+        try {
+            productID = Integer.parseInt(request.getParameter("productID"));
+        } catch (NumberFormatException e){
+            //log
+            response.sendRedirect("Controller?command=go_to_main_page&message=error_product_id");
+        }
 
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         ProductService productService = serviceProvider.getProductService();
@@ -31,14 +35,13 @@ public class GoToShowProductPage implements Command {
         try {
             product = productService.takeByProductID(productID);
             request.setAttribute("product", product);
+
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/showProduct.jsp");
+            requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
             //log
+            response.sendRedirect("Controller?command=go_to_main_page&message=server_error");
         }
 
-        logger.info("Go to show product page");
-        logger.info(product);
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/showProduct.jsp");
-        requestDispatcher.forward(request, response);
     }
 }

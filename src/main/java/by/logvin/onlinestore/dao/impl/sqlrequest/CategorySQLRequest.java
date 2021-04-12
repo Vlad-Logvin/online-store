@@ -12,7 +12,13 @@ public final class CategorySQLRequest {
             "SELECT * " +
                     "FROM categories c " +
                     "WHERE c.c_id=?";
-
+    public static final String selectAllCategories =
+            "SELECT * " +
+                    "FROM categories";
+    public static final String selectCategoryByName =
+            "SELECT * " +
+                    "FROM categories c " +
+                    "WHERE c.c_name=?";
 
     private CategorySQLRequest() {
     }

@@ -173,6 +173,56 @@ public class SQLProductDAO implements ProductDAO {
     }
 
     @Override
+    public List<Product> take(Category category) throws DAOException {
+        if (category == null) {
+            return null;
+        }
+        Connection connection = getConnection();
+        logger.info("Connection established");
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Product> products = null;
+        try {
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.selectProductByCategoryID);
+            preparedStatement.setInt(1, category.getId());
+            resultSet = preparedStatement.executeQuery();
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
+            while (resultSet.next()) {
+                if (products == null) {
+                    products = new ArrayList<>();
+                }
+                products.add(getProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
+        } catch (ServiceException e) {
+            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            throw new DAOException("Error product information by product id", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Result set has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
+        }
+        return products;
+    }
+
+    @Override
     public boolean remove(int productID) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");

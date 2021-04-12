@@ -22,6 +22,7 @@ public class Logout implements Command {
             redirectURL = "Controller?command=go_to_main_page";
         }
 
+
         response.sendRedirect(redirectURL);
     }
 }

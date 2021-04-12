@@ -11,6 +11,7 @@ public enum CommandName {
     DELETE_CARD,
     DELETE_PRODUCT,
     EDIT_CARD,
+    EDIT_PRODUCT,
     EDIT_PROFILE,
     ISSUE_ADMIN,
     LOGOUT,
@@ -20,6 +21,7 @@ public enum CommandName {
     SIGN_IN,
     SIGN_UP,
     UNBLOCK_USER,
+
     GO_TO_ADD_CARD_FORM_PAGE,
     GO_TO_ADD_PRODUCT_FORM_PAGE,
     GO_TO_AUTHORIZATION_PAGE,
@@ -34,5 +36,6 @@ public enum CommandName {
     GO_TO_ORDER_PAGE,
     GO_TO_REGISTRATION_PAGE,
     GO_TO_SHOW_PRODUCT_PAGE,
-    GO_TO_SHOW_USER_PAGE
+    GO_TO_SHOW_USER_PAGE,
+    GO_TO_USER_PAGE
 }

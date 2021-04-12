@@ -6,8 +6,11 @@ import by.logvin.onlinestore.dao.DAOProvider;
 import by.logvin.onlinestore.dao.exception.DAOException;
 import by.logvin.onlinestore.service.AttributeService;
 import by.logvin.onlinestore.service.exception.ServiceException;
+import by.logvin.onlinestore.service.util.AttributeParser;
+import by.logvin.onlinestore.service.util.impl.AttributeParserImpl;
 import org.apache.log4j.Logger;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -70,5 +73,22 @@ public class AttributeServiceImpl implements AttributeService {
             throw new ServiceException("Error during attributes deleting", e);
         }
         return isDelete;
+    }
+
+    @Override
+    public String getParsedAttributes(int productID) throws ServiceException {
+        AttributeDAO attributeDAO = DAOProvider.getInstance().getAttributeDAO();
+        List<Attribute> attributes = null;
+        String parsedAttributes = null;
+        AttributeParser parser = new AttributeParserImpl();
+        try {
+            attributes = attributeDAO.getAttributes(productID);
+            parsedAttributes = parser.unparse(attributes);
+            logger.info("Attributes get: " + parsedAttributes);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during attributes getting", e);
+            throw new ServiceException("Error during attributes getting", e);
+        }
+        return parsedAttributes;
     }
 }

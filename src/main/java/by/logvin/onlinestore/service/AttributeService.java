@@ -13,5 +13,7 @@ public interface AttributeService {
 
     List<Attribute> getAttributes(int productID) throws ServiceException;
 
+    String getParsedAttributes(int productID) throws ServiceException;
+
     boolean deleteAttributes(int productID) throws ServiceException;
 }
