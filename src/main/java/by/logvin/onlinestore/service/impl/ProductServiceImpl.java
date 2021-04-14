@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
         ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
         boolean isEdit = false;
         try {
-            isEdit = productDAO.add(name, price, description, quantity, photoURL, categoryID, attributes);
+            isEdit = productDAO.edit(productID, name, price, description, quantity, photoURL, categoryID, attributes);
             logger.info("Product edits: " + isEdit);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during product editing", e);

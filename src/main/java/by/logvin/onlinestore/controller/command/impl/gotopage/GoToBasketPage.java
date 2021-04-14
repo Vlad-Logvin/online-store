@@ -2,6 +2,9 @@ package by.logvin.onlinestore.controller.command.impl.gotopage;
 
 import by.logvin.onlinestore.bean.User;
 import by.logvin.onlinestore.controller.command.Command;
+import by.logvin.onlinestore.controller.message.GoToPage;
+import by.logvin.onlinestore.controller.message.Message;
+import by.logvin.onlinestore.controller.util.ExistenceProvider;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import jakarta.servlet.RequestDispatcher;
@@ -15,25 +18,26 @@ import java.io.IOException;
 public class GoToBasketPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        if (!ExistenceProvider.getInstance().getUserExistence().isUserExist(request, response)) {
+            return;
+        }
+
         HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.sendRedirect("Controller?command=go_to_authorization_page&message=session_has_timed_out");
-        } else {
-            User user = (User) session.getAttribute("user");
-            if (user == null) {
-                response.sendRedirect("Controller?command=go_to_authorization_page&message=not_authorized_user");
-            } else if (!"admin".equals(((User) session.getAttribute("user")).getUserDetails().getRole())) {
-                response.sendRedirect("Controller?command=go_to_main_page");
-            } else {
-                try {
-                    //request.setAttribute("action", "addProduct");
-                    request.setAttribute("categories", ServiceProvider.getInstance().getCategoryService().getCategories());
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productForm.jsp");
-                    requestDispatcher.forward(request, response);
-                } catch (ServiceException e) {
-                    response.sendRedirect("Controller?command=go_to_main_page&message=somethingWrong");
-                }
-            }
+        String sessionMessage = (String) session.getAttribute(Message.MESSAGE);
+        if (sessionMessage != null) {
+            request.setAttribute(Message.MESSAGE, sessionMessage);
+            session.removeAttribute(Message.MESSAGE);
+        }
+
+        try {
+            request.setAttribute(Message.ATTRIBUTE_PRODUCTS, ServiceProvider.getInstance().getBasketService().getBasketByUserID(((User)session.getAttribute(Message.ATTRIBUTE_USER)).getId()).getProducts());
+            request.getSession(false).setAttribute(Message.ATTRIBUTE_URL, GoToPage.REDIRECT_BASKET_PAGE);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_BASKET_PAGE);
+            requestDispatcher.forward(request, response);
+        } catch (ServiceException e) {
+            request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }
     }
 }

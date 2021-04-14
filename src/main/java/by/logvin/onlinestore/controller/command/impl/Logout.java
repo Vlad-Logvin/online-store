@@ -2,6 +2,8 @@ package by.logvin.onlinestore.controller.command.impl;
 
 import by.logvin.onlinestore.controller.command.Command;
 
+import by.logvin.onlinestore.controller.message.GoToPage;
+import by.logvin.onlinestore.controller.message.Message;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 //import javax.servlet.RequestDispatcher;
@@ -16,12 +18,11 @@ public class Logout implements Command {
         HttpSession session = request.getSession(true);
         session.removeAttribute("user");
 
-        String redirectURL = (String) session.getAttribute("url");
+        String redirectURL = (String) session.getAttribute(Message.ATTRIBUTE_URL);
 
         if (redirectURL == null) {
-            redirectURL = "Controller?command=go_to_main_page";
+            redirectURL = GoToPage.REDIRECT_MAIN_PAGE;
         }
-
 
         response.sendRedirect(redirectURL);
     }

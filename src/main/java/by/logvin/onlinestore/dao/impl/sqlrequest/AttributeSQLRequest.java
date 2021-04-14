@@ -10,8 +10,8 @@ public final class AttributeSQLRequest {
                     "FROM attributes a " +
                     "WHERE a.a_product_id=?";
     public static final String deleteAttributesByProductID =
-            "DELETE FROM attributes a" +
-                    "WHERE a.a_product_id=?";
+            "DELETE FROM attributes " +
+                    "WHERE a_product_id=?";
 
 
     private AttributeSQLRequest() {

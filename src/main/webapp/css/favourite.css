@@ -3,7 +3,7 @@
 }
 
 .max-height-p {
-    max-height: 3rem;
+    max-height: 5rem;
     overflow-y: auto;
     text-overflow: ellipsis;
 }

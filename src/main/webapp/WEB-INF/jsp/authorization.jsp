@@ -35,32 +35,40 @@
 <c:import url="temp/header.jsp"/>
 
 
-<form class="form-signin">
+<div class="form-signin">
     <img class="mb-4" src="img/bylogvin_logotype.png" alt="logotype bylogvin" width="200" height="200">
     <h1 class="h3 mb-3 font-weight-normal">${please_log_in}</h1>
 
-    <c:if test="${param.get('message')=='wrong'}">
-        <div class="red-text">
-            <c:out value="${wrong_email_or_password}"/>
-        </div>
+    <p>
+        <c:if test="${requestScope.message!=null}">
+            <fmt:message bundle="${loc}" key="${requestScope.message}" var="message"/>
+        <c:if test="${requestScope.message.contains('local.error')}">
+    <div class="red-text">
+            ${message}
+    </div>
     </c:if>
-
-    <c:if test="${param.get('message')=='correct'}">
+    <c:if test="${requestScope.message.contains('local.correct')}">
         <div class="green-text">
-            <c:out value="${successful_registration}"/>
+                ${message}
         </div>
     </c:if>
+    </c:if>
+    </p>
 
-    <label for="inputEmail" class="sr-only">${email}</label>
-    <input type="text" name="email" value="" id="inputEmail" class="form-control" placeholder="${email}" autofocus="">
-    <label for="inputPassword" class="sr-only">${password}</label>
-    <input type="password" name="password" value="" id="inputPassword" class="form-control" placeholder="${password}">
-    <button class="btn btn-lg btn-primary btn-block" name="command" value="sign_in" type="submit">${sign_in}</button>
-    <button class="btn btn-lg btn-primary btn-block" type="submit"><a class="reg"
-                                                                      href="Controller?command=go_to_registration_page">${sign_up}</a>
-    </button>
+    <form action="Controller" method="post">
+        <label for="inputEmail" class="sr-only">${email}</label>
+        <input type="text" name="email" value="" id="inputEmail" class="form-control" placeholder="${email}" autofocus="" required>
+        <label for="inputPassword" class="sr-only">${password}</label>
+        <input type="password" name="password" value="" id="inputPassword" class="form-control" placeholder="${password}" required>
+        <button class="btn btn-lg btn-primary btn-block" name="command" value="sign_in" type="submit">${sign_in}</button>
+    </form>
+    <form action="Controller" method="get">
+        <button class="btn btn-lg btn-primary btn-block margin-top-1rem" type="submit" name="command" value="go_to_registration_page">${sign_up}
+        </button>
+    </form>
 
-</form>
+
+</div>
 
 <c:import url="temp/footer.jsp"/>
 

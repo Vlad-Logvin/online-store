@@ -13,6 +13,12 @@
 <fmt:setBundle basename="local" var="loc"/>
 <fmt:message bundle="${loc}" key="local.registration" var="registration"/>
 <fmt:message bundle="${loc}" key="local.registration.email" var="email"/>
+<fmt:message bundle="${loc}" key="local.registration.first_name" var="first_name"/>
+<fmt:message bundle="${loc}" key="local.registration.last_name" var="last_name"/>
+<fmt:message bundle="${loc}" key="local.registration.sign_up" var="sign_up"/>
+<fmt:message bundle="${loc}" key="local.registration.date" var="date"/>
+<fmt:message bundle="${loc}" key="local.registration.not_necessary" var="not_necessary"/>
+<fmt:message bundle="${loc}" key="local.registration.password" var="password"/>
 
 
 <html>
@@ -32,76 +38,44 @@
     <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="img/bylogvin_logotype.png" alt="bylogvin logotype" width="72"
              height="72">
-        <h1 class="h2">Регистрация</h1>
+        <h1 class="h2">${registration}</h1>
         <div class="row g-3">
-            <c:if test="${param.get('message')!=null}">
-                <font color="red">
-                    <c:out value="Wrong registration! Check data!"/>
-                </font>
-            </c:if>
 
             <div>
                 <form class="needs-validation" novalidate="">
                     <div class="row g-3">
                         <div class="col-sm-6">
-                            <label for="firstName" class="form-label">Имя</label>
+                            <label for="firstName" class="form-label">${first_name}</label>
                             <input type="text" class="form-control" id="firstName" placeholder="" name="firstName" value="">
                         </div>
 
                         <div class="col-sm-6">
-                            <label for="lastName" class="form-label">Фамилия</label>
+                            <label for="lastName" class="form-label">${last_name}</label>
                             <input type="text" class="form-control" id="lastName" placeholder="" name="lastName" value="">
                         </div>
 
 
                         <div class="col-12">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label">${email}</label>
                             <input type="email" class="form-control" id="email" name="email" value="" placeholder="you@example.com">
                         </div>
 
                         <div class="col-12">
-                            <label for="password" class="form-label">Пароль</label>
+                            <label for="password" class="form-label">${password}</label>
                             <input type="password" class="form-control" id="password" name="password" value="" placeholder="">
                         </div>
 
 
                         <div class="col-12">
-                            <label for="zip" class="form-label">Дата рождения
-                                <span class="text-muted">(необязательно)</span></label>
+                            <label for="zip" class="form-label">${date}
+                                <span class="text-muted">${not_necessary}</span></label>
                             <input type="date" class="form-control" id="zip" name="dateOfBirth" value="" placeholder="">
                         </div>
                     </div>
 
                     <hr class="my-4">
 
-                    <h4 class="mb-3">Карта <span class="text-muted">(необязательно)</span></h4>
-
-                    <div class="row gy-3">
-                        <div class="col-md-6">
-                            <label for="cc-name" class="form-label">Имя на карте</label>
-                            <input type="text" class="form-control" id="cc-name" name="cardholder" value="" placeholder="">
-                            <small class="text-muted">Полное имя, как показано на карточке</small>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="cc-number" class="form-label">Номер кредитной карты</label>
-                            <input type="text" class="form-control" id="cc-number" name="number" value="" placeholder="">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="cc-expiration" class="form-label">Срок действия</label>
-                            <input type="text" class="form-control" id="cc-expiration" name="validityPeriod" value="" placeholder="">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="cc-cvv" class="form-label">CVV</label>
-                            <input type="text" class="form-control" id="cc-cvv" name="authenticationCode" value="" placeholder="">
-                        </div>
-                    </div>
-
-                    <hr class="my-4">
-
-                    <button class="btn btn-primary btn-lg btn-block" type="submit" name="command" value="sign_up">Зарегистрироваться</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" name="command" value="sign_up">${sign_up}</button>
                 </form>
             </div>
         </div>

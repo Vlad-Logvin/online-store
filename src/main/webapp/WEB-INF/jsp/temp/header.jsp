@@ -29,15 +29,16 @@
 <fmt:message bundle="${loc}" key="local.header.computers" var="computers"/>
 <fmt:message bundle="${loc}" key="local.header.laptops" var="laptops"/>
 <fmt:message bundle="${loc}" key="local.header.settings" var="settings"/>
-<fmt:message bundle="${loc}" key="local.authorization.sign_in" var="signIn"/>
-<fmt:message bundle="${loc}" key="local.authorization.sign_up" var="signUp"/>
-<fmt:message bundle="${loc}" key="local.authorization.logout" var="logout"/>
-<fmt:message bundle="${loc}" key="local.header.orders" var="orders"/>
+<fmt:message bundle="${loc}" key="local.header.sign_in" var="signIn"/>
+<fmt:message bundle="${loc}" key="local.header.sign_up" var="signUp"/>
+<fmt:message bundle="${loc}" key="local.header.logout" var="logout"/>
 <fmt:message bundle="${loc}" key="local.header.basket" var="basket"/>
 <fmt:message bundle="${loc}" key="local.header.favourites" var="favourites"/>
 <fmt:message bundle="${loc}" key="local.header.add_product" var="add_product"/>
 <fmt:message bundle="${loc}" key="local.header.users" var="users"/>
 <fmt:message bundle="${loc}" key="local.header.all_orders" var="all_orders"/>
+<fmt:message bundle="${loc}" key="local.header.my_orders" var="my_orders"/>
+<fmt:message bundle="${loc}" key="local.header.add_card" var="add_card"/>
 
 <html>
 <head>
@@ -191,12 +192,12 @@
                                 </c:if>
                                 <li>
                                     <a class="dropdown-item" href="Controller?command=go_to_orders_page&order=${user.id}">
-                                            ${orders}
+                                            ${my_orders}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="Controller?command=go_to_add_card_form_page&userID=${user.id}">
-                                            Добавить карту
+                                            ${add_card}
                                     </a>
                                 </li>
                                 <li><a class="dropdown-item"

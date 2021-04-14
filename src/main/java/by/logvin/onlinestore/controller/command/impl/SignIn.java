@@ -2,17 +2,15 @@ package by.logvin.onlinestore.controller.command.impl;
 
 import by.logvin.onlinestore.bean.User;
 import by.logvin.onlinestore.controller.command.Command;
+import by.logvin.onlinestore.controller.message.GoToPage;
+import by.logvin.onlinestore.controller.message.Message;
 import by.logvin.onlinestore.service.ServiceProvider;
-import by.logvin.onlinestore.service.UserService;
 import by.logvin.onlinestore.service.exception.ServiceException;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import org.apache.log4j.Logger;
-//import javax.servlet.RequestDispatcher;
-//import javax.servlet.ServletException;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 public class SignIn implements Command {
@@ -20,35 +18,25 @@ public class SignIn implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String email = request.getParameter(Message.ATTRIBUTE_EMAIL);
+        String password = request.getParameter(Message.ATTRIBUTE_PASSWORD);
 
-        logger.info("email + " + email);
-        logger.info("password + " + password);
-
-        ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        UserService userService = serviceProvider.getUserService();
         User user = null;
-        String redirectURL = null;
-        HttpSession session = null;
+        HttpSession session = request.getSession(true);
         try {
-            user = userService.signIn(email, password);
-            logger.info(user);
+            user = ServiceProvider.getInstance().getUserService().signIn(email, password);
             if (user == null) {
-                redirectURL = "Controller?command=go_to_authorization_page&message=wrong";
+                session.setAttribute(Message.MESSAGE, Message.ERROR_SIGN_IN);
+            } else if (!user.getUserDetails().isAccess()) {
+                session.setAttribute(Message.MESSAGE, Message.BLOCKED_USER);
             } else {
-                session = request.getSession();
-                session.setAttribute("user", user);
-                redirectURL = "Controller?command=go_to_main_page";
+                session.setAttribute(Message.ATTRIBUTE_USER, user);
+                session.setAttribute(Message.MESSAGE, Message.CORRECT_SIGN_IN);
             }
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         } catch (ServiceException e) {
-            logger.info("ServiceException", e);
-            redirectURL = "Controller?command=go_to_error_page";
+            request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }
-
-        logger.info(user);
-
-
-        response.sendRedirect(redirectURL);
     }
 }

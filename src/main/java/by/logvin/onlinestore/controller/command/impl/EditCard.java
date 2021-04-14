@@ -2,6 +2,9 @@ package by.logvin.onlinestore.controller.command.impl;
 
 import by.logvin.onlinestore.bean.User;
 import by.logvin.onlinestore.controller.command.Command;
+import by.logvin.onlinestore.controller.message.GoToPage;
+import by.logvin.onlinestore.controller.message.Message;
+import by.logvin.onlinestore.controller.util.ExistenceProvider;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import jakarta.servlet.ServletException;
@@ -14,35 +17,31 @@ import java.io.IOException;
 public class EditCard implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(!ExistenceProvider.getInstance().getUserExistence().isUserExist(request, response)){
+            return;
+        }
         HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.sendRedirect("Controller?command=go_to_authorization_page&message=session_has_timed_out");
-            return;
-        }
-        User user = (User) session.getAttribute("user");
-
-        if (user == null) {
-            response.sendRedirect("Controller?command=go_to_authorization_page&message=not_authorized_user");
-            return;
-        }
+        User user = (User) session.getAttribute(Message.ATTRIBUTE_USER);
         try {
-            boolean isEdit = ServiceProvider.getInstance().getCardService().editCardInfo(
-                    Integer.parseInt(request.getParameter("cardID")),
-                    Long.parseLong(request.getParameter("cardNumber")),
-                    Integer.parseInt(request.getParameter("cardValidityPeriod")),
-                    Integer.parseInt(request.getParameter("cardAuthenticationCode")),
-                    request.getParameter("cardCardholder")
-            );
-            if (isEdit) {
-                session.setAttribute("user", ServiceProvider.getInstance().getUserService().signIn(user.getEmail(), user.getPassword()));
-                response.sendRedirect(session.getAttribute("url") + "&message=correctEditingCard");
+            if (ServiceProvider.getInstance().getCardService().editCardInfo(
+                    Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CARD_ID)),
+                    Long.parseLong(request.getParameter(Message.ATTRIBUTE_CARD_NUMBER)),
+                    Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CARD_VALIDITY_PERIOD)),
+                    Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CARD_AUTHENTICATION_CODE)),
+                    request.getParameter(Message.ATTRIBUTE_CARD_CARDHOLDER)))
+            {
+                session.setAttribute(Message.ATTRIBUTE_USER, ServiceProvider.getInstance().getUserService().signIn(user.getEmail(), user.getPassword()));
+                session.setAttribute(Message.MESSAGE, Message.CORRECT_CARD_EDITING);
             } else {
-                response.sendRedirect(session.getAttribute("url") + "&message=wrongEditing");
+                session.setAttribute(Message.MESSAGE, Message.ERROR_CARD_EDITING);
             }
+            response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         } catch (ServiceException e) {
-            response.sendRedirect(session.getAttribute("url") + "&message=somethingWrong");
+            request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         } catch (NumberFormatException e) {
-            response.sendRedirect("Controller?command=go_to_add_card_form_page&message=wrongInput");
+            request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_CARD_DATA_INPUT);
+            response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         }
 
     }

@@ -7,6 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="local" var="loc"/>
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -35,6 +38,12 @@
                     </c:if>
                 </p>
                 <p class="lead text-muted">Role: ${user.userDetails.role}</p>
+                <p>
+                    <c:if test="${requestScope.message!=null}">
+                        <fmt:message bundle="${loc}" key="${requestScope.message}" var="message"/>
+                        <c:out value="${message}"/>
+                    </c:if>
+                </p>
             </div>
         </div>
     </section>

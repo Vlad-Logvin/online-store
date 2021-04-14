@@ -5,6 +5,10 @@
     margin: auto;
 }
 
+.margin-top-1rem {
+    margin-top: 1rem;
+}
+
 *, ::after, ::before {
     box-sizing: border-box;
 }

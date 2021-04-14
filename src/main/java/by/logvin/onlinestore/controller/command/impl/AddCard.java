@@ -2,8 +2,12 @@ package by.logvin.onlinestore.controller.command.impl;
 
 import by.logvin.onlinestore.bean.User;
 import by.logvin.onlinestore.controller.command.Command;
+import by.logvin.onlinestore.controller.message.GoToPage;
+import by.logvin.onlinestore.controller.message.Message;
+import by.logvin.onlinestore.controller.util.ExistenceProvider;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
+import by.logvin.onlinestore.service.util.impl.AttributeParserImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,35 +21,30 @@ public class AddCard implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.sendRedirect("Controller?command=go_to_authorization_page&message=session_has_timed_out");
+        if (!ExistenceProvider.getInstance().getUserExistence().isUserExist(request, response)) {
             return;
         }
-        User user = (User) session.getAttribute("user");
-
-        if (user == null) {
-            response.sendRedirect("Controller?command=go_to_authorization_page&message=not_authorized_user");
-            return;
-        }
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(Message.ATTRIBUTE_USER);
         try {
-            boolean isAdd = ServiceProvider.getInstance().getCardService().addCard(
-                    Long.parseLong(request.getParameter("cardNumber")),
-                    Integer.parseInt(request.getParameter("cardValidityPeriod")),
-                    Integer.parseInt(request.getParameter("cardAuthenticationCode")),
-                    request.getParameter("cardCardholder"),
-                    user.getId()
-            );
-            if (isAdd) {
-                session.setAttribute("user", ServiceProvider.getInstance().getUserService().signIn(user.getEmail(), user.getPassword()));
-                response.sendRedirect(session.getAttribute("url") + "&message=correctAddingCard");
+            if (ServiceProvider.getInstance().getCardService().addCard(
+                    Long.parseLong(request.getParameter(Message.ATTRIBUTE_CARD_NUMBER)),
+                    Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CARD_VALIDITY_PERIOD)),
+                    Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CARD_AUTHENTICATION_CODE)),
+                    request.getParameter(Message.ATTRIBUTE_CARD_CARDHOLDER),
+                    user.getId())) {
+                session.setAttribute(Message.ATTRIBUTE_USER, ServiceProvider.getInstance().getUserService().signIn(user.getEmail(), user.getPassword()));
+                session.setAttribute(Message.MESSAGE, Message.CORRECT_ADDING_CARD);
             } else {
-                response.sendRedirect(session.getAttribute("url") + "&message=wrongAdding");
+                session.setAttribute(Message.MESSAGE, Message.ERROR_ADDING_CARD);
             }
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         } catch (ServiceException e) {
-            response.sendRedirect(session.getAttribute("url") + "&message=somethingWrong");
+            request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
+            response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         } catch (NumberFormatException e) {
-            response.sendRedirect("Controller?command=go_to_add_card_form_page&message=wrongInput");
+            request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_CARD_DATA_INPUT);
+            response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         }
 
     }

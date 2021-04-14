@@ -49,23 +49,23 @@
                             <div class="card-body max-height-div">
                                 <p class="card-text max-height-p">${product.description}</p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div>
+                                    <div class="full-width">
                                         <form action="Controller" method="get">
                                             <input type="hidden" name="command" value="go_to_show_product_page"/>
                                             <input type="hidden" name="productID" value="${product.id}"/>
-                                            <input class="btn btn-sm btn-outline-secondary" type="submit"
+                                            <input class="full-width btn btn-sm btn-outline-secondary" type="submit"
                                                    value="Просмотреть"/>
                                         </form>
                                         <form action="Controller" method="post">
                                             <input type="hidden" name="command" value="add_to_basket"/>
                                             <input type="hidden" name="productID" value="${product.id}"/>
-                                            <input type="submit" class="btn btn-sm btn-outline-secondary"
+                                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
                                                    value="В корзину"/>
                                         </form>
                                         <form action="Controller" method="post">
                                             <input type="hidden" name="command" value="add_to_favourite"/>
                                             <input type="hidden" name="productID" value="${product.id}"/>
-                                            <input type="submit" class="btn btn-sm btn-outline-secondary"
+                                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
                                                    value="В избранное"/>
                                         </form>
                                         <c:if test="${sessionScope.user.userDetails.role=='admin'}">
@@ -73,7 +73,7 @@
                                                 <input type="hidden" name="command"
                                                        value="go_to_edit_product_form_page"/>
                                                 <input type="hidden" name="productID" value="${product.id}"/>
-                                                <input type="submit" class="btn btn-sm btn-outline-secondary"
+                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
                                                        value="Редактировать"/>
                                             </form>
                                         </c:if>

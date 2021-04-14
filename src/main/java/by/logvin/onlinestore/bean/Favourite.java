@@ -1,5 +1,7 @@
 package by.logvin.onlinestore.bean;
 
+import org.apache.log4j.Logger;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,13 @@ public class Favourite implements Serializable {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+
+    // FIXME: 14.04.2021
+    Logger logger = Logger.getLogger(Favourite.class);
+    public boolean isProductContains(Product product) {
+        return products != null ? products.contains(product) : false;
     }
 
     public void setProducts(List<Product> products) {

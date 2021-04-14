@@ -2,6 +2,8 @@ package by.logvin.onlinestore.controller.command.impl.gotopage;
 
 import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.controller.command.Command;
+import by.logvin.onlinestore.controller.message.GoToPage;
+import by.logvin.onlinestore.controller.message.Message;
 import by.logvin.onlinestore.service.ProductService;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
@@ -17,30 +19,27 @@ import java.io.IOException;
 public class GoToShowProductPage implements Command {
     private final static Logger logger = Logger.getLogger(GoToShowProductPage.class);
 
-    // FIXME: 12.04.2021
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int productID = 0;
-        try {
-            productID = Integer.parseInt(request.getParameter("productID"));
-        } catch (NumberFormatException e){
-            //log
-            response.sendRedirect("Controller?command=go_to_main_page&message=error_product_id");
+        HttpSession session = request.getSession(true);
+        String sessionMessage = (String) session.getAttribute(Message.MESSAGE);
+        if (sessionMessage != null) {
+            request.setAttribute(Message.MESSAGE, sessionMessage);
+            session.removeAttribute(Message.MESSAGE);
         }
-
-        ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        ProductService productService = serviceProvider.getProductService();
-
-        Product product = null;
         try {
-            product = productService.takeByProductID(productID);
-            request.setAttribute("product", product);
-
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/showProduct.jsp");
+            Product product = ServiceProvider.getInstance().getProductService().takeByProductID(Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID)));
+            request.setAttribute(Message.ATTRIBUTE_PRODUCT, product);
+            session.setAttribute(Message.ATTRIBUTE_URL, GoToPage.REDIRECT_SHOW_PRODUCT_PAGE + Message.PARAMETER_PRODUCT_ID + product.getId());
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_SHOW_PRODUCT_PAGE);
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
-            //log
-            response.sendRedirect("Controller?command=go_to_main_page&message=server_error");
+            session.setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
+        } catch (NumberFormatException e) {
+            session.setAttribute(Message.MESSAGE, Message.WRONG_PRODUCT_INPUT);
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
+            return;
         }
 
     }

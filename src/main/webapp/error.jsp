@@ -12,6 +12,7 @@
 </head>
 <body>
     <h1>error!</h1>
+    Something wrong with server! Oah no!!!
     <a href="Controller?command=go_to_main_page">main page</a>
 </body>
 </html>

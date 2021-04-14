@@ -29,8 +29,8 @@ public final class ProductSQLRequest {
                     "FROM products p " +
                     "WHERE p.p_name=? AND p.p_category_id=?";
     public static final String deleteProductByID =
-            "DELETE FROM products p " +
-                    "WHERE p.p_id=?";
+            "DELETE FROM products " +
+                    "WHERE p_id=?";
     public static final String updateProductByID =
             "UPDATE products p " +
                     "SET p.p_name=?, p.p_price=?, p.p_quantity=?, p.p_description=?, p.p_category_id=?, p.p_photo_url=? " +

@@ -6,3 +6,15 @@ form {
     text-align: -webkit-match-parent;
     margin: initial;
 }
+
+.green-text {
+    color: green;
+}
+
+.red-text {
+    color: red;
+}
+
+.full-width {
+    width: 100%;
+}

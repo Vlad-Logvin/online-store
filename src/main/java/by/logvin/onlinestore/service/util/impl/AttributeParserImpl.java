@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AttributeParserImpl implements AttributeParser {
-    private final static Pattern ATTRIBUTE_REGEX = Pattern.compile("(\\S*)\\s*=\\s*(\\S*)");
+    private final static Pattern ATTRIBUTE_REGEX = Pattern.compile("'(.+?)'\\s*=\\s*'(.+?)'");
 
     @Override
     public Map<String, String> parse(String input) {
@@ -29,7 +29,7 @@ public class AttributeParserImpl implements AttributeParser {
         }
         StringBuilder attributeBuilder = new StringBuilder();
         for (Attribute a : attributes) {
-            attributeBuilder.append(a.getName() + "=" + a.getValue() + " ");
+            attributeBuilder.append("\'" + a.getName()  + "\'" +" = " + "\'" +a.getValue() + "\'" + " ");
 
         }
         return attributeBuilder.toString();

@@ -1,9 +1,9 @@
 package by.logvin.onlinestore.controller.command.impl.gotopage;
 
-import by.logvin.onlinestore.bean.User;
 import by.logvin.onlinestore.controller.command.Command;
-import by.logvin.onlinestore.service.ServiceProvider;
-import by.logvin.onlinestore.service.exception.ServiceException;
+import by.logvin.onlinestore.controller.message.GoToPage;
+import by.logvin.onlinestore.controller.message.Message;
+import by.logvin.onlinestore.controller.util.ExistenceProvider;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,19 +15,21 @@ import java.io.IOException;
 public class GoToUserPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.sendRedirect("Controller?command=go_to_authorization_page&message=session_has_timed_out");
-        } else {
-            User user = (User) session.getAttribute("user");
-            if (user == null) {
-                response.sendRedirect("Controller?command=go_to_authorization_page&message=not_authorized_user");
-            } else {
 
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/user.jsp");
-                requestDispatcher.forward(request, response);
-
-            }
+        if(!ExistenceProvider.getInstance().getUserExistence().isUserExist(request, response)){
+            return;
         }
+        HttpSession session = request.getSession(false);
+
+        String sessionMessage = (String) session.getAttribute(Message.MESSAGE);
+        if (sessionMessage != null) {
+            request.setAttribute(Message.MESSAGE, sessionMessage);
+            session.removeAttribute(Message.MESSAGE);
+        }
+
+        request.getSession(false).setAttribute(Message.ATTRIBUTE_URL, GoToPage.REDIRECT_USER_PAGE);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_USER_PAGE);
+        requestDispatcher.forward(request, response);
+
     }
 }

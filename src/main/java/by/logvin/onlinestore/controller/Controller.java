@@ -6,10 +6,6 @@ import by.logvin.onlinestore.controller.command.CommandProvider;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import org.apache.log4j.Logger;
-//import javax.servlet.ServletException;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Controller extends HttpServlet {

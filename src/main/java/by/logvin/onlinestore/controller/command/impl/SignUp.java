@@ -3,6 +3,8 @@ package by.logvin.onlinestore.controller.command.impl;
 import by.logvin.onlinestore.bean.RegistrationInfo;
 import by.logvin.onlinestore.controller.command.Command;
 
+import by.logvin.onlinestore.controller.message.GoToPage;
+import by.logvin.onlinestore.controller.message.Message;
 import by.logvin.onlinestore.dao.UserDAO;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.UserService;
@@ -14,6 +16,7 @@ import org.apache.log4j.Logger;
 //import javax.servlet.ServletException;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
+import javax.print.attribute.standard.MediaSize;
 import java.io.IOException;
 
 public class SignUp implements Command {
@@ -21,7 +24,6 @@ public class SignUp implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String redirectURL = null;
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -29,34 +31,23 @@ public class SignUp implements Command {
         String lastName = request.getParameter("lastName");
         String dateOfBirth = request.getParameter("dateOfBirth");
 
-        logger.info("email: " + email);
-        logger.info("password: " + password);
-        logger.info("firstName: " + firstName);
-        logger.info("lastName: " + lastName);
-        logger.info("dateOfBirth: " + dateOfBirth);
-
-        ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        UserService userService = serviceProvider.getUserService();
-
+        HttpSession session = request.getSession(true);
         try {
-            boolean isSignUp = userService.signUp(new RegistrationInfo(
-                    email,
-                    password,
-                    firstName,
-                    lastName,
-                    dateOfBirth
-            ));
-            logger.info("isSignUp: " + isSignUp);
-            if (isSignUp) {
-                redirectURL = "Controller?command=go_to_authorization_page&message=correct";
-            } else {
-                redirectURL = "Controller?command=go_to_registration_page&message=wrongRegistration";
+            if(ServiceProvider.getInstance().getUserService().signUp(new RegistrationInfo(
+                    request.getParameter("email"),
+                    request.getParameter("password"),
+                    request.getParameter("firstName"),
+                    request.getParameter("lastName"),
+                    request.getParameter("dateOfBirth")
+            ))){
+                session.setAttribute(Message.MESSAGE, Message.CORRECT_SIGN_UP);
+            }else {
+                session.setAttribute(Message.MESSAGE, Message.ERROR_SIGN_UP);
             }
+            response.sendRedirect(GoToPage.REDIRECT_AUTHORIZATION_PAGE);
         } catch (ServiceException e) {
-            logger.info("ServiceException: ", e);
-            redirectURL = "Controller?command=go_to_registration_page&message=wrongRegistration";
+            request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }
-
-        response.sendRedirect(redirectURL);
     }
 }

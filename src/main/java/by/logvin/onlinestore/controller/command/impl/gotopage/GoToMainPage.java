@@ -3,15 +3,13 @@ package by.logvin.onlinestore.controller.command.impl.gotopage;
 import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.controller.command.Command;
 
+import by.logvin.onlinestore.controller.message.GoToPage;
+import by.logvin.onlinestore.controller.message.Message;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import org.apache.log4j.Logger;
-//import javax.servlet.RequestDispatcher;
-//import javax.servlet.ServletException;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,21 +19,25 @@ public class GoToMainPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        session.setAttribute("url", "Controller?command=go_to_main_page");
+        session.setAttribute(Message.ATTRIBUTE_URL, GoToPage.REDIRECT_MAIN_PAGE);
 
-        String forwardURL = "/WEB-INF/jsp/main.jsp";
+        String sessionMessage = (String) session.getAttribute(Message.MESSAGE);
+        if (sessionMessage != null) {
+            request.setAttribute(Message.MESSAGE, sessionMessage);
+            session.removeAttribute(Message.MESSAGE);
+        }
 
         List<Product> products = null;
         try {
             products = ServiceProvider.getInstance().getProductService().take(9);
         } catch (ServiceException e) {
-            logger.info("ServiceException", e);
-            forwardURL = "error.jsp";
+            response.sendRedirect(GoToPage.REDIRECT_ERROR_PAGE);
+            return;
         }
 
-        request.setAttribute("products", products);
+        request.setAttribute(Message.ATTRIBUTE_PRODUCTS, products);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(forwardURL);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(GoToPage.FORWARD_MAIN_PAGE);
         dispatcher.forward(request, response);
     }
 }
