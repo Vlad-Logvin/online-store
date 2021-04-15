@@ -7,7 +7,6 @@ import by.logvin.onlinestore.controller.message.Message;
 import by.logvin.onlinestore.controller.util.ExistenceProvider;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
-import by.logvin.onlinestore.service.util.impl.AttributeParserImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

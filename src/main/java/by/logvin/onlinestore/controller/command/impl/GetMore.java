@@ -1,6 +1,5 @@
 package by.logvin.onlinestore.controller.command.impl;
 
-import by.logvin.onlinestore.bean.User;
 import by.logvin.onlinestore.controller.command.Command;
 import by.logvin.onlinestore.controller.message.GoToPage;
 import by.logvin.onlinestore.controller.message.Message;
@@ -14,28 +13,31 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-public class AddToBasket implements Command {
+public class GetMore implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (!ExistenceProvider.getInstance().getUserExistence().isUserExist(request, response)) {
+        if (!ExistenceProvider.getInstance().getUserExistence().isAdmin(request, response)) {
             return;
         }
+
         HttpSession session = request.getSession(false);
-        User user = (User) session.getAttribute(Message.ATTRIBUTE_USER);
+
+
         try {
-            if (ServiceProvider.getInstance().getBasketService().addProduct(user.getUserDetails().getBasket().getId(), Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID)))) {
-                session.setAttribute(Message.MESSAGE, Message.CORRECT_ADD_TO_BASKET);
-                user.getUserDetails().getBasket().getProducts().add(ServiceProvider.getInstance().getProductService().takeByProductID(Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID))));
+            if (ServiceProvider.getInstance().getProductService().orderProduct(
+                    Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID)),
+                    Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_QUANTITY))
+            )) {
+                session.setAttribute(Message.MESSAGE, Message.CORRECT_PRODUCT_GET_MORE);
             } else {
-                session.setAttribute(Message.MESSAGE, Message.ERROR_ADD_TO_BASKET);
+                session.setAttribute(Message.MESSAGE, Message.ERROR_PRODUCT_GET_MORE);
             }
-            response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
+            response.sendRedirect(GoToPage.REDIRECT_SHOW_PRODUCT_PAGE + Message.PARAMETER_PRODUCT_ID + Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID)));
         } catch (ServiceException e) {
-            //log
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         } catch (NumberFormatException e) {
-            request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_PRODUCT_INPUT);
+            request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_PRODUCT_DATA_INPUT);
             response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         }
 

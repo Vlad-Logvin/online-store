@@ -39,7 +39,15 @@ public final class ProductSQLRequest {
             "SELECT * " +
                     "FROM products p " +
                     "WHERE p.p_category_id=?";
+    public static final String updateProductQuantityByID =
+            "UPDATE products p " +
+                    "SET p.p_quantity=? " +
+                    "WHERE p.p_id=?";
 
+    public static final String updateIncreaseProductQuantityByID =
+            "UPDATE products p " +
+                    "SET p.p_quantity=p.p_quantity+? " +
+                    "WHERE p.p_id=?";
 
     private ProductSQLRequest() {
 

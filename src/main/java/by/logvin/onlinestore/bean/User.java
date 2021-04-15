@@ -2,7 +2,6 @@ package by.logvin.onlinestore.bean;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class User implements Serializable {

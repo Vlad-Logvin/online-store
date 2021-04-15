@@ -185,13 +185,13 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="Controller?command=go_to_order_page&order=0">
+                                        <a class="dropdown-item" href="Controller?command=go_to_order_page&userID=0">
                                                 ${all_orders}
                                         </a>
                                     </li>
                                 </c:if>
                                 <li>
-                                    <a class="dropdown-item" href="Controller?command=go_to_orders_page&order=${user.id}">
+                                    <a class="dropdown-item" href="Controller?command=go_to_order_page&userID=${user.id}">
                                             ${my_orders}
                                     </a>
                                 </li>

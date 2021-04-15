@@ -15,21 +15,21 @@ public class CommandProvider {
         commands.put(CommandName.ADD_PRODUCT, new AddProduct());
         commands.put(CommandName.ADD_TO_BASKET, new AddToBasket());
         commands.put(CommandName.ADD_TO_FAVOURITE, new AddToFavourite());
-        commands.put(CommandName.BLOCK_USER, new BlockUser());
         commands.put(CommandName.CHANGE_LOCALE, new ChangeLocale());
         commands.put(CommandName.DELETE_CARD, new DeleteCard());
         commands.put(CommandName.DELETE_PRODUCT, new DeleteProduct());
         commands.put(CommandName.EDIT_CARD, new EditCard());
         commands.put(CommandName.EDIT_PRODUCT, new EditProduct());
         commands.put(CommandName.EDIT_PROFILE, new EditProfile());
-        commands.put(CommandName.ISSUE_ADMIN, new IssueAdmin());
+        commands.put(CommandName.GET_MORE, new GetMore());
+        commands.put(CommandName.MANAGE_ACCESS, new ManageAccess());
+        commands.put(CommandName.MANAGE_ROLE, new ManageRole());
         commands.put(CommandName.LOGOUT, new Logout());
         commands.put(CommandName.MAKE_ORDER, new MakeOrder());
         commands.put(CommandName.REMOVE_FROM_BASKET, new RemoveFromBasket());
         commands.put(CommandName.REMOVE_FROM_FAVOURITE, new RemoveFromFavourite());
         commands.put(CommandName.SIGN_IN, new SignIn());
         commands.put(CommandName.SIGN_UP, new SignUp());
-        commands.put(CommandName.UNBLOCK_USER, new UnblockUser());
 
         commands.put(CommandName.GO_TO_ADD_CARD_FORM_PAGE, new GoToAddCardFormPage());
         commands.put(CommandName.GO_TO_ADD_PRODUCT_FORM_PAGE, new GoToAddProductFormPage());

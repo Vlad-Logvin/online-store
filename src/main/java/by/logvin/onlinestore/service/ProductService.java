@@ -1,6 +1,5 @@
 package by.logvin.onlinestore.service;
 
-import by.logvin.onlinestore.bean.Attribute;
 import by.logvin.onlinestore.bean.Category;
 import by.logvin.onlinestore.bean.Criteria;
 import by.logvin.onlinestore.bean.Product;
@@ -27,4 +26,8 @@ public interface ProductService {
     boolean remove(int productID) throws ServiceException;
 
     boolean edit(int productID, String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws ServiceException;
+
+    boolean buyProduct(int productID, int quantity) throws ServiceException;
+
+    boolean orderProduct(int productID, int quantity) throws ServiceException;
 }

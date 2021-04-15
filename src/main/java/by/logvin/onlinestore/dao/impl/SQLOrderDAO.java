@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
-import java.util.Date;
+import java.sql.Date;
 
 public class SQLOrderDAO implements OrderDAO {
 
@@ -28,7 +28,7 @@ public class SQLOrderDAO implements OrderDAO {
         List<Order> orders = null;
         Map<Integer, List<Product>> products = null;
         Map<Integer, Integer> cards = null;
-        Map<Integer, Date> dateOfPurchases = null;
+        Map<Integer, Timestamp> dateOfPurchases = null;
         Map<Integer, Double> grandTotal = null;
         try {
             preparedStatement = connection.prepareStatement(OrderSQLRequest.selectAllOrdersByUserID);
@@ -48,7 +48,7 @@ public class SQLOrderDAO implements OrderDAO {
                 if (grandTotal == null) {
                     grandTotal = new HashMap<>();
                 }
-                Integer orderID = resultSet.getInt("o_order_id");
+                Integer orderID = resultSet.getInt("o_id");
                 List<Product> productList = null;
                 if (products.containsKey(orderID)) {
                     productList = products.get(orderID);
@@ -61,7 +61,7 @@ public class SQLOrderDAO implements OrderDAO {
                     cards.put(orderID, resultSet.getInt("o_card_id"));
                 }
                 if (!dateOfPurchases.containsKey(orderID)) {
-                    dateOfPurchases.put(orderID, resultSet.getDate("o_date_of_purchase"));
+                    dateOfPurchases.put(orderID, resultSet.getTimestamp("o_date_of_purchase"));
                 }
                 if (!grandTotal.containsKey(orderID)) {
                     grandTotal.put(orderID, resultSet.getDouble("o_grand_total"));
@@ -111,7 +111,7 @@ public class SQLOrderDAO implements OrderDAO {
     }
 
     @Override
-    public boolean makeOrder(int userID, Map<Product, Integer> products, int cardID, Date dateOfPurchase) throws DAOException {
+    public boolean makeOrder(int userID, Map<Product, Integer> products, int cardID, Timestamp dateOfPurchase) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;
@@ -122,13 +122,14 @@ public class SQLOrderDAO implements OrderDAO {
             preparedStatement.setInt(1, userID);
             preparedStatement.setDouble(2, getGrandTotal(products));
             preparedStatement.setInt(3, cardID);
-            preparedStatement.setDate(4, (java.sql.Date) dateOfPurchase);
+            preparedStatement.setTimestamp(4,  dateOfPurchase);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
             preparedStatement = connection.prepareStatement(OrderSQLRequest.selectLastOrderID);
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
+            resultSet.next();
             int orderID = resultSet.getInt("o_id");
             preparedStatement = connection.prepareStatement(OrderSQLRequest.insertProductToOrder);
             preparedStatement.setInt(1, orderID);
@@ -181,7 +182,7 @@ public class SQLOrderDAO implements OrderDAO {
         List<Order> orders = null;
         Map<Integer, List<Product>> products = null;
         Map<Integer, Integer> cards = null;
-        Map<Integer, Date> dateOfPurchases = null;
+        Map<Integer, Timestamp> dateOfPurchases = null;
         Map<Integer, Double> grandTotal = null;
         try {
             statement = connection.createStatement();
@@ -200,20 +201,22 @@ public class SQLOrderDAO implements OrderDAO {
                 if (grandTotal == null) {
                     grandTotal = new HashMap<>();
                 }
-                Integer orderID = resultSet.getInt("o_order_id");
+                Integer orderID = resultSet.getInt("o_id");
                 List<Product> productList = null;
                 if (products.containsKey(orderID)) {
                     productList = products.get(orderID);
                 } else {
                     productList = new ArrayList<>();
                 }
-                productList.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("op_product_id")));
+                Product product = ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("op_product_id"));
+                product.setQuantity(resultSet.getInt("op_quantity"));
+                productList.add(product);
                 products.put(orderID, productList);
                 if (!cards.containsKey(orderID)) {
                     cards.put(orderID, resultSet.getInt("o_card_id"));
                 }
                 if (!dateOfPurchases.containsKey(orderID)) {
-                    dateOfPurchases.put(orderID, resultSet.getDate("o_date_of_purchase"));
+                    dateOfPurchases.put(orderID, resultSet.getTimestamp("o_date_of_purchase"));
                 }
                 if (!grandTotal.containsKey(orderID)) {
                     grandTotal.put(orderID, resultSet.getDouble("o_grand_total"));
@@ -235,7 +238,7 @@ public class SQLOrderDAO implements OrderDAO {
             }
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
-            throw new DAOException("Error prepared statement updating or setting data", e);
+            throw new DAOException("Error prepared statement updating", e);
         } catch (ServiceException e) {
             logger.error("ServiceException was thrown due to an error during getting product|card information by product|card id", e);
             throw new DAOException("Error product|card information by product|card id", e);

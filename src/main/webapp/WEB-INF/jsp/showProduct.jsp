@@ -36,44 +36,51 @@
             <img alt="${product.name}" title="${product.name}" src="${product.photoURL}">
         </div>
         <div class="product-card-container-right">
-            <div class="product-card-container-right-section simple">
-                <div class="price-block  js-price-block">
-                    <div class="price-block-left">
-                        <span class="_price">${product.price}$</span>
+            <div class="product-card-container-right-section simple full-width">
+                <div class="price-block  js-price-block full-width">
+                    <div class="price-block-left full-width">
+                        <span class="_price full-width">${product.price}$</span>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="price-block-left full-width">
+                        <span class="_price text-muted full-width">Осталось: ${product.quantity}</span>
                     </div>
                 </div>
             </div>
-            <form action="Controller" method="post">
+            <form action="Controller" method="post" class="full-width">
                 <input type="hidden" name="productID" value="${product.id}"/>
                 <c:if test="${sessionScope.user.userDetails.basket.isProductContains(product)}">
-                    <button class="btn btn-outline-secondary enter" type="submit" name="command"
+                    <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
                             value="remove_from_basket">Удалить из корзины
                     </button>
                 </c:if>
                 <c:if test="${!sessionScope.user.userDetails.basket.isProductContains(product)}">
-                    <button class="btn btn-outline-secondary enter" type="submit" name="command"
+                    <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
                             value="add_to_basket">Положить в корзину
                     </button>
                 </c:if>
 
                 <c:if test="${sessionScope.user.userDetails.favourite.isProductContains(product)}">
-                    <button class="btn btn-outline-secondary enter" type="submit" name="command"
+                    <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
                             value="remove_from_favourite">Убрать из избранных
                     </button>
                 </c:if>
                 <c:if test="${!sessionScope.user.userDetails.favourite.isProductContains(product)}">
-                    <button class="btn btn-outline-secondary enter" type="submit" name="command"
+                    <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
                             value="add_to_favourite">Добавить в избранные
                     </button>
                 </c:if>
                 <c:if test="${sessionScope.user.userDetails.role=='admin'}">
-                    <button class="btn btn-outline-secondary enter" type="submit" name="command"
+                    <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
                             value="edit_product">Редактировать
                     </button>
-                    <button class="btn btn-outline-secondary enter" type="submit" name="command"
+                    <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
                             value="get_more">Дозаказать
                     </button>
-                    <button class="btn btn-outline-secondary enter" type="submit" name="command"
+                    <input class="full-width" type="number" name="productQuantity" value="1" min="1">
+                    <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
                             value="delete_product">Удалить
                     </button>
                 </c:if>

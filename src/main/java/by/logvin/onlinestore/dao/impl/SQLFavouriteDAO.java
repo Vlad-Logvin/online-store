@@ -42,7 +42,9 @@ public class SQLFavouriteDAO implements FavouriteDAO {
                 if (products == null) {
                     products = new ArrayList<>();
                 }
-                products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("fp_product_id")));
+                if(resultSet.getInt("fp_product_id") != 0) {
+                    products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("fp_product_id")));
+                }
             }
             if (favouriteID != 0) {
                 favourite = new Favourite(

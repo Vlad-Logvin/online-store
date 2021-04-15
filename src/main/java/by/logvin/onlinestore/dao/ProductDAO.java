@@ -25,4 +25,8 @@ public interface ProductDAO {
     boolean remove(int productID) throws DAOException;
 
     boolean edit(int productID, String name, double price, String description, int quantity, String photoURL, int categoryID, Map<String, String> attributes) throws DAOException;
+
+    boolean buyProduct(int productID, int quantity) throws DAOException;
+
+    boolean orderProduct(int productID, int quantity) throws DAOException;
 }

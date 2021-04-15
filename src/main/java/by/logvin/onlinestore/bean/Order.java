@@ -1,7 +1,8 @@
 package by.logvin.onlinestore.bean;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,13 +13,13 @@ public class Order implements Serializable {
     private int id;
     private double grandTotal;
     private Card card;
-    private Date dateOfPurchase;
+    private Timestamp dateOfPurchase;
     private List<Product> products;
 
     public Order() {
     }
 
-    public Order(int id, double grandTotal, Card card, Date dateOfPurchase, List<Product> products) {
+    public Order(int id, double grandTotal, Card card, Timestamp dateOfPurchase, List<Product> products) {
         this.id = id;
         this.grandTotal = grandTotal;
         this.card = card;
@@ -50,11 +51,11 @@ public class Order implements Serializable {
         this.card = card;
     }
 
-    public Date getDateOfPurchase() {
+    public Timestamp getDateOfPurchase() {
         return dateOfPurchase;
     }
 
-    public void setDateOfPurchase(Date dateOfPurchase) {
+    public void setDateOfPurchase(Timestamp dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
     }
 

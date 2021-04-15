@@ -10,6 +10,8 @@ import by.logvin.onlinestore.service.exception.ServiceException;
 import by.logvin.onlinestore.service.validator.ValidatorProvider;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
     private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
 
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean editUserInfo(int userID, String email, String password, String firstName, String lastName, String dateOfBirth) throws ServiceException {
-        if (ValidatorProvider.getInstance().getAuthorizationValidator().validate(
+        if (!ValidatorProvider.getInstance().getAuthorizationValidator().validate(
                 new RegistrationInfo(email, password, firstName, lastName, dateOfBirth))) {
             logger.info("Not valid user editing data");
             return false;
@@ -72,5 +74,47 @@ public class UserServiceImpl implements UserService {
         }
 
         return isEdit;
+    }
+
+    @Override
+    public boolean editUserRole(int userID, int roleID) throws ServiceException {
+        UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
+        boolean isEdit = false;
+        try {
+            isEdit = userDAO.editUserRole(userID, roleID);
+            logger.info("User edits: " + isEdit);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during user editing", e);
+            throw new ServiceException("Error during user editing", e);
+        }
+        return isEdit;
+    }
+
+    @Override
+    public boolean editUserAccess(int userID, int accessID) throws ServiceException {
+        UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
+        boolean isEdit = false;
+        try {
+            isEdit = userDAO.editUserAccess(userID, accessID);
+            logger.info("User edits: " + isEdit);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during user editing", e);
+            throw new ServiceException("Error during user editing", e);
+        }
+        return isEdit;
+    }
+
+    @Override
+    public List<User> getUsers() throws ServiceException {
+        UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
+        List<User> users = null;
+        try {
+            users = userDAO.getUsers();
+            logger.info("Users get: " + users);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during users getting", e);
+            throw new ServiceException("Error during users getting", e);
+        }
+        return users;
     }
 }

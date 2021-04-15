@@ -38,6 +38,30 @@
                     </c:if>
                 </p>
                 <p class="lead text-muted">Role: ${user.userDetails.role}</p>
+
+                <div class="text-center justify-content-between align-items-center">
+                    <div class="btn-group-lg">
+
+
+                        <form action="Controller" method="get">
+                            <input type="hidden" name="command" value="go_to_edit_user_form_page">
+                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary" value="Изменить данные">
+                        </form>
+
+
+                        <form action="Controller" method="get">
+                            <input type="hidden" name="command" value="go_to_add_card_form_page">
+                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary" value="Добавить карту">
+                        </form>
+
+                        <form action="Controller" method="post">
+                            <input type="hidden" name="command" value="logout">
+                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary" value="Выйти">
+                        </form>
+
+
+                    </div>
+                </div>
                 <p>
                     <c:if test="${requestScope.message!=null}">
                         <fmt:message bundle="${loc}" key="${requestScope.message}" var="message"/>

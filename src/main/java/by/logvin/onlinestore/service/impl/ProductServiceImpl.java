@@ -20,6 +20,20 @@ public class ProductServiceImpl implements ProductService {
     private final static Logger logger = Logger.getLogger(ProductServiceImpl.class);
 
     @Override
+    public boolean orderProduct(int productID, int quantity) throws ServiceException {
+        ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
+        boolean isOrder = false;
+        try {
+            isOrder = productDAO.orderProduct(productID, quantity);
+            logger.info("Product ordering: " + isOrder);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during product ordering", e);
+            throw new ServiceException("Error during product ordering", e);
+        }
+        return isOrder;
+    }
+
+    @Override
     public Product takeByProductID(int productID) throws ServiceException {
         ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
         Product product = null;
@@ -145,5 +159,19 @@ public class ProductServiceImpl implements ProductService {
             throw new ServiceException("Error during products taking", e);
         }
         return products;
+    }
+
+    @Override
+    public boolean buyProduct(int productID, int quantity) throws ServiceException {
+        ProductDAO productDAO = DAOProvider.getInstance().getProductDAO();
+        boolean isBuy = false;
+        try {
+            isBuy = productDAO.buyProduct(productID, quantity);
+            logger.info("Product buying: " + isBuy);
+        } catch (DAOException e) {
+            logger.error("DAOException was thrown during product buying", e);
+            throw new ServiceException("Error during product buying", e);
+        }
+        return isBuy;
     }
 }

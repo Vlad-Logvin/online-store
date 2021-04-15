@@ -24,8 +24,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
-    <title>Favourite</title>
-    <link rel="stylesheet" href="css/favourite.css" type="text/css">
+    <title>Cart</title>
+    <link rel="stylesheet" href="css/basket.css" type="text/css">
 </head>
 <body>
 <c:import url="temp/header.jsp"/>
@@ -44,81 +44,78 @@
             </div>
         </div>
     </section>
+    <form class="text-center container bg-light" action="Controller" method="get">
+        <button class="btn btn-sm btn-outline-secondary full-width" type="submit" name="command"
+                value="go_to_add_card_form_page">
+            Добавить карту
+        </button>
+    </form>
 
     <form action="Controller" method="post" class="album py-5 bg-light">
+        <c:if test="${sessionScope.user.userDetails.cards!=null}">
+            <c:forEach var="card" items="${sessionScope.user.userDetails.cards}">
+                <div class="col-lg-4 container bg-light margin-top-3em">
+                    <input class="form-check-input" type="radio" name="cardID" value="${card.id}" checked required/>
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <h3 class="mb-0">Банковская карточка</h3>
+                            <p class="card-text mb-auto">Cardholder: ${card.cardholder}</p>
+                            <p class="card-text mb-auto">Номер карты: ${card.number}</p>
+                            <p class="card-text mb-auto">Валидационный
+                                период: ${card.validityPeriod}</p>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </c:if>
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <c:if test="${requestScope.products==null}">
+
+                <c:if test="${requestScope.products==null || requestScope.products.size()==0}">
                     ${no_product_in_basket}
                 </c:if>
-                <c:forEach var="product" items="${requestScope.products}">
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <h5 class="font-weight-light text-center">${product.name}</h5>
-                            <input type="hidden" name="productID" value="${product.id}"/>
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                 xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder: ${product.name}"
-                                 preserveAspectRatio="xMidYMid slice" role="img" focusable="false"><title>
-                                    ${product.name}</title>
-                                <image width="100%" height="100%" href="${product.photoURL}"></image>
-                                <p>Цена: ${product.price}$ </p>
-                                <input type="number" max="${product.quantity}" min="0" class="full-width" name="productQuantity" value=""/>
-                            </svg>
 
-                            <div class="card-body max-height-div">
-                                <p class="card-text max-height-p">${product.description}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="full-width">
-                                        <!--<form action="Controller" method="get">
-                                            <input type="hidden" name="command" value="go_to_show_product_page"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <input class="btn btn-sm btn-outline-secondary full-width" type="submit"
-                                                   value="${show}"/>
-                                        </form>
-                                        <form action="Controller" method="post">
-                                            <input type="hidden" name="command" value="remove_from_basket"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <c:if test="${sessionScope.user.userDetails.basket.isProductContains(product)}">
-                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                       value="${remove_from_basket}"/>
-                                            </c:if>
+                <c:if test="${requestScope.products!=null && requestScope.products.size()!=0}">
+                    <c:forEach var="product" items="${requestScope.products}">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <h5 class="font-weight-light text-center">${product.name}</h5>
+                                <input type="hidden" name="productID" value="${product.id}"/>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                     xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder: ${product.name}"
+                                     preserveAspectRatio="xMidYMid slice" role="img" focusable="false"><title>
+                                        ${product.name}</title>
+                                    <image width="100%" height="100%" href="${product.photoURL}"></image>
+                                    <p class="text-center">Цена: ${product.price}$ </p>
+                                    <p class="text-center">Количество: ${product.quantity} </p>
+                                    <input type="number" max="${product.quantity}" min="0" class="full-width"
+                                           name="productQuantity" value="0" required/>
+                                </svg>
 
-                                        </form>
-                                        <form action="Controller" method="post">
-                                            <input type="hidden" name="command" value="add_to_favourite"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <c:if test="${!sessionScope.user.userDetails.favourite.isProductContains(product)}">
-                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                       value="${add_to_favourite}"/>
-                                            </c:if>
-                                        </form>
+                                <div class="card-body max-height-div">
+                                    <p class="card-text max-height-p">${product.description}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="full-width">
+                                            <button class="full-width btn btn-sm btn-outline-secondary" name="command"
+                                                    value="remove_from_basket" type="submit">
+                                                    ${remove_from_basket}
+                                            </button>
+                                        </div>
 
-                                        <form action="Controller" method="post">
-                                            <input type="hidden" name="command" value="remove_from_favourite"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                   value="${remove_from_favourite}"/>
-                                        </form>
-                                        <c:if test="${sessionScope.user.userDetails.role=='admin'}">
-                                            <form action="Controller" method="get">
-                                                <input type="hidden" name="command"
-                                                       value="go_to_edit_product_form_page"/>
-                                                <input type="hidden" name="productID" value="${product.id}"/>
-                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                       value="${edit}"/>
-                                            </form>
-                                        </c:if>
-                                        -->
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </c:forEach>
+                    </c:forEach>
+                </c:if>
             </div>
-            <button class="text-center container bg-light" type="submit" name="command" value="make_order">Сделать заказ</button>
+
+            <c:if test="${requestScope.products!=null && requestScope.products.size()!=0}">
+                <button class="text-center container bg-light margin-top-3em" type="submit" name="command" value="make_order">Сделать
+                    заказ
+                </button>
+            </c:if>
         </div>
     </form>
 

@@ -13,8 +13,6 @@
 <fmt:setBundle basename="local" var="loc"/>
 <fmt:message bundle="${loc}" key="local.authorization.sign_in" var="sign_in"/>
 <fmt:message bundle="${loc}" key="local.authorization.sign_up" var="sign_up"/>
-<fmt:message bundle="${loc}" key="local.authorization.successful_registration" var="successful_registration"/>
-<fmt:message bundle="${loc}" key="local.authorization.wrong_email_or_password" var="wrong_email_or_password"/>
 <fmt:message bundle="${loc}" key="local.authorization.email" var="email"/>
 <fmt:message bundle="${loc}" key="local.authorization.password" var="password"/>
 <fmt:message bundle="${loc}" key="local.authorization.please_log_in" var="please_log_in"/>

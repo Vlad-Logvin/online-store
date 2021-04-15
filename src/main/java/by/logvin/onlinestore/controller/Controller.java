@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class Controller extends HttpServlet {
     private final static Logger logger = Logger.getLogger(Controller.class);
+    private final static String COMMAND = "command";
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +33,7 @@ public class Controller extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String name = request.getParameter("command");
+        String name = request.getParameter(COMMAND);
         Command command = provider.takeCommand(name);
         command.execute(request, response);
     }

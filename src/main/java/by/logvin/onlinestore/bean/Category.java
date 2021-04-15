@@ -1,7 +1,6 @@
 package by.logvin.onlinestore.bean;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 public class Category implements Serializable {

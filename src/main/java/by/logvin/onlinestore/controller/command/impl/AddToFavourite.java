@@ -28,6 +28,7 @@ public class AddToFavourite implements Command {
         try {
             if (ServiceProvider.getInstance().getFavouriteService().addProduct(user.getUserDetails().getFavourite().getId(), Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID)))) {
                 session.setAttribute(Message.MESSAGE, Message.CORRECT_ADD_TO_FAVOURITE);
+                user.getUserDetails().getFavourite().getProducts().add(ServiceProvider.getInstance().getProductService().takeByProductID(Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID))));
             } else {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_ADD_TO_FAVOURITE);
             }

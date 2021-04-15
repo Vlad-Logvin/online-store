@@ -48,70 +48,75 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <c:if test="${requestScope.products==null}">
+                <c:if test="${requestScope.products==null || requestScope.products.size()==0}">
                     ${no_product_in_favourite}
                 </c:if>
-                <c:forEach var="product" items="${requestScope.products}">
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <h5 class="font-weight-light text-center">${product.name}</h5>
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                 xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder: ${product.name}"
-                                 preserveAspectRatio="xMidYMid slice" role="img" focusable="false"><title>
-                                    ${product.name}</title>
-                                <image width="100%" height="100%" href="${product.photoURL}"></image>
-                            </svg>
+                <c:if test="${requestScope.products!=null && requestScope.products.size()!=0}">
+                    <c:forEach var="product" items="${requestScope.products}">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <h5 class="font-weight-light text-center">${product.name}</h5>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                     xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder: ${product.name}"
+                                     preserveAspectRatio="xMidYMid slice" role="img" focusable="false"><title>
+                                        ${product.name}</title>
+                                    <image width="100%" height="100%" href="${product.photoURL}"></image>
+                                </svg>
 
-                            <div class="card-body max-height-div">
-                                <p class="card-text max-height-p">${product.description}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="full-width">
-                                        <form action="Controller" method="get">
-                                            <input type="hidden" name="command" value="go_to_show_product_page"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <input class="btn btn-sm btn-outline-secondary full-width" type="submit"
-                                                   value="${show}"/>
-                                        </form>
-                                        <form action="Controller" method="post">
-                                            <input type="hidden" name="command" value="add_to_basket"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <c:if test="${!sessionScope.user.userDetails.basket.isProductContains(product)}">
-                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                       value="${add_to_basket}"/>
-                                            </c:if>
-                                        </form>
-                                        <form action="Controller" method="post">
-                                            <input type="hidden" name="command" value="remove_from_basket"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <c:if test="${sessionScope.user.userDetails.basket.isProductContains(product)}">
-                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                       value="${remove_from_basket}"/>
-                                            </c:if>
-
-                                        </form>
-                                        <form action="Controller" method="post">
-                                            <input type="hidden" name="command" value="remove_from_favourite"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                   value="${remove_from_favourite}"/>
-                                        </form>
-                                        <c:if test="${sessionScope.user.userDetails.role=='admin'}">
+                                <div class="card-body max-height-div">
+                                    <p class="card-text max-height-p">${product.description}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="full-width">
                                             <form action="Controller" method="get">
-                                                <input type="hidden" name="command"
-                                                       value="go_to_edit_product_form_page"/>
+                                                <input type="hidden" name="command" value="go_to_show_product_page"/>
+                                                <input type="hidden" name="productID" value="${product.id}"/>
+                                                <input class="btn btn-sm btn-outline-secondary full-width" type="submit"
+                                                       value="${show}"/>
+                                            </form>
+                                            <form action="Controller" method="post">
+                                                <input type="hidden" name="command" value="add_to_basket"/>
+                                                <input type="hidden" name="productID" value="${product.id}"/>
+                                                <c:if test="${!sessionScope.user.userDetails.basket.isProductContains(product)}">
+                                                    <input type="submit"
+                                                           class="full-width btn btn-sm btn-outline-secondary"
+                                                           value="${add_to_basket}"/>
+                                                </c:if>
+                                            </form>
+                                            <form action="Controller" method="post">
+                                                <input type="hidden" name="command" value="remove_from_basket"/>
+                                                <input type="hidden" name="productID" value="${product.id}"/>
+                                                <c:if test="${sessionScope.user.userDetails.basket.isProductContains(product)}">
+                                                    <input type="submit"
+                                                           class="full-width btn btn-sm btn-outline-secondary"
+                                                           value="${remove_from_basket}"/>
+                                                </c:if>
+
+                                            </form>
+                                            <form action="Controller" method="post">
+                                                <input type="hidden" name="command" value="remove_from_favourite"/>
                                                 <input type="hidden" name="productID" value="${product.id}"/>
                                                 <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                       value="${edit}"/>
+                                                       value="${remove_from_favourite}"/>
                                             </form>
-                                        </c:if>
-                                    </div>
+                                            <c:if test="${sessionScope.user.userDetails.role=='admin'}">
+                                                <form action="Controller" method="get">
+                                                    <input type="hidden" name="command"
+                                                           value="go_to_edit_product_form_page"/>
+                                                    <input type="hidden" name="productID" value="${product.id}"/>
+                                                    <input type="submit"
+                                                           class="full-width btn btn-sm btn-outline-secondary"
+                                                           value="${edit}"/>
+                                                </form>
+                                            </c:if>
+                                        </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </c:forEach>
+                    </c:forEach>
+                </c:if>
             </div>
         </div>
     </div>

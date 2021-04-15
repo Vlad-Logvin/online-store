@@ -1,6 +1,5 @@
 package by.logvin.onlinestore.controller.command.impl.gotopage;
 
-import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.bean.User;
 import by.logvin.onlinestore.controller.command.Command;
 import by.logvin.onlinestore.controller.message.GoToPage;
@@ -15,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
 
 public class GoToFavouritePage implements Command {
     @Override

@@ -9,7 +9,8 @@ import by.logvin.onlinestore.service.OrderService;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean makeOrder(int userID, Map<Product, Integer> products, int cardID, Date dateOfPurchase) throws ServiceException {
+    public boolean makeOrder(int userID, Map<Product, Integer> products, int cardID, Timestamp dateOfPurchase) throws ServiceException {
         OrderDAO orderDAO = DAOProvider.getInstance().getOrderDAO();
         boolean isMade = false;
         try {

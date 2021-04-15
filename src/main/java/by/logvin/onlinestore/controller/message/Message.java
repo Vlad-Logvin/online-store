@@ -26,7 +26,16 @@ public final class Message {
     public static final String ERROR_SIGN_IN = "local.error.sign_in";
     public static final String ERROR_SIGN_UP = "local.error.sign_up";
     public static final String BLOCKED_USER = "local.error.blocked_user";
+    public static final String ERROR_MAKE_ORDER = "local.error.make_order";
+    public static final String WRONG_MAKE_ORDER_INPUT = "local.error.make_order_input";
+    public static final String ERROR_REMOVE_FROM_BASKET = "local.error.remove_from_basket";
+    public static final String ERROR_PRODUCT_GET_MORE = "local.error.get_more";
+    public static final String WRONG_USER_ID_INPUT = "local.error.user_id_input";
+    public static final String ERROR_EDIT_PROFILE = "local.error.edit_profile";
 
+
+    public static final String CORRECT_PRODUCT_GET_MORE = "local.correct.get_more";
+    public static final String CORRECT_MAKE_ORDER = "local.correct.make_order";
     public static final String CORRECT_ADDING_CARD = "local.correct.add_card";
     public static final String CORRECT_ADDING_PRODUCT = "local.correct.add_product";
     public static final String CORRECT_ADD_TO_FAVOURITE = "local.correct.add_to_favourite";
@@ -38,8 +47,12 @@ public final class Message {
     public static final String CORRECT_REMOVE_FROM_FAVOURITE = "local.correct.remove_from_favourite";
     public static final String CORRECT_SIGN_IN = "local.correct.sign_in";
     public static final String CORRECT_SIGN_UP = "local.correct.sign_up";
+    public static final String CORRECT_REMOVE_FROM_BASKET = "local.correct.remove_from_basket";
+    public static final String CORRECT_EDIT_PROFILE = "local.correct.edit_profile";
+
 
     public static final String ATTRIBUTE_USER = "user";
+    public static final String ATTRIBUTE_USERS = "users";
     public static final String ATTRIBUTE_ADMIN = "admin";
     public static final String ATTRIBUTE_URL = "url";
     public static final String ATTRIBUTE_ACTION = "action";
@@ -70,6 +83,15 @@ public final class Message {
     public static final String ATTRIBUTE_PRODUCT_PHOTO_URL = "productPhotoURL";
     public static final String ATTRIBUTE_EMAIL = "email";
     public static final String ATTRIBUTE_PASSWORD = "password";
+    public static final String ATTRIBUTE_BASKET = "basket";
+    public static final String ATTRIBUTE_ACCESS = "access";
+    public static final String ATTRIBUTE_ROLE = "role";
+    public static final String ATTRIBUTE_FIRST_NAME = "firstName";
+    public static final String ATTRIBUTE_LAST_NAME = "lastName";
+    public static final String ATTRIBUTE_DATE_OF_BIRTH = "dataOfBirth";
+
+    public static final String ATTRIBUTE_USER_ID = "userID";
+    public static final String ATTRIBUTE_ORDERS = "orders";
 
     public static final String PARAMETER_CATEGORY_ID = "&categoryID=";
     public static final String PARAMETER_PRODUCT_ID = "&productID=";

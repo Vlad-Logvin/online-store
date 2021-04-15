@@ -1,11 +1,9 @@
 package by.logvin.onlinestore.controller.command.impl;
 
-import by.logvin.onlinestore.bean.Category;
 import by.logvin.onlinestore.controller.command.Command;
 import by.logvin.onlinestore.controller.message.GoToPage;
 import by.logvin.onlinestore.controller.message.Message;
 import by.logvin.onlinestore.controller.util.ExistenceProvider;
-import by.logvin.onlinestore.service.ProductService;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import by.logvin.onlinestore.service.util.impl.AttributeParserImpl;

@@ -43,7 +43,9 @@ public class SQLBasketDAO implements BasketDAO {
                 if (products == null) {
                     products = new ArrayList<>();
                 }
-                products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("pb_product_id")));
+                if(resultSet.getInt("pb_product_id") != 0){
+                    products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("pb_product_id")));
+                }
             }
             if (basketID != 0) {
                 basket = new Basket(

@@ -5,12 +5,13 @@ import by.logvin.onlinestore.bean.Order;
 import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.service.exception.ServiceException;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 public interface OrderService {
-    boolean makeOrder(int userID, Map<Product, Integer> products, int cardID, Date dateOfPurchase) throws ServiceException;
+    boolean makeOrder(int userID, Map<Product, Integer> products, int cardID, Timestamp dateOfPurchase) throws ServiceException;
 
     List<Order> getOrderLog() throws ServiceException;
 

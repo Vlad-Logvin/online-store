@@ -11,6 +11,7 @@ import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SQLUserDAO implements UserDAO {
@@ -147,7 +148,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setString(5, dateOfBirth);
             preparedStatement.setInt(6, userID);
             numberOfUpdateLines = preparedStatement.executeUpdate();
-            logger.info("User was updated");
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
             logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
             throw new DAOException("Error prepared statement updating or setting data", e);
@@ -166,6 +167,116 @@ public class SQLUserDAO implements UserDAO {
         }
 
         return numberOfUpdateLines != 0;
+    }
+
+    @Override
+    public boolean editUserRole(int userID, int roleID) throws DAOException {
+        Connection connection = getConnection();
+        logger.info("Connection established");
+        PreparedStatement preparedStatement = null;
+        int numberOfUpdateLines = 0;
+
+        try {
+            preparedStatement = connection.prepareStatement(UserSQLRequest.updateUserRole);
+            preparedStatement.setInt(1, roleID);
+            preparedStatement.setInt(2, userID);
+            numberOfUpdateLines = preparedStatement.executeUpdate();
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
+        } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
+        }
+
+        return numberOfUpdateLines != 0;
+    }
+
+    @Override
+    public boolean editUserAccess(int userID, int accessID) throws DAOException {
+        Connection connection = getConnection();
+        logger.info("Connection established");
+        PreparedStatement preparedStatement = null;
+        int numberOfUpdateLines = 0;
+
+        try {
+            preparedStatement = connection.prepareStatement(UserSQLRequest.updateUserAccess);
+            preparedStatement.setInt(1, accessID);
+            preparedStatement.setInt(2, userID);
+            numberOfUpdateLines = preparedStatement.executeUpdate();
+            logger.info("Request (" + preparedStatement.toString() + ") was completed");
+        } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
+        }
+
+        return numberOfUpdateLines != 0;
+    }
+
+    @Override
+    public List<User> getUsers() throws DAOException {
+        Connection connection = getConnection();
+        logger.info("Connection established");
+        Statement statement = null;
+        ResultSet userResultSet = null;
+        List<User> users = null;
+        try {
+            statement = connection.createStatement();
+            userResultSet = statement.executeQuery(UserSQLRequest.selectUserEmailAndPassword);
+            logger.info("Request (" + statement.toString() + ") completed");
+            while (userResultSet.next()) {
+                if (users == null) {
+                    users = new ArrayList<>();
+                }
+                users.add(signIn(userResultSet.getString("u.u_email"), userResultSet.getString("u.u_password")));
+            }
+        } catch (SQLException e) {
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            throw new DAOException("Error prepared statement updating or setting data", e);
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Prepared statement has been already closed", e);
+            }
+            try {
+                if (userResultSet != null) {
+                    userResultSet.close();
+                }
+            } catch (SQLException e) {
+                logger.error("Result set has been already closed", e);
+            }
+            if (connection != null) {
+                removeConnection(connection);
+                logger.info("Connection is broken");
+            }
+        }
+
+        return users;
     }
 
     private Connection getConnection() throws DAOException {
