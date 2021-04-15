@@ -11,7 +11,6 @@ import java.util.concurrent.Executor;
 
 
 public final class ConnectionPool {
-    // FIXME: 10.04.2021
     private final static Logger logger = Logger.getLogger(ConnectionPool.class);
 
     private static final ConnectionPool instance = new ConnectionPool();

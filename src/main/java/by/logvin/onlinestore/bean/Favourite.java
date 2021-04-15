@@ -39,9 +39,6 @@ public class Favourite implements Serializable {
         return products;
     }
 
-
-    // FIXME: 14.04.2021
-    Logger logger = Logger.getLogger(Favourite.class);
     public boolean isProductContains(Product product) {
         return products != null ? products.contains(product) : false;
     }
