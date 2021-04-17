@@ -14,12 +14,7 @@ public class Logout implements Command {
         HttpSession session = request.getSession(true);
         session.removeAttribute(Message.ATTRIBUTE_USER);
 
-        String redirectURL = (String) session.getAttribute(Message.ATTRIBUTE_URL);
-
-        if (redirectURL == null) {
-            redirectURL = GoToPage.REDIRECT_MAIN_PAGE;
-        }
-
-        response.sendRedirect(redirectURL);
+        session.setAttribute(Message.MESSAGE, Message.LOGOUT);
+        response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
     }
 }

@@ -38,7 +38,6 @@ public class AuthorizationValidatorImpl implements AuthorizationValidator {
         logger.info(password + " password: " + password.matches(PASSWORD_REGEX));
         logger.info(firstName + " first name: " + firstName.matches(FIRST_NAME_REGEX));
         logger.info(lastName + " last name: " + lastName.matches(LAST_NAME_REGEX));
-        logger.info(dateOfBirth + " date of birth: " + isDateOfBirthValid(dateOfBirth));
         if (dateOfBirth == "") {
             info.setDateOfBirth(null);
         }

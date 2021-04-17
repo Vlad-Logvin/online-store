@@ -49,6 +49,7 @@ public final class Message {
     public static final String CORRECT_SIGN_UP = "local.correct.sign_up";
     public static final String CORRECT_REMOVE_FROM_BASKET = "local.correct.remove_from_basket";
     public static final String CORRECT_EDIT_PROFILE = "local.correct.edit_profile";
+    public static final String LOGOUT = "local.correct.logout";
 
 
     public static final String ATTRIBUTE_USER = "user";
@@ -95,6 +96,7 @@ public final class Message {
 
     public static final String PARAMETER_CATEGORY_ID = "&categoryID=";
     public static final String PARAMETER_PRODUCT_ID = "&productID=";
+
 
     private Message() {
 
