@@ -32,7 +32,7 @@ public class SQLBasketDAO implements BasketDAO {
         List<Product> products = null;
         int basketID = 0;
         try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.selectBasketByUserID);
+            preparedStatement = connection.prepareStatement(BasketSQLRequest.SELECT_BASKET_BY_USER_ID);
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -89,7 +89,7 @@ public class SQLBasketDAO implements BasketDAO {
         int numberOfUpdatedLines = 0;
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.addProductToBasket);
+            preparedStatement = connection.prepareStatement(BasketSQLRequest.ADD_PRODUCT_TO_BASKET);
             preparedStatement.setInt(1, basketID);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
@@ -120,7 +120,7 @@ public class SQLBasketDAO implements BasketDAO {
         int numberOfUpdatedLines = 0;
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.removeProductFromBasket);
+            preparedStatement = connection.prepareStatement(BasketSQLRequest.REMOVE_PRODUCT_FROM_BASKET);
             preparedStatement.setInt(1, basketID);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
@@ -151,7 +151,7 @@ public class SQLBasketDAO implements BasketDAO {
         int numberOfUpdatedLines = 0;
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.deleteBasketByUserID);
+            preparedStatement = connection.prepareStatement(BasketSQLRequest.DELETE_BASKET_BY_USER_ID);
             preparedStatement.setInt(1, userID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -181,7 +181,7 @@ public class SQLBasketDAO implements BasketDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdatedLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.insertBasket);
+            preparedStatement = connection.prepareStatement(BasketSQLRequest.INSERT_BASKET);
             preparedStatement.setInt(1, userID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");

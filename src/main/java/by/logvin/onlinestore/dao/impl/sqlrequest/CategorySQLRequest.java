@@ -1,21 +1,20 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
-// FIXME: 11.04.2021
 public final class CategorySQLRequest {
-    public static final String insertCategory =
+    public static final String INSERT_CATEGORY =
             "INSERT INTO categories(c_name) " +
                     "VALUES (?)";
-    public static final String deleteCategory =
+    public static final String DELETE_CATEGORY =
             "DELETE FROM categories c " +
                     "WHERE c.c_id=?";
-    public static final String selectCategoryByID =
+    public static final String SELECT_CATEGORY_BY_ID =
             "SELECT * " +
                     "FROM categories c " +
                     "WHERE c.c_id=?";
-    public static final String selectAllCategories =
+    public static final String SELECT_ALL_CATEGORIES =
             "SELECT * " +
                     "FROM categories";
-    public static final String selectCategoryByName =
+    public static final String SELECT_CATEGORY_BY_NAME =
             "SELECT * " +
                     "FROM categories c " +
                     "WHERE c.c_name=?";

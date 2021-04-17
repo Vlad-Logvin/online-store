@@ -31,7 +31,7 @@ public class SQLFavouriteDAO implements FavouriteDAO {
         List<Product> products = null;
         int favouriteID = 0;
         try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.selectFavouriteByUserID);
+            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.SELECT_FAVOURITE_BY_USER_ID);
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -88,7 +88,7 @@ public class SQLFavouriteDAO implements FavouriteDAO {
         int numberOfUpdatedLines = 0;
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.addProductToFavourite);
+            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.ADD_PRODUCT_TO_FAVOURITE);
             preparedStatement.setInt(1, favouriteID);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
@@ -119,7 +119,7 @@ public class SQLFavouriteDAO implements FavouriteDAO {
         int numberOfUpdatedLines = 0;
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.removeProductFromFavourite);
+            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.REMOVE_PRODUCT_FROM_FAVOURITE);
             preparedStatement.setInt(1, favouriteID);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
@@ -150,7 +150,7 @@ public class SQLFavouriteDAO implements FavouriteDAO {
         int numberOfUpdatedLines = 0;
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.deleteFavouriteByUserID);
+            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.DELETE_FAVOURITE_BY_USER_ID);
             preparedStatement.setInt(1, userID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -180,7 +180,7 @@ public class SQLFavouriteDAO implements FavouriteDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdatedLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.insertFavourite);
+            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.INSERT_FAVOURITE);
             preparedStatement.setInt(1, userID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");

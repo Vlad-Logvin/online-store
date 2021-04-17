@@ -25,7 +25,7 @@ public class SQLUserDAO implements UserDAO {
         int numberOfUpdateLines = 0;
 
         try {
-            preparedStatement = connection.prepareStatement(UserSQLRequest.insertUser);
+            preparedStatement = connection.prepareStatement(UserSQLRequest.INSERT_USER);
             preparedStatement.setString(1, info.getEmail());
             preparedStatement.setString(2, info.getPassword());
             preparedStatement.setString(3, info.getFirstName());
@@ -66,7 +66,7 @@ public class SQLUserDAO implements UserDAO {
         Favourite favourite = null;
         List<Order> orders = null;
         try {
-            preparedStatement = connection.prepareStatement(UserSQLRequest.selectUserWithLoginAndPassword);
+            preparedStatement = connection.prepareStatement(UserSQLRequest.SELECT_USER_WITH_LOGIN_AND_PASSWORD);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             userResultSet = preparedStatement.executeQuery();
@@ -140,7 +140,7 @@ public class SQLUserDAO implements UserDAO {
         int numberOfUpdateLines = 0;
 
         try {
-            preparedStatement = connection.prepareStatement(UserSQLRequest.updateUser);
+            preparedStatement = connection.prepareStatement(UserSQLRequest.UPDATE_USER);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, firstName);
@@ -177,7 +177,7 @@ public class SQLUserDAO implements UserDAO {
         int numberOfUpdateLines = 0;
 
         try {
-            preparedStatement = connection.prepareStatement(UserSQLRequest.updateUserRole);
+            preparedStatement = connection.prepareStatement(UserSQLRequest.UPDATE_USER_ROLE);
             preparedStatement.setInt(1, roleID);
             preparedStatement.setInt(2, userID);
             numberOfUpdateLines = preparedStatement.executeUpdate();
@@ -210,7 +210,7 @@ public class SQLUserDAO implements UserDAO {
         int numberOfUpdateLines = 0;
 
         try {
-            preparedStatement = connection.prepareStatement(UserSQLRequest.updateUserAccess);
+            preparedStatement = connection.prepareStatement(UserSQLRequest.UPDATE_USER_ACCESS);
             preparedStatement.setInt(1, accessID);
             preparedStatement.setInt(2, userID);
             numberOfUpdateLines = preparedStatement.executeUpdate();
@@ -244,7 +244,7 @@ public class SQLUserDAO implements UserDAO {
         List<User> users = null;
         try {
             statement = connection.createStatement();
-            userResultSet = statement.executeQuery(UserSQLRequest.selectUserEmailAndPassword);
+            userResultSet = statement.executeQuery(UserSQLRequest.SELECT_USER_EMAIL_AND_PASSWORD);
             logger.info("Request (" + statement.toString() + ") completed");
             while (userResultSet.next()) {
                 if (users == null) {

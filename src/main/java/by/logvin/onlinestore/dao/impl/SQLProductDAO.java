@@ -30,7 +30,7 @@ public class SQLProductDAO implements ProductDAO {
         Product product = null;
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(ProductSQLRequest.selectOneProduct);
+            resultSet = statement.executeQuery(ProductSQLRequest.SELECT_ONE_PRODUCT);
             logger.info("Request (" + statement.toString() + ") completed");
             if (!resultSet.next()) {
                 logger.info("Not found product in database");
@@ -74,7 +74,7 @@ public class SQLProductDAO implements ProductDAO {
         ResultSet resultSet = null;
         int numberOfUpdatedLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(ProductSQLRequest.updateIncreaseProductQuantityByID);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.UPDATE_INCREASE_PRODUCT_QUANTITY_BY_ID);
             preparedStatement.setInt(1, quantity);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
@@ -113,7 +113,7 @@ public class SQLProductDAO implements ProductDAO {
         ResultSet resultSet = null;
         List<Product> products = null;
         try {
-            preparedStatement = connection.prepareStatement(ProductSQLRequest.selectNProducts);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.SELECT_N_PRODUCTS);
             preparedStatement.setInt(1, number);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") completed");
@@ -161,7 +161,7 @@ public class SQLProductDAO implements ProductDAO {
         int numberOfUpdatedLines = 0;
         int productID = 0;
         try {
-            preparedStatement = connection.prepareStatement(ProductSQLRequest.insertProduct);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.INSERT_PRODUCT);
             preparedStatement.setString(1, name);
             preparedStatement.setDouble(2, price);
             preparedStatement.setInt(3, quantity);
@@ -170,7 +170,7 @@ public class SQLProductDAO implements ProductDAO {
             preparedStatement.setString(6, photoURL);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
-            preparedStatement = connection.prepareStatement(ProductSQLRequest.selectProductIDByNameAndCategory);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.SELECT_PRODUCT_ID_BY_NAME_AND_CATEGORY);
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, categoryID);
             resultSet = preparedStatement.executeQuery();
@@ -222,7 +222,7 @@ public class SQLProductDAO implements ProductDAO {
         ResultSet resultSet = null;
         List<Product> products = null;
         try {
-            preparedStatement = connection.prepareStatement(ProductSQLRequest.selectProductByCategoryID);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.SELECT_PRODUCT_BY_CATEGORY_ID);
             preparedStatement.setInt(1, category.getId());
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -268,7 +268,7 @@ public class SQLProductDAO implements ProductDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdatedLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(ProductSQLRequest.deleteProductByID);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.DELETE_PRODUCT_BY_ID);
             preparedStatement.setInt(1, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") completed");
@@ -299,7 +299,7 @@ public class SQLProductDAO implements ProductDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdatedLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(ProductSQLRequest.updateProductByID);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.UPDATE_PRODUCT_BY_ID);
             preparedStatement.setString(1, name);
             preparedStatement.setDouble(2, price);
             preparedStatement.setInt(3, quantity);
@@ -341,7 +341,7 @@ public class SQLProductDAO implements ProductDAO {
         List<Product> product = null;
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(ProductSQLRequest.selectAllProducts);
+            resultSet = statement.executeQuery(ProductSQLRequest.SELECT_ALL_PRODUCTS);
             logger.info("Request (" + statement.toString() + ") was completed");
             while (resultSet.next()) {
                 if (product == null) {
@@ -386,7 +386,7 @@ public class SQLProductDAO implements ProductDAO {
         ResultSet resultSet = null;
         Product product = null;
         try {
-            preparedStatement = connection.prepareStatement(ProductSQLRequest.selectProductByProductID);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.SELECT_PRODUCT_BY_PRODUCT_ID);
             preparedStatement.setInt(1, productID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -448,7 +448,7 @@ public class SQLProductDAO implements ProductDAO {
         ResultSet resultSet = null;
         int numberOfUpdatedLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(ProductSQLRequest.updateProductQuantityByID);
+            preparedStatement = connection.prepareStatement(ProductSQLRequest.UPDATE_PRODUCT_QUANTITY_BY_ID);
             preparedStatement.setInt(1, quantity);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();

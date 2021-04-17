@@ -29,7 +29,7 @@ public class SQLAttributeDAO implements AttributeDAO {
         Set<String> attributeNames = attributes.keySet();
         int numberOfUpdatedLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(AttributeSQLRequest.insertAttribute);
+            preparedStatement = connection.prepareStatement(AttributeSQLRequest.INSERT_ATTRIBUTE);
             for (String attributeName : attributeNames) {
                 preparedStatement.setString(1, attributeName);
                 preparedStatement.setString(2, attributes.get(attributeName));
@@ -64,7 +64,7 @@ public class SQLAttributeDAO implements AttributeDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdatedLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(AttributeSQLRequest.deleteAttributesByProductID);
+            preparedStatement = connection.prepareStatement(AttributeSQLRequest.DELETE_ATTRIBUTES_BY_PRODUCT_ID);
             preparedStatement.setInt(1, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -96,7 +96,7 @@ public class SQLAttributeDAO implements AttributeDAO {
         List<Attribute> attributes = null;
         ResultSet resultSet = null;
         try {
-            preparedStatement = connection.prepareStatement(AttributeSQLRequest.selectAttributesByProductID);
+            preparedStatement = connection.prepareStatement(AttributeSQLRequest.SELECT_ATTRIBUTES_BY_PRODUCT_ID);
             preparedStatement.setInt(1, productID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");

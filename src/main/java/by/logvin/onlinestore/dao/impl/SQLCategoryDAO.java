@@ -23,7 +23,7 @@ public class SQLCategoryDAO implements CategoryDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdateLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(CategorySQLRequest.insertCategory);
+            preparedStatement = connection.prepareStatement(CategorySQLRequest.INSERT_CATEGORY);
             preparedStatement.setString(1, name);
             numberOfUpdateLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -54,7 +54,7 @@ public class SQLCategoryDAO implements CategoryDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdateLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(CategorySQLRequest.deleteCategory);
+            preparedStatement = connection.prepareStatement(CategorySQLRequest.DELETE_CATEGORY);
             preparedStatement.setInt(1, categoryID);
             numberOfUpdateLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -87,7 +87,7 @@ public class SQLCategoryDAO implements CategoryDAO {
         Category category = null;
         ResultSet resultSet = null;
         try {
-            preparedStatement = connection.prepareStatement(CategorySQLRequest.selectCategoryByID);
+            preparedStatement = connection.prepareStatement(CategorySQLRequest.SELECT_CATEGORY_BY_ID);
             preparedStatement.setInt(1, categoryID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -134,7 +134,7 @@ public class SQLCategoryDAO implements CategoryDAO {
         ResultSet resultSet = null;
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(CategorySQLRequest.selectAllCategories);
+            resultSet = statement.executeQuery(CategorySQLRequest.SELECT_ALL_CATEGORIES);
             logger.info("Request (" + statement + ") was completed");
             while (resultSet.next()) {
                 if (categories == null) {
@@ -179,7 +179,7 @@ public class SQLCategoryDAO implements CategoryDAO {
         Category category = null;
         ResultSet resultSet = null;
         try {
-            preparedStatement = connection.prepareStatement(CategorySQLRequest.selectCategoryByName);
+            preparedStatement = connection.prepareStatement(CategorySQLRequest.SELECT_CATEGORY_BY_NAME);
             preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");

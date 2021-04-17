@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
-import java.sql.Date;
 
 public class SQLOrderDAO implements OrderDAO {
 
@@ -31,7 +30,7 @@ public class SQLOrderDAO implements OrderDAO {
         Map<Integer, Timestamp> dateOfPurchases = null;
         Map<Integer, Double> grandTotal = null;
         try {
-            preparedStatement = connection.prepareStatement(OrderSQLRequest.selectAllOrdersByUserID);
+            preparedStatement = connection.prepareStatement(OrderSQLRequest.SELECT_ALL_ORDERS_BY_USER_ID);
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -118,20 +117,20 @@ public class SQLOrderDAO implements OrderDAO {
         ResultSet resultSet = null;
         int numberOfUpdatedLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(OrderSQLRequest.insertOrder);
+            preparedStatement = connection.prepareStatement(OrderSQLRequest.INSERT_ORDER);
             preparedStatement.setInt(1, userID);
             preparedStatement.setDouble(2, getGrandTotal(products));
             preparedStatement.setInt(3, cardID);
             preparedStatement.setTimestamp(4,  dateOfPurchase);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
-            preparedStatement = connection.prepareStatement(OrderSQLRequest.selectLastOrderID);
+            preparedStatement = connection.prepareStatement(OrderSQLRequest.SELECT_LAST_ORDER_ID);
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
             resultSet.next();
             int orderID = resultSet.getInt("o_id");
-            preparedStatement = connection.prepareStatement(OrderSQLRequest.insertProductToOrder);
+            preparedStatement = connection.prepareStatement(OrderSQLRequest.INSERT_PRODUCT_TO_ORDER);
             preparedStatement.setInt(1, orderID);
             for (Product product : products.keySet()) {
                 preparedStatement.setInt(2, product.getId());
@@ -186,7 +185,7 @@ public class SQLOrderDAO implements OrderDAO {
         Map<Integer, Double> grandTotal = null;
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(OrderSQLRequest.selectAllOrders);
+            resultSet = statement.executeQuery(OrderSQLRequest.SELECT_ALL_ORDERS);
             logger.info("Request (" + statement.toString() + ") was completed");
             while (resultSet.next()) {
                 if (products == null) {

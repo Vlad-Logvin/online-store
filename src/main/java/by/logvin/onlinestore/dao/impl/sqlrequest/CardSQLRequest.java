@@ -1,23 +1,22 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
-// FIXME: 11.04.2021
 public final class CardSQLRequest {
-    public static final String selectCardByID =
+    public static final String SELECT_CARD_BY_ID =
             "SELECT * " +
                     "FROM cards c " +
                     "WHERE c.c_id=?";
 
-    public static final String selectCardsByUserID =
+    public static final String SELECT_CARDS_BY_USER_ID =
             "SELECT * " +
                     "FROM cards c " +
                     "WHERE c.c_user_id=?";
-    public static final String insertCard =
+    public static final String INSERT_CARD =
             "INSERT INTO cards(c_user_id, c_number, c_validity_period, c_authentication_code, c_cardholder) " +
                     "VALUES(?,?,?,?,?)";
-    public static final String deleteCard =
+    public static final String DELETE_CARD =
             "DELETE FROM cards c " +
                     "WHERE c.c_id=?";
-    public static final String updateCard =
+    public static final String UPDATE_CARD =
             "UPDATE cards c " +
                     "SET c.c_number=?, c_validity_period=?, c_authentication_code=?, c_cardholder=? " +
                     "WHERE c.c_id=?";

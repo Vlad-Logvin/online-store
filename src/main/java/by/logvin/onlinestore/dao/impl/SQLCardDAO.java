@@ -27,7 +27,7 @@ public class SQLCardDAO implements CardDAO {
         Card card = null;
         ResultSet resultSet = null;
         try {
-            preparedStatement = connection.prepareStatement(CardSQLRequest.selectCardByID);
+            preparedStatement = connection.prepareStatement(CardSQLRequest.SELECT_CARD_BY_ID);
             preparedStatement.setInt(1, cardID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -76,7 +76,7 @@ public class SQLCardDAO implements CardDAO {
         List<Card> cards = null;
         ResultSet resultSet = null;
         try {
-            preparedStatement = connection.prepareStatement(CardSQLRequest.selectCardsByUserID);
+            preparedStatement = connection.prepareStatement(CardSQLRequest.SELECT_CARDS_BY_USER_ID);
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -126,7 +126,7 @@ public class SQLCardDAO implements CardDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdateLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(CardSQLRequest.insertCard);
+            preparedStatement = connection.prepareStatement(CardSQLRequest.INSERT_CARD);
             preparedStatement.setInt(1, userID);
             preparedStatement.setLong(2, number);
             preparedStatement.setInt(3, validityPeriod);
@@ -161,7 +161,7 @@ public class SQLCardDAO implements CardDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdateLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(CardSQLRequest.deleteCard);
+            preparedStatement = connection.prepareStatement(CardSQLRequest.DELETE_CARD);
             preparedStatement.setInt(1, cardID);
             numberOfUpdateLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
@@ -191,7 +191,7 @@ public class SQLCardDAO implements CardDAO {
         PreparedStatement preparedStatement = null;
         int numberOfUpdateLines = 0;
         try {
-            preparedStatement = connection.prepareStatement(CardSQLRequest.updateCard);
+            preparedStatement = connection.prepareStatement(CardSQLRequest.UPDATE_CARD);
             preparedStatement.setLong(1, number);
             preparedStatement.setInt(2, validityPeriod);
             preparedStatement.setInt(3, authenticationCode);
