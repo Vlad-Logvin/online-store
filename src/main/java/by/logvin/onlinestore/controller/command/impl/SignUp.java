@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 
 public class SignUp implements Command {
+
     private final static Logger logger = Logger.getLogger(SignUp.class);
 
     @Override
@@ -31,8 +32,10 @@ public class SignUp implements Command {
             }else {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_SIGN_UP);
             }
+            logger.info("Redirect to authorization page");
             response.sendRedirect(GoToPage.REDIRECT_AUTHORIZATION_PAGE);
         } catch (ServiceException e) {
+            logger.error("Error while signing up", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }

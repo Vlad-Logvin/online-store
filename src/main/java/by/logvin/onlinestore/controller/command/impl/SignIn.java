@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 
 public class SignIn implements Command {
+
     private final static Logger logger = Logger.getLogger(SignIn.class);
 
     @Override
@@ -27,14 +28,21 @@ public class SignIn implements Command {
             user = ServiceProvider.getInstance().getUserService().signIn(email, password);
             if (user == null) {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_SIGN_IN);
+                logger.info("Redirect to authorization page");
+                response.sendRedirect(GoToPage.REDIRECT_AUTHORIZATION_PAGE);
             } else if (!user.getUserDetails().isAccess()) {
                 session.setAttribute(Message.MESSAGE, Message.BLOCKED_USER);
+                logger.info("Redirect to authorization page");
+                response.sendRedirect(GoToPage.REDIRECT_AUTHORIZATION_PAGE);
             } else {
                 session.setAttribute(Message.ATTRIBUTE_USER, user);
                 session.setAttribute(Message.MESSAGE, Message.CORRECT_SIGN_IN);
+                logger.error("Redirect to main page");
+                response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
             }
-            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
+
         } catch (ServiceException e) {
+            logger.error("Error while signing in", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }

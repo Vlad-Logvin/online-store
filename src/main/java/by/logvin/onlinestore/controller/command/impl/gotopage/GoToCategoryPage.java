@@ -17,27 +17,37 @@ import java.io.IOException;
 
 public class GoToCategoryPage implements Command {
     private static final Logger logger = Logger.getLogger(GoToCategoryPage.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
         HttpSession session = request.getSession(true);
-        int categoryID = 0;
-        try {
-            categoryID = Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CATEGORY_ID));
-        } catch (NumberFormatException e){
-            request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_CATEGORY_INPUT);
-            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
-            return;
+        String sessionMessage = (String) session.getAttribute(Message.MESSAGE);
+        if (sessionMessage != null) {
+            request.setAttribute(Message.MESSAGE, sessionMessage);
+            session.removeAttribute(Message.MESSAGE);
         }
+
         try {
-            Category category = ServiceProvider.getInstance().getCategoryService().getCategory(categoryID);
+            Category category = ServiceProvider.getInstance().getCategoryService().getCategory(
+                    Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CATEGORY_ID))
+            );
             request.setAttribute(Message.ATTRIBUTE_CATEGORY, category);
             request.setAttribute(Message.ATTRIBUTE_PRODUCTS, ServiceProvider.getInstance().getProductService().take(category));
-            session.setAttribute(Message.ATTRIBUTE_URL, GoToPage.REDIRECT_CATEGORY_PAGE + Message.PARAMETER_CATEGORY_ID + categoryID);
+            session.setAttribute(Message.ATTRIBUTE_URL, GoToPage.REDIRECT_CATEGORY_PAGE +
+                    Message.PARAMETER_CATEGORY_ID +
+                    request.getParameter(Message.ATTRIBUTE_CATEGORY_ID));
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_CATEGORY_PAGE);
+            logger.info("Forward to category page");
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
-            //log
+            logger.error("Error while getting products or categories", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
+        } catch (NumberFormatException e) {
+            logger.error("Error while parsing values from site, not correct input data", e);
+            request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_CATEGORY_INPUT);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }
     }

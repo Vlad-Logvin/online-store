@@ -30,6 +30,7 @@ public class GoToOrderPage implements Command {
         try {
             userID = Integer.parseInt(request.getParameter(Message.ATTRIBUTE_USER_ID));
         } catch (NumberFormatException e) {
+            logger.error("Error while parsing number(user id) to int", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_USER_ID_INPUT);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
             return;
@@ -47,14 +48,17 @@ public class GoToOrderPage implements Command {
                     orders = ServiceProvider.getInstance().getOrderService().getUserOrders(userID);
                 } else {
                     request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_USER_ID_INPUT);
+                    logger.info("Redirect to main page");
                     response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
                     return;
                 }
             }
             request.setAttribute(Message.ATTRIBUTE_ORDERS, orders);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_ORDER_PAGE);
+            logger.info("Forward to order page");
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
+            logger.error("Error while getting orders", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }

@@ -11,10 +11,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class DeleteCard implements Command {
+
+    private static final Logger logger = Logger.getLogger(DeleteCard.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (!ExistenceProvider.getInstance().getUserExistence().isUserExist(request, response)) {
@@ -31,11 +35,14 @@ public class DeleteCard implements Command {
             } else {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_CARD_DELETING);
             }
+            logger.info("Redirect to last page");
             response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         } catch (ServiceException e) {
+            logger.error("Error while deleting card", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         } catch (NumberFormatException e) {
+            logger.error("Error while parsing card id", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_CARD_ID_INPUT);
             response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         }

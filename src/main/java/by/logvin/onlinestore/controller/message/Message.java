@@ -32,6 +32,10 @@ public final class Message {
     public static final String ERROR_PRODUCT_GET_MORE = "local.error.get_more";
     public static final String WRONG_USER_ID_INPUT = "local.error.user_id_input";
     public static final String ERROR_EDIT_PROFILE = "local.error.edit_profile";
+    public static final String ERROR_NO_PRODUCT_WITH_ID = "local.error.no_product_with_id";
+    public static final String ERROR_CARD_NON_EXISTENCE = "local.error.card_non_existence";
+    public static final String ERROR_ACCESS_CHANGING = "local.error.access_changing";
+    public static final String ERROR_ROLE_CHANGING = "local.error.role_changing";
 
 
     public static final String CORRECT_PRODUCT_GET_MORE = "local.correct.get_more";
@@ -50,6 +54,8 @@ public final class Message {
     public static final String CORRECT_REMOVE_FROM_BASKET = "local.correct.remove_from_basket";
     public static final String CORRECT_EDIT_PROFILE = "local.correct.edit_profile";
     public static final String LOGOUT = "local.correct.logout";
+    public static final String CORRECT_ACCESS_CHANGING = "local.correct.access_changing";
+    public static final String CORRECT_ROLE_CHANGING = "local.correct.role_changing";
 
 
     public static final String ATTRIBUTE_USER = "user";

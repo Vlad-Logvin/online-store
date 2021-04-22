@@ -1,8 +1,6 @@
 package by.logvin.onlinestore.dao;
 
-import by.logvin.onlinestore.bean.Attribute;
 import by.logvin.onlinestore.bean.Category;
-import by.logvin.onlinestore.bean.Criteria;
 import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.dao.exception.DAOException;
 

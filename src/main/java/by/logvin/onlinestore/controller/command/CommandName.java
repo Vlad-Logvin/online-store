@@ -2,7 +2,6 @@ package by.logvin.onlinestore.controller.command;
 
 public enum CommandName {
     ADD_CARD,
-    ADD_CRITERIA,
     ADD_PRODUCT,
     ADD_TO_BASKET,
     ADD_TO_FAVOURITE,

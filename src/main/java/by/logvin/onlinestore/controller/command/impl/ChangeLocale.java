@@ -7,10 +7,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class ChangeLocale implements Command {
+
+    private static final Logger logger = Logger.getLogger(ChangeLocale.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
@@ -21,6 +25,7 @@ public class ChangeLocale implements Command {
             redirectURL = GoToPage.REDIRECT_MAIN_PAGE;
         }
 
+        logger.info("Redirect to last page");
         response.sendRedirect(redirectURL);
     }
 }

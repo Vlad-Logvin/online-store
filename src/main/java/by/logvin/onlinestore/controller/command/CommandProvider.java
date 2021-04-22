@@ -11,7 +11,6 @@ public class CommandProvider {
 
     public CommandProvider() {
         commands.put(CommandName.ADD_CARD, new AddCard());
-        commands.put(CommandName.ADD_CRITERIA, new AddCriteria());
         commands.put(CommandName.ADD_PRODUCT, new AddProduct());
         commands.put(CommandName.ADD_TO_BASKET, new AddToBasket());
         commands.put(CommandName.ADD_TO_FAVOURITE, new AddToFavourite());

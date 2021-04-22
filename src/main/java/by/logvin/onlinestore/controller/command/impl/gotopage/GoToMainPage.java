@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class GoToMainPage implements Command {
+
     private static final Logger logger = Logger.getLogger(GoToMainPage.class);
 
     @Override
@@ -27,17 +28,14 @@ public class GoToMainPage implements Command {
             session.removeAttribute(Message.MESSAGE);
         }
 
-        List<Product> products = null;
         try {
-            products = ServiceProvider.getInstance().getProductService().take(9);
+            request.setAttribute(Message.ATTRIBUTE_PRODUCTS, ServiceProvider.getInstance().getProductService().take(9));
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_MAIN_PAGE);
+            logger.info("Forward to main page");
+            requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
+            logger.error("Error while getting products", e);
             response.sendRedirect(GoToPage.REDIRECT_ERROR_PAGE);
-            return;
         }
-
-        request.setAttribute(Message.ATTRIBUTE_PRODUCTS, products);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher(GoToPage.FORWARD_MAIN_PAGE);
-        dispatcher.forward(request, response);
     }
 }

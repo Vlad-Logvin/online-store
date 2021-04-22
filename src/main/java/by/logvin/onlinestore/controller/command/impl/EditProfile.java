@@ -10,10 +10,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class EditProfile implements Command {
+
+    private static final Logger logger = Logger.getLogger(EditProfile.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (!ExistenceProvider.getInstance().getUserExistence().isUserExist(request, response)) {
@@ -35,8 +39,10 @@ public class EditProfile implements Command {
             } else {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_EDIT_PROFILE);
             }
-            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
+            logger.info("Redirect to last page");
+            response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         } catch (ServiceException e) {
+            logger.error("Error while profile editing", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }

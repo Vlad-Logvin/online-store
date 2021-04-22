@@ -72,10 +72,16 @@
                             value="add_to_favourite">Добавить в избранные
                     </button>
                 </c:if>
-                <c:if test="${sessionScope.user.userDetails.role=='admin'}">
+            </form>
+            <c:if test="${sessionScope.user.userDetails.role=='admin'}">
+                <form action="Controller" method="get">
+                    <input type="hidden" name="productID" value="${product.id}"/>
                     <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
-                            value="edit_product">Редактировать
+                            value="go_to_edit_product_form_page">Редактировать
                     </button>
+                </form>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="productID" value="${product.id}"/>
                     <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
                             value="get_more">Дозаказать
                     </button>
@@ -83,7 +89,8 @@
                     <button class="btn btn-outline-secondary enter full-width" type="submit" name="command"
                             value="delete_product">Удалить
                     </button>
-                </c:if>
+                </form>
+            </c:if>
 
             </form>
             <p>

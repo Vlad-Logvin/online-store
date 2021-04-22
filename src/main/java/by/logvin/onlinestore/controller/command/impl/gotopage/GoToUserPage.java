@@ -9,10 +9,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class GoToUserPage implements Command {
+
+    private final static Logger logger = Logger.getLogger(GoToUserPage.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -29,6 +33,7 @@ public class GoToUserPage implements Command {
 
         request.getSession(false).setAttribute(Message.ATTRIBUTE_URL, GoToPage.REDIRECT_USER_PAGE);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_USER_PAGE);
+        logger.info("Forward to user page");
         requestDispatcher.forward(request, response);
 
     }

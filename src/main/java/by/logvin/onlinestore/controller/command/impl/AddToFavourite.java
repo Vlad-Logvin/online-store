@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 
 public class AddToFavourite implements Command {
+
     private final static Logger logger = Logger.getLogger(AddToFavourite.class);
 
     @Override
@@ -32,12 +33,14 @@ public class AddToFavourite implements Command {
             } else {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_ADD_TO_FAVOURITE);
             }
+            logger.info("Redirect to last page");
             response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         } catch (ServiceException e) {
-            //log
+            logger.error("Error while adding product to favourite", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         } catch (NumberFormatException e) {
+            logger.error("Error while parsing product id", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_PRODUCT_INPUT);
             response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
         }

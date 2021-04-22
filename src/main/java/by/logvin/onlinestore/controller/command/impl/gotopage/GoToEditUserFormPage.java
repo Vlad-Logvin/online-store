@@ -7,10 +7,14 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class GoToEditUserFormPage implements Command {
+
+    private final static Logger logger = Logger.getLogger(GoToEditUserFormPage.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(!ExistenceProvider.getInstance().getUserExistence().isUserExist(request, response)){
@@ -18,6 +22,7 @@ public class GoToEditUserFormPage implements Command {
         }
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_EDIT_USER_FORM_PAGE);
+        logger.info("Forward to edit user form page");
         requestDispatcher.forward(request, response);
     }
 }

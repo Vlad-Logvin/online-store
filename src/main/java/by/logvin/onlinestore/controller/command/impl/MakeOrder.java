@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MakeOrder implements Command {
+
     private final Logger logger = Logger.getLogger(MakeOrder.class);
 
     @Override
@@ -38,17 +39,29 @@ public class MakeOrder implements Command {
 
         Map<Product, Integer> products = new HashMap<>();
 
+
         try {
+            Integer cardID = Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CARD_ID));
+            if (cardID == null) {
+                session.setAttribute(Message.MESSAGE, Message.ERROR_CARD_NON_EXISTENCE);
+                response.sendRedirect(GoToPage.REDIRECT_BASKET_PAGE);
+                return;
+            }
             Product product = null;
+            int quantity = 0;
             for (int i = 0; i < basketSize; i++) {
+                quantity = Integer.parseInt(productQuantity[i]);
+                if (quantity < 1) {
+                    continue;
+                }
                 product = ServiceProvider.getInstance().getProductService().takeByProductID(Integer.parseInt(productID[i]));
-                products.put(product, Integer.valueOf(productQuantity[i]));
-                ServiceProvider.getInstance().getProductService().buyProduct(Integer.parseInt(productID[i]), product.getQuantity() - Integer.parseInt(productQuantity[i]));
+                products.put(product, quantity);
+                ServiceProvider.getInstance().getProductService().buyProduct(Integer.parseInt(productID[i]), product.getQuantity() - quantity);
             }
             if (ServiceProvider.getInstance().getOrderService().makeOrder(
                     user.getId(),
                     products,
-                    Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CARD_ID)),
+                    cardID,
                     new Timestamp(new Date().getTime()))) {
                 session.setAttribute(Message.MESSAGE, Message.CORRECT_MAKE_ORDER);
                 ServiceProvider.getInstance().getBasketService().deleteBasketByUserID(user.getId());
@@ -58,11 +71,14 @@ public class MakeOrder implements Command {
             } else {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_MAKE_ORDER);
             }
+            logger.info("Redirect to main page");
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         } catch (ServiceException e) {
+            logger.error("Error while making order", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         } catch (NumberFormatException e) {
+            logger.error("Error while parsing card id or product id", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_MAKE_ORDER_INPUT);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }

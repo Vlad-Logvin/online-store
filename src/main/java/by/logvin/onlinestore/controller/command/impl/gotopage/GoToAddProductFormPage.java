@@ -23,13 +23,14 @@ public class GoToAddProductFormPage implements Command {
             return;
         }
 
-
         try {
             request.setAttribute(Message.ATTRIBUTE_ACTION, Message.ATTRIBUTE_ADD_PRODUCT);
             request.setAttribute(Message.ATTRIBUTE_CATEGORIES, ServiceProvider.getInstance().getCategoryService().getCategories());
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_PRODUCT_FORM_PAGE);
+            logger.info("Forward to product form page");
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
+            logger.error("Error with getting categories", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }

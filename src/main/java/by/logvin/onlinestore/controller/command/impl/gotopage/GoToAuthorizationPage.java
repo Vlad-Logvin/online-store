@@ -25,6 +25,7 @@ public class GoToAuthorizationPage implements Command {
         }
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_AUTHORIZATION_PAGE);
+        logger.info("Forward to authorization page");
         requestDispatcher.forward(request, response);
     }
 }

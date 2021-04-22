@@ -55,13 +55,17 @@
 
     <form action="Controller" method="post">
         <label for="inputEmail" class="sr-only">${email}</label>
-        <input type="text" name="email" value="" id="inputEmail" class="form-control" placeholder="${email}" autofocus="" required>
+        <input type="text" name="email" value="" id="inputEmail" class="form-control" placeholder="${email}"
+               autofocus="" required>
         <label for="inputPassword" class="sr-only">${password}</label>
-        <input type="password" name="password" value="" id="inputPassword" class="form-control" placeholder="${password}" required>
-        <button class="btn btn-lg btn-primary btn-block" name="command" value="sign_in" type="submit">${sign_in}</button>
+        <input type="password" name="password" value="" id="inputPassword" class="form-control"
+               placeholder="${password}" required>
+        <button class="btn btn-lg btn-primary btn-block" name="command" value="sign_in"
+                type="submit">${sign_in}</button>
     </form>
     <form action="Controller" method="get">
-        <button class="btn btn-lg btn-primary btn-block margin-top-1rem" type="submit" name="command" value="go_to_registration_page">${sign_up}
+        <button class="btn btn-lg btn-primary btn-block margin-top-1rem" type="submit" name="command"
+                value="go_to_registration_page">${sign_up}
         </button>
     </form>
 
