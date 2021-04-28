@@ -105,11 +105,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsers() throws ServiceException {
+    public List<User> takeUsers() throws ServiceException {
         UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
         List<User> users = null;
         try {
-            users = userDAO.getUsers();
+            users = userDAO.takeUsers();
             logger.info("Users get: " + users);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during users getting", e);

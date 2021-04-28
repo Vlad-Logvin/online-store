@@ -19,7 +19,7 @@ public class SQLOrderDAO implements OrderDAO {
     private final static Logger logger = Logger.getLogger(SQLOrderDAO.class);
 
     @Override
-    public List<Order> getUserOrders(int userID) throws DAOException {
+    public List<Order> takeUserOrders(int userID) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;
@@ -74,7 +74,7 @@ public class SQLOrderDAO implements OrderDAO {
                     orders.add(new Order(
                             orderID,
                             grandTotal.get(orderID),
-                            ServiceProvider.getInstance().getCardService().getCard(cards.get(orderID)),
+                            ServiceProvider.getInstance().getCardService().takeCard(cards.get(orderID)),
                             dateOfPurchases.get(orderID),
                             products.get(orderID)
                     ));
@@ -173,7 +173,7 @@ public class SQLOrderDAO implements OrderDAO {
     }
 
     @Override
-    public List<Order> getOrderLog() throws DAOException {
+    public List<Order> takeOrderLog() throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         Statement statement = null;
@@ -229,7 +229,7 @@ public class SQLOrderDAO implements OrderDAO {
                     orders.add(new Order(
                             orderID,
                             grandTotal.get(orderID),
-                            ServiceProvider.getInstance().getCardService().getCard(cards.get(orderID)),
+                            ServiceProvider.getInstance().getCardService().takeCard(cards.get(orderID)),
                             dateOfPurchases.get(orderID),
                             products.get(orderID)
                     ));

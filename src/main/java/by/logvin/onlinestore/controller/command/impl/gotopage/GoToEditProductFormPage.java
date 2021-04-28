@@ -40,8 +40,8 @@ public class GoToEditProductFormPage implements Command {
             }
             request.setAttribute(Message.ATTRIBUTE_ACTION, Message.ATTRIBUTE_EDIT_PRODUCT);
             request.setAttribute(Message.ATTRIBUTE_PRODUCT, product);
-            request.setAttribute(Message.ATTRIBUTE_CATEGORIES, ServiceProvider.getInstance().getCategoryService().getCategories());
-            request.setAttribute(Message.ATTRIBUTE_ATTRIBUTES, ServiceProvider.getInstance().getAttributeService().getParsedAttributes(productID));
+            request.setAttribute(Message.ATTRIBUTE_CATEGORIES, ServiceProvider.getInstance().getCategoryService().takeCategories());
+            request.setAttribute(Message.ATTRIBUTE_ATTRIBUTES, ServiceProvider.getInstance().getAttributeService().takeParsedAttributes(productID));
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_PRODUCT_FORM_PAGE);
             logger.info("Forward to product form page");
             requestDispatcher.forward(request, response);

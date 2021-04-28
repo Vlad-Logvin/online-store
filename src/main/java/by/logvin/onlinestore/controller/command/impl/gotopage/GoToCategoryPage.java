@@ -30,7 +30,7 @@ public class GoToCategoryPage implements Command {
         }
 
         try {
-            Category category = ServiceProvider.getInstance().getCategoryService().getCategory(
+            Category category = ServiceProvider.getInstance().getCategoryService().takeCategory(
                     Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CATEGORY_ID))
             );
             request.setAttribute(Message.ATTRIBUTE_CATEGORY, category);

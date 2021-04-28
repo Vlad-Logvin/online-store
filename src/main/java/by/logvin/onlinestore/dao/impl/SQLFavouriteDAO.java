@@ -22,7 +22,7 @@ public class SQLFavouriteDAO implements FavouriteDAO {
     private final static Logger logger = Logger.getLogger(SQLFavouriteDAO.class);
 
     @Override
-    public Favourite getFavouriteByUserID(int userID) throws DAOException {
+    public Favourite takeFavouriteByUserID(int userID) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;

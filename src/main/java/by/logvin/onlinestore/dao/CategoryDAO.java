@@ -10,9 +10,9 @@ public interface CategoryDAO {
 
     boolean deleteCategory(int categoryID) throws DAOException;
 
-    Category getCategory(int categoryID) throws DAOException;
+    Category takeCategory(int categoryID) throws DAOException;
 
-    List<Category> getCategories() throws DAOException;
+    List<Category> takeCategories() throws DAOException;
 
-    Category getCategory(String name) throws DAOException;
+    Category takeCategory(String name) throws DAOException;
 }

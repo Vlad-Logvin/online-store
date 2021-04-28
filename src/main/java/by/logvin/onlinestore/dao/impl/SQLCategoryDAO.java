@@ -80,7 +80,7 @@ public class SQLCategoryDAO implements CategoryDAO {
     }
 
     @Override
-    public Category getCategory(int categoryID) throws DAOException {
+    public Category takeCategory(int categoryID) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;
@@ -126,7 +126,7 @@ public class SQLCategoryDAO implements CategoryDAO {
     }
 
     @Override
-    public List<Category> getCategories() throws DAOException {
+    public List<Category> takeCategories() throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         Statement statement = null;
@@ -172,7 +172,7 @@ public class SQLCategoryDAO implements CategoryDAO {
     }
 
     @Override
-    public Category getCategory(String name) throws DAOException {
+    public Category takeCategory(String name) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;

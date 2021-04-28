@@ -11,9 +11,9 @@ public interface AttributeService {
 
     boolean updateAttributes(int productID, Map<String, String> attributes) throws ServiceException;
 
-    List<Attribute> getAttributes(int productID) throws ServiceException;
+    List<Attribute> takeAttributes(int productID) throws ServiceException;
 
-    String getParsedAttributes(int productID) throws ServiceException;
+    String takeParsedAttributes(int productID) throws ServiceException;
 
     boolean deleteAttributes(int productID) throws ServiceException;
 }

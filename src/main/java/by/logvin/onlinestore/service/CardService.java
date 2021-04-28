@@ -6,9 +6,9 @@ import by.logvin.onlinestore.service.exception.ServiceException;
 import java.util.List;
 
 public interface CardService {
-    Card getCard(int cardID) throws ServiceException;
+    Card takeCard(int cardID) throws ServiceException;
 
-    List<Card> getCardsByUserID(int userID) throws ServiceException;
+    List<Card> takeCardsByUserID(int userID) throws ServiceException;
 
     boolean addCard(long number, int validityPeriod, int authenticationCode, String cardholder, int userID) throws ServiceException;
 

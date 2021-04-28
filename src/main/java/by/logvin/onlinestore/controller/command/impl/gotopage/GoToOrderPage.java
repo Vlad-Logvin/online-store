@@ -42,10 +42,10 @@ public class GoToOrderPage implements Command {
                 if(!ExistenceProvider.getInstance().getUserExistence().isAdmin(request, response)){
                     return;
                 }
-                orders = ServiceProvider.getInstance().getOrderService().getOrderLog();
+                orders = ServiceProvider.getInstance().getOrderService().takeOrderLog();
             } else {
                 if (userID == ((User) request.getSession(false).getAttribute(Message.ATTRIBUTE_USER)).getId()) {
-                    orders = ServiceProvider.getInstance().getOrderService().getUserOrders(userID);
+                    orders = ServiceProvider.getInstance().getOrderService().takeUserOrders(userID);
                 } else {
                     request.getSession(true).setAttribute(Message.MESSAGE, Message.WRONG_USER_ID_INPUT);
                     logger.info("Redirect to main page");

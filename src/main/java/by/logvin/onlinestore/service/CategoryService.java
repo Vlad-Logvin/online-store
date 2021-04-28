@@ -10,9 +10,9 @@ public interface CategoryService {
 
     boolean deleteCategory(int categoryID) throws ServiceException;
 
-    Category getCategory(int categoryID) throws ServiceException;
+    Category takeCategory(int categoryID) throws ServiceException;
 
-    List<Category> getCategories() throws ServiceException;
+    List<Category> takeCategories() throws ServiceException;
 
-    Category getCategory(String name) throws ServiceException;
+    Category takeCategory(String name) throws ServiceException;
 }

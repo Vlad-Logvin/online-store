@@ -4,7 +4,7 @@ import by.logvin.onlinestore.bean.Basket;
 import by.logvin.onlinestore.service.exception.ServiceException;
 
 public interface BasketService {
-    Basket getBasketByUserID(int userID) throws ServiceException;
+    Basket takeBasketByUserID(int userID) throws ServiceException;
 
     boolean addProduct(int basketID, int productID) throws ServiceException;
 

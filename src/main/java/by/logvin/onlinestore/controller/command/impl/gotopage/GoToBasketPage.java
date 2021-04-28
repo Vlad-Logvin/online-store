@@ -35,7 +35,7 @@ public class GoToBasketPage implements Command {
         }
 
         try {
-            request.setAttribute(Message.ATTRIBUTE_PRODUCTS, ServiceProvider.getInstance().getBasketService().getBasketByUserID(((User)session.getAttribute(Message.ATTRIBUTE_USER)).getId()).getProducts());
+            request.setAttribute(Message.ATTRIBUTE_PRODUCTS, ServiceProvider.getInstance().getBasketService().takeBasketByUserID(((User)session.getAttribute(Message.ATTRIBUTE_USER)).getId()).getProducts());
             request.getSession(false).setAttribute(Message.ATTRIBUTE_URL, GoToPage.REDIRECT_BASKET_PAGE);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_BASKET_PAGE);
             logger.info("Forward to basket page");

@@ -33,7 +33,7 @@ public class GoToFavouritePage implements Command {
         }
 
         try {
-            request.setAttribute(Message.ATTRIBUTE_PRODUCTS, ServiceProvider.getInstance().getFavouriteService().getFavouriteByUserID(((User)session.getAttribute(Message.ATTRIBUTE_USER)).getId()).getProducts());
+            request.setAttribute(Message.ATTRIBUTE_PRODUCTS, ServiceProvider.getInstance().getFavouriteService().takeFavouriteByUserID(((User)session.getAttribute(Message.ATTRIBUTE_USER)).getId()).getProducts());
             request.getSession(false).setAttribute(Message.ATTRIBUTE_URL, GoToPage.REDIRECT_FAVOURITE_PAGE);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_FAVOURITE_PAGE);
             logger.info("Forward to favourite page");

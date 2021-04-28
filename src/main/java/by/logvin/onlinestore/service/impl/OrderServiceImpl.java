@@ -9,7 +9,6 @@ import by.logvin.onlinestore.service.OrderService;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +18,11 @@ public class OrderServiceImpl implements OrderService {
     private final static Logger logger = Logger.getLogger(OrderServiceImpl.class);
 
     @Override
-    public List<Order> getUserOrders(int userID) throws ServiceException {
+    public List<Order> takeUserOrders(int userID) throws ServiceException {
         OrderDAO orderDAO = DAOProvider.getInstance().getOrderDAO();
         List<Order> orders = null;
         try {
-            orders = orderDAO.getUserOrders(userID);
+            orders = orderDAO.takeUserOrders(userID);
             logger.info("Orders get: " + orders);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during orders getting", e);
@@ -47,11 +46,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrderLog() throws ServiceException {
+    public List<Order> takeOrderLog() throws ServiceException {
         OrderDAO orderDAO = DAOProvider.getInstance().getOrderDAO();
         List<Order> orders = null;
         try {
-            orders = orderDAO.getOrderLog();
+            orders = orderDAO.takeOrderLog();
             logger.info("Orders get: " + orders);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during orders getting", e);

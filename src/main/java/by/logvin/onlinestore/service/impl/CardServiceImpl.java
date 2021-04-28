@@ -16,11 +16,11 @@ public class CardServiceImpl implements CardService {
     private final static Logger logger = Logger.getLogger(CardServiceImpl.class);
 
     @Override
-    public Card getCard(int cardID) throws ServiceException {
+    public Card takeCard(int cardID) throws ServiceException {
         CardDAO cardDAO = DAOProvider.getInstance().getCardDAO();
         Card card = null;
         try {
-            card = cardDAO.getCard(cardID);
+            card = cardDAO.takeCard(cardID);
             logger.info("Card gets: " + card);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during card getting", e);
@@ -30,11 +30,11 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<Card> getCardsByUserID(int userID) throws ServiceException {
+    public List<Card> takeCardsByUserID(int userID) throws ServiceException {
         CardDAO cardDAO = DAOProvider.getInstance().getCardDAO();
         List<Card> cards = null;
         try {
-            cards = cardDAO.getCardsByUserID(userID);
+            cards = cardDAO.takeCardsByUserID(userID);
             logger.info("Cards get: " + cards);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during cards getting by user id", e);

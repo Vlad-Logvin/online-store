@@ -76,16 +76,16 @@ public class SQLUserDAO implements UserDAO {
                 return null;
             }
             userID = userResultSet.getInt("u_id");
-            cards = ServiceProvider.getInstance().getCardService().getCardsByUserID(userID);
-            if ((basket = ServiceProvider.getInstance().getBasketService().getBasketByUserID(userID)) == null) {
+            cards = ServiceProvider.getInstance().getCardService().takeCardsByUserID(userID);
+            if ((basket = ServiceProvider.getInstance().getBasketService().takeBasketByUserID(userID)) == null) {
                 ServiceProvider.getInstance().getBasketService().createBasket(userID);
-                basket = ServiceProvider.getInstance().getBasketService().getBasketByUserID(userID);
+                basket = ServiceProvider.getInstance().getBasketService().takeBasketByUserID(userID);
             }
-            if ((favourite = ServiceProvider.getInstance().getFavouriteService().getFavouriteByUserID(userID)) == null) {
+            if ((favourite = ServiceProvider.getInstance().getFavouriteService().takeFavouriteByUserID(userID)) == null) {
                 ServiceProvider.getInstance().getFavouriteService().createFavourite(userID);
-                favourite = ServiceProvider.getInstance().getFavouriteService().getFavouriteByUserID(userID);
+                favourite = ServiceProvider.getInstance().getFavouriteService().takeFavouriteByUserID(userID);
             }
-            orders = ServiceProvider.getInstance().getOrderService().getUserOrders(userID);
+            orders = ServiceProvider.getInstance().getOrderService().takeUserOrders(userID);
             user = new User(
                     userID,
                     userResultSet.getString("u_email"),
@@ -236,7 +236,7 @@ public class SQLUserDAO implements UserDAO {
     }
 
     @Override
-    public List<User> getUsers() throws DAOException {
+    public List<User> takeUsers() throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         Statement statement = null;

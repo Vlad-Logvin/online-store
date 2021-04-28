@@ -66,8 +66,8 @@ public class MakeOrder implements Command {
                 session.setAttribute(Message.MESSAGE, Message.CORRECT_MAKE_ORDER);
                 ServiceProvider.getInstance().getBasketService().deleteBasketByUserID(user.getId());
                 ServiceProvider.getInstance().getBasketService().createBasket(user.getId());
-                user.getUserDetails().setBasket(ServiceProvider.getInstance().getBasketService().getBasketByUserID(user.getId()));
-                user.getUserDetails().setOrders(ServiceProvider.getInstance().getOrderService().getUserOrders(user.getId()));
+                user.getUserDetails().setBasket(ServiceProvider.getInstance().getBasketService().takeBasketByUserID(user.getId()));
+                user.getUserDetails().setOrders(ServiceProvider.getInstance().getOrderService().takeUserOrders(user.getId()));
             } else {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_MAKE_ORDER);
             }

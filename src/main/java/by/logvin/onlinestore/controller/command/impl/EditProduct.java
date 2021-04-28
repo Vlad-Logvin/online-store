@@ -35,7 +35,7 @@ public class EditProduct implements Command {
                     request.getParameter(Message.ATTRIBUTE_PRODUCT_DESCRIPTION),
                     Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_QUANTITY)),
                     request.getParameter(Message.ATTRIBUTE_PRODUCT_PHOTO_URL),
-                    ServiceProvider.getInstance().getCategoryService().getCategory(request.getParameter(Message.ATTRIBUTE_PRODUCT_CATEGORY)).getId(),
+                    ServiceProvider.getInstance().getCategoryService().takeCategory(request.getParameter(Message.ATTRIBUTE_PRODUCT_CATEGORY)).getId(),
                     new AttributeParserImpl().parse(request.getParameter(Message.ATTRIBUTE_PRODUCT_ATTRIBUTES))))
             {
                 session.setAttribute(Message.ATTRIBUTE_USER, ServiceProvider.getInstance().getUserService().signIn(user.getEmail(), user.getPassword()));

@@ -20,7 +20,7 @@ public class SQLCardDAO implements CardDAO {
     private final static Logger logger = Logger.getLogger(SQLCardDAO.class);
 
     @Override
-    public Card getCard(int cardID) throws DAOException {
+    public Card takeCard(int cardID) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;
@@ -69,7 +69,7 @@ public class SQLCardDAO implements CardDAO {
     }
 
     @Override
-    public List<Card> getCardsByUserID(int userID) throws DAOException {
+    public List<Card> takeCardsByUserID(int userID) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;

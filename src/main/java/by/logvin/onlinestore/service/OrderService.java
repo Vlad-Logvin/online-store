@@ -13,7 +13,7 @@ import java.util.Map;
 public interface OrderService {
     boolean makeOrder(int userID, Map<Product, Integer> products, int cardID, Timestamp dateOfPurchase) throws ServiceException;
 
-    List<Order> getOrderLog() throws ServiceException;
+    List<Order> takeOrderLog() throws ServiceException;
 
-    List<Order> getUserOrders(int userID) throws ServiceException;
+    List<Order> takeUserOrders(int userID) throws ServiceException;
 }

@@ -23,7 +23,7 @@ public class SQLBasketDAO implements BasketDAO {
     private final static Logger logger = Logger.getLogger(SQLBasketDAO.class);
 
     @Override
-    public Basket getBasketByUserID(int userID) throws DAOException {
+    public Basket takeBasketByUserID(int userID) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;

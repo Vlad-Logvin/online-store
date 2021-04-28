@@ -25,7 +25,7 @@ public class GoToAddProductFormPage implements Command {
 
         try {
             request.setAttribute(Message.ATTRIBUTE_ACTION, Message.ATTRIBUTE_ADD_PRODUCT);
-            request.setAttribute(Message.ATTRIBUTE_CATEGORIES, ServiceProvider.getInstance().getCategoryService().getCategories());
+            request.setAttribute(Message.ATTRIBUTE_CATEGORIES, ServiceProvider.getInstance().getCategoryService().takeCategories());
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_PRODUCT_FORM_PAGE);
             logger.info("Forward to product form page");
             requestDispatcher.forward(request, response);

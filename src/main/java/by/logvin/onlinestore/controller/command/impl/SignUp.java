@@ -19,6 +19,7 @@ public class SignUp implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
         HttpSession session = request.getSession(true);
         try {
             if(ServiceProvider.getInstance().getUserService().signUp(new RegistrationInfo(

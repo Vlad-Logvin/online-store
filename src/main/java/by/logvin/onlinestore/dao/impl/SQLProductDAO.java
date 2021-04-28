@@ -426,8 +426,8 @@ public class SQLProductDAO implements ProductDAO {
 
     private Product getProductFromResultSet(ResultSet resultSet) throws SQLException, ServiceException {
         int productID = resultSet.getInt("p_id");
-        Category category = ServiceProvider.getInstance().getCategoryService().getCategory(resultSet.getInt("p_category_id"));
-        List<Attribute> attributes = ServiceProvider.getInstance().getAttributeService().getAttributes(productID);
+        Category category = ServiceProvider.getInstance().getCategoryService().takeCategory(resultSet.getInt("p_category_id"));
+        List<Attribute> attributes = ServiceProvider.getInstance().getAttributeService().takeAttributes(productID);
         return new Product(
                 productID,
                 resultSet.getString("p_name"),

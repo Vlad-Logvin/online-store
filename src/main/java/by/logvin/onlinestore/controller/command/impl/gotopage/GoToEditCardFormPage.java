@@ -27,7 +27,7 @@ public class GoToEditCardFormPage implements Command {
 
         try {
             request.setAttribute(Message.ATTRIBUTE_ACTION, Message.ATTRIBUTE_EDIT_CARD);
-            request.setAttribute(Message.ATTRIBUTE_CARD, ServiceProvider.getInstance().getCardService().getCard(Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CARD_ID))));
+            request.setAttribute(Message.ATTRIBUTE_CARD, ServiceProvider.getInstance().getCardService().takeCard(Integer.parseInt(request.getParameter(Message.ATTRIBUTE_CARD_ID))));
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_CARD_FORM_PAGE);
             logger.info("Forward to card form page");
             requestDispatcher.forward(request, response);

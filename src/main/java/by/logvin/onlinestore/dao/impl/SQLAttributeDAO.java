@@ -89,7 +89,7 @@ public class SQLAttributeDAO implements AttributeDAO {
     }
 
     @Override
-    public List<Attribute> getAttributes(int productID) throws DAOException {
+    public List<Attribute> takeAttributes(int productID) throws DAOException {
         Connection connection = getConnection();
         logger.info("Connection established");
         PreparedStatement preparedStatement = null;

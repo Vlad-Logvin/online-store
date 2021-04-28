@@ -6,9 +6,9 @@ import by.logvin.onlinestore.dao.exception.DAOException;
 import java.util.List;
 
 public interface CardDAO {
-    Card getCard(int cardID) throws DAOException;
+    Card takeCard(int cardID) throws DAOException;
 
-    List<Card> getCardsByUserID(int userID) throws DAOException;
+    List<Card> takeCardsByUserID(int userID) throws DAOException;
 
     boolean addCard(long number, int validityPeriod, int authenticationCode, String cardholder, int userID) throws DAOException;
 

@@ -17,5 +17,5 @@ public interface UserService {
 
     boolean editUserAccess(int userID, int accessID) throws ServiceException;
 
-    List<User> getUsers() throws ServiceException;
+    List<User> takeUsers() throws ServiceException;
 }

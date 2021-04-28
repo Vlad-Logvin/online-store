@@ -10,7 +10,6 @@ import by.logvin.onlinestore.service.util.AttributeParser;
 import by.logvin.onlinestore.service.util.impl.AttributeParserImpl;
 import org.apache.log4j.Logger;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -48,11 +47,11 @@ public class AttributeServiceImpl implements AttributeService {
     }
 
     @Override
-    public List<Attribute> getAttributes(int productID) throws ServiceException {
+    public List<Attribute> takeAttributes(int productID) throws ServiceException {
         AttributeDAO attributeDAO = DAOProvider.getInstance().getAttributeDAO();
         List<Attribute> attributes = null;
         try {
-            attributes = attributeDAO.getAttributes(productID);
+            attributes = attributeDAO.takeAttributes(productID);
             logger.info("Attributes get: " + attributes);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during attributes getting", e);
@@ -76,13 +75,13 @@ public class AttributeServiceImpl implements AttributeService {
     }
 
     @Override
-    public String getParsedAttributes(int productID) throws ServiceException {
+    public String takeParsedAttributes(int productID) throws ServiceException {
         AttributeDAO attributeDAO = DAOProvider.getInstance().getAttributeDAO();
         List<Attribute> attributes = null;
         String parsedAttributes = null;
         AttributeParser parser = new AttributeParserImpl();
         try {
-            attributes = attributeDAO.getAttributes(productID);
+            attributes = attributeDAO.takeAttributes(productID);
             parsedAttributes = parser.unparse(attributes);
             logger.info("Attributes get: " + parsedAttributes);
         } catch (DAOException e) {

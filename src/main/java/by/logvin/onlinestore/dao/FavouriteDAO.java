@@ -5,7 +5,7 @@ import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.dao.exception.DAOException;
 
 public interface FavouriteDAO {
-    Favourite getFavouriteByUserID(int userID) throws DAOException;
+    Favourite takeFavouriteByUserID(int userID) throws DAOException;
 
     boolean addProduct(int favouriteID, int productID) throws DAOException;
 

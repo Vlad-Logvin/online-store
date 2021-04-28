@@ -18,5 +18,5 @@ public interface UserDAO {
 
     boolean editUserAccess(int userID, int accessID) throws DAOException;
 
-    List<User> getUsers() throws DAOException;
+    List<User> takeUsers() throws DAOException;
 }

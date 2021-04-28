@@ -25,7 +25,7 @@ public class GoToShowUserPage implements Command {
         }
 
         try {
-            request.setAttribute(Message.ATTRIBUTE_USERS, ServiceProvider.getInstance().getUserService().getUsers());
+            request.setAttribute(Message.ATTRIBUTE_USERS, ServiceProvider.getInstance().getUserService().takeUsers());
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(GoToPage.FORWARD_SHOW_USER_PAGE);
             logger.info("Forward to show user page");
             requestDispatcher.forward(request, response);

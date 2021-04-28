@@ -13,11 +13,11 @@ public class FavouriteServiceImpl implements FavouriteService {
     private final static Logger logger = Logger.getLogger(FavouriteServiceImpl.class);
 
     @Override
-    public Favourite getFavouriteByUserID(int userID) throws ServiceException {
+    public Favourite takeFavouriteByUserID(int userID) throws ServiceException {
         FavouriteDAO favouriteDAO = DAOProvider.getInstance().getFavouriteDAO();
         Favourite favourite = null;
         try {
-            favourite = favouriteDAO.getFavouriteByUserID(userID);
+            favourite = favouriteDAO.takeFavouriteByUserID(userID);
             logger.info("Favourite gets: " + favourite);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during favourite getting", e);

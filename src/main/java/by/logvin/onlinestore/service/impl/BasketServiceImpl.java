@@ -13,11 +13,11 @@ public class BasketServiceImpl implements BasketService {
     private final static Logger logger = Logger.getLogger(BasketServiceImpl.class);
 
     @Override
-    public Basket getBasketByUserID(int userID) throws ServiceException {
+    public Basket takeBasketByUserID(int userID) throws ServiceException {
         BasketDAO basketDAO = DAOProvider.getInstance().getBasketDAO();
         Basket basket = null;
         try {
-            basket = basketDAO.getBasketByUserID(userID);
+            basket = basketDAO.takeBasketByUserID(userID);
             logger.info("Basket gets: " + basket);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during basket getting by user id", e);

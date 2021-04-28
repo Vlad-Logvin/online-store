@@ -4,7 +4,7 @@ import by.logvin.onlinestore.bean.Favourite;
 import by.logvin.onlinestore.service.exception.ServiceException;
 
 public interface FavouriteService {
-    Favourite getFavouriteByUserID(int userID) throws ServiceException;
+    Favourite takeFavouriteByUserID(int userID) throws ServiceException;
 
     boolean addProduct(int favouriteID, int productID) throws ServiceException;
 
