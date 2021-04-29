@@ -6,6 +6,7 @@ import by.logvin.onlinestore.dao.BasketDAO;
 import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
+import by.logvin.onlinestore.dao.impl.sqlparameter.SQLBasketParameter;
 import by.logvin.onlinestore.dao.impl.sqlrequest.BasketSQLRequest;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
@@ -25,26 +26,25 @@ public class SQLBasketDAO implements BasketDAO {
     @Override
     public Basket takeBasketByUserID(int userID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        PreparedStatement preparedStatement = null;
         Basket basket = null;
         ResultSet resultSet = null;
         List<Product> products = null;
         int basketID = 0;
-        try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.SELECT_BASKET_BY_USER_ID);
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(BasketSQLRequest.SELECT_BASKET_BY_USER_ID)
+        ) {
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
             while (resultSet.next()) {
                 if (basketID == 0) {
-                    basketID = resultSet.getInt("b_id");
+                    basketID = resultSet.getInt(SQLBasketParameter.BASKET_ID);
                 }
                 if (products == null) {
                     products = new ArrayList<>();
                 }
-                if(resultSet.getInt("pb_product_id") != 0){
-                    products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("pb_product_id")));
+                if (resultSet.getInt(SQLBasketParameter.BASKET_PRODUCT_ID) != 0) {
+                    products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt(SQLBasketParameter.BASKET_PRODUCT_ID)));
                 }
             }
             if (basketID != 0) {
@@ -54,19 +54,12 @@ public class SQLBasketDAO implements BasketDAO {
                 );
             }
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } catch (ServiceException e) {
-            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            logger.error("ServiceException was thrown due to an error during getting product information by product id");
             throw new DAOException("Error product information by product id", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -76,7 +69,6 @@ public class SQLBasketDAO implements BasketDAO {
             }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return basket;
@@ -85,29 +77,20 @@ public class SQLBasketDAO implements BasketDAO {
     @Override
     public boolean addProduct(int basketID, int productID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        int numberOfUpdatedLines = 0;
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.ADD_PRODUCT_TO_BASKET);
+        int numberOfUpdatedLines;
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(BasketSQLRequest.ADD_PRODUCT_TO_BASKET)
+        ) {
             preparedStatement.setInt(1, basketID);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return numberOfUpdatedLines != 0;
@@ -116,29 +99,20 @@ public class SQLBasketDAO implements BasketDAO {
     @Override
     public boolean removeProduct(int basketID, int productID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        int numberOfUpdatedLines = 0;
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.REMOVE_PRODUCT_FROM_BASKET);
+        int numberOfUpdatedLines;
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(BasketSQLRequest.REMOVE_PRODUCT_FROM_BASKET)
+        ) {
             preparedStatement.setInt(1, basketID);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return numberOfUpdatedLines != 0;
@@ -147,28 +121,19 @@ public class SQLBasketDAO implements BasketDAO {
     @Override
     public boolean deleteBasketByUserID(int userID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        int numberOfUpdatedLines = 0;
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.DELETE_BASKET_BY_USER_ID);
+        int numberOfUpdatedLines;
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(BasketSQLRequest.DELETE_BASKET_BY_USER_ID)
+        ) {
             preparedStatement.setInt(1, userID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return numberOfUpdatedLines != 0;
@@ -177,40 +142,30 @@ public class SQLBasketDAO implements BasketDAO {
     @Override
     public boolean createBasket(int userID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        PreparedStatement preparedStatement = null;
-        int numberOfUpdatedLines = 0;
-        try {
-            preparedStatement = connection.prepareStatement(BasketSQLRequest.INSERT_BASKET);
+        int numberOfUpdatedLines;
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(BasketSQLRequest.INSERT_BASKET)
+        ) {
             preparedStatement.setInt(1, userID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return numberOfUpdatedLines != 0;
     }
 
     private Connection getConnection() throws DAOException {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            logger.info("Connection is gotten from connection pool");
         } catch (ConnectionPoolException e) {
-            logger.error("ConnectionPoolException was thrown due to an error during getting connection from connection pool", e);
+            logger.error("ConnectionPoolException was thrown due to an error during getting connection from connection pool");
             throw new DAOException("Error with getting pool from server", e);
         }
         return connection;

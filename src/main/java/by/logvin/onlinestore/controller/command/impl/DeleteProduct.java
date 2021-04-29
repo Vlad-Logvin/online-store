@@ -33,7 +33,7 @@ public class DeleteProduct implements Command {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_PRODUCT_DELETING);
             }
             logger.info("Redirect to last page");
-            response.sendRedirect((String) session.getAttribute(Message.ATTRIBUTE_URL));
+            response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         } catch (ServiceException e) {
             logger.error("Error while product deleting", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);

@@ -6,6 +6,7 @@ import by.logvin.onlinestore.dao.FavouriteDAO;
 import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
+import by.logvin.onlinestore.dao.impl.sqlparameter.SQLFavouriteParameter;
 import by.logvin.onlinestore.dao.impl.sqlrequest.FavouriteSQLRequest;
 import by.logvin.onlinestore.service.ServiceProvider;
 import by.logvin.onlinestore.service.exception.ServiceException;
@@ -24,26 +25,25 @@ public class SQLFavouriteDAO implements FavouriteDAO {
     @Override
     public Favourite takeFavouriteByUserID(int userID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        PreparedStatement preparedStatement = null;
         Favourite favourite = null;
         ResultSet resultSet = null;
         List<Product> products = null;
         int favouriteID = 0;
-        try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.SELECT_FAVOURITE_BY_USER_ID);
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(FavouriteSQLRequest.SELECT_FAVOURITE_BY_USER_ID)
+        ) {
             preparedStatement.setInt(1, userID);
             resultSet = preparedStatement.executeQuery();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
             while (resultSet.next()) {
                 if (favouriteID == 0) {
-                    favouriteID = resultSet.getInt("f_id");
+                    favouriteID = resultSet.getInt(SQLFavouriteParameter.FAVOURITE_ID);
                 }
                 if (products == null) {
                     products = new ArrayList<>();
                 }
-                if(resultSet.getInt("fp_product_id") != 0) {
-                    products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt("fp_product_id")));
+                if (resultSet.getInt(SQLFavouriteParameter.FAVOURITE_PRODUCT_ID) != 0) {
+                    products.add(ServiceProvider.getInstance().getProductService().takeByProductID(resultSet.getInt(SQLFavouriteParameter.FAVOURITE_PRODUCT_ID)));
                 }
             }
             if (favouriteID != 0) {
@@ -53,19 +53,12 @@ public class SQLFavouriteDAO implements FavouriteDAO {
                 );
             }
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } catch (ServiceException e) {
-            logger.error("ServiceException was thrown due to an error during getting product information by product id", e);
+            logger.error("ServiceException was thrown due to an error during getting product information by product id");
             throw new DAOException("Error product information by product id", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -75,7 +68,6 @@ public class SQLFavouriteDAO implements FavouriteDAO {
             }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return favourite;
@@ -84,29 +76,20 @@ public class SQLFavouriteDAO implements FavouriteDAO {
     @Override
     public boolean addProduct(int favouriteID, int productID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        int numberOfUpdatedLines = 0;
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.ADD_PRODUCT_TO_FAVOURITE);
+        int numberOfUpdatedLines;
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(FavouriteSQLRequest.ADD_PRODUCT_TO_FAVOURITE)
+        ) {
             preparedStatement.setInt(1, favouriteID);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return numberOfUpdatedLines != 0;
@@ -115,29 +98,20 @@ public class SQLFavouriteDAO implements FavouriteDAO {
     @Override
     public boolean removeProduct(int favouriteID, int productID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        int numberOfUpdatedLines = 0;
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.REMOVE_PRODUCT_FROM_FAVOURITE);
+        int numberOfUpdatedLines;
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(FavouriteSQLRequest.REMOVE_PRODUCT_FROM_FAVOURITE)
+        ) {
             preparedStatement.setInt(1, favouriteID);
             preparedStatement.setInt(2, productID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return numberOfUpdatedLines != 0;
@@ -146,28 +120,19 @@ public class SQLFavouriteDAO implements FavouriteDAO {
     @Override
     public boolean deleteFavouriteByUserID(int userID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        int numberOfUpdatedLines = 0;
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.DELETE_FAVOURITE_BY_USER_ID);
+        int numberOfUpdatedLines;
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(FavouriteSQLRequest.DELETE_FAVOURITE_BY_USER_ID)
+        ) {
             preparedStatement.setInt(1, userID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return numberOfUpdatedLines != 0;
@@ -176,40 +141,30 @@ public class SQLFavouriteDAO implements FavouriteDAO {
     @Override
     public boolean createFavourite(int userID) throws DAOException {
         Connection connection = getConnection();
-        logger.info("Connection established");
-        PreparedStatement preparedStatement = null;
-        int numberOfUpdatedLines = 0;
-        try {
-            preparedStatement = connection.prepareStatement(FavouriteSQLRequest.INSERT_FAVOURITE);
+        int numberOfUpdatedLines;
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(FavouriteSQLRequest.INSERT_FAVOURITE)
+        ) {
             preparedStatement.setInt(1, userID);
             numberOfUpdatedLines = preparedStatement.executeUpdate();
             logger.info("Request (" + preparedStatement.toString() + ") was completed");
         } catch (SQLException e) {
-            logger.error("SQLException was thrown due to an error during prepared statement creation or execution", e);
+            logger.error("SQLException was thrown due to an error during prepared statement creation or execution");
             throw new DAOException("Error prepared statement updating or setting data", e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                logger.error("Prepared statement has been already closed", e);
-            }
             if (connection != null) {
                 removeConnection(connection);
-                logger.info("Connection is broken");
             }
         }
         return numberOfUpdatedLines != 0;
     }
 
     private Connection getConnection() throws DAOException {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            logger.info("Connection is gotten from connection pool");
         } catch (ConnectionPoolException e) {
-            logger.error("ConnectionPoolException was thrown due to an error during getting connection from connection pool", e);
+            logger.error("ConnectionPoolException was thrown due to an error during getting connection from connection pool");
             throw new DAOException("Error with getting pool from server", e);
         }
         return connection;
