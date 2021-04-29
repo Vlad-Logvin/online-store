@@ -15,12 +15,11 @@ public class FavouriteServiceImpl implements FavouriteService {
     @Override
     public Favourite takeFavouriteByUserID(int userID) throws ServiceException {
         FavouriteDAO favouriteDAO = DAOProvider.getInstance().getFavouriteDAO();
-        Favourite favourite = null;
+        Favourite favourite;
         try {
             favourite = favouriteDAO.takeFavouriteByUserID(userID);
-            logger.info("Favourite gets: " + favourite);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during favourite getting", e);
+            logger.error("DAOException was thrown during favourite getting");
             throw new ServiceException("Error during favourite getting", e);
         }
         return favourite;
@@ -29,12 +28,11 @@ public class FavouriteServiceImpl implements FavouriteService {
     @Override
     public boolean addProduct(int favouriteID, int productID) throws ServiceException {
         FavouriteDAO favouriteDAO = DAOProvider.getInstance().getFavouriteDAO();
-        boolean isAdd = false;
+        boolean isAdd;
         try {
             isAdd = favouriteDAO.addProduct(favouriteID, productID);
-            logger.info("Favourite product adds: " + isAdd);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during favourite product adding", e);
+            logger.error("DAOException was thrown during favourite product adding");
             throw new ServiceException("Error during favourite product adding", e);
         }
         return isAdd;
@@ -43,12 +41,11 @@ public class FavouriteServiceImpl implements FavouriteService {
     @Override
     public boolean removeProduct(int favouriteID, int productID) throws ServiceException {
         FavouriteDAO favouriteDAO = DAOProvider.getInstance().getFavouriteDAO();
-        boolean isRemove = false;
+        boolean isRemove;
         try {
             isRemove = favouriteDAO.removeProduct(favouriteID, productID);
-            logger.info("Favourite product removes: " + isRemove);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during favourite product removing", e);
+            logger.error("DAOException was thrown during favourite product removing");
             throw new ServiceException("Error during favourite product removing", e);
         }
         return isRemove;
@@ -57,12 +54,11 @@ public class FavouriteServiceImpl implements FavouriteService {
     @Override
     public boolean deleteFavouriteByUserID(int userID) throws ServiceException {
         FavouriteDAO favouriteDAO = DAOProvider.getInstance().getFavouriteDAO();
-        boolean isDeleted = false;
+        boolean isDeleted;
         try {
             isDeleted = favouriteDAO.deleteFavouriteByUserID(userID);
-            logger.info("Favourite deletes: " + isDeleted);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during favourite deleting", e);
+            logger.error("DAOException was thrown during favourite deleting");
             throw new ServiceException("Error during favourite deleting", e);
         }
         return isDeleted;
@@ -71,12 +67,11 @@ public class FavouriteServiceImpl implements FavouriteService {
     @Override
     public boolean createFavourite(int userID) throws ServiceException {
         FavouriteDAO favouriteDAO = DAOProvider.getInstance().getFavouriteDAO();
-        boolean isCreated = false;
+        boolean isCreated;
         try {
             isCreated = favouriteDAO.createFavourite(userID);
-            logger.info("Favourite creates: " + isCreated);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during favourite creating", e);
+            logger.error("DAOException was thrown during favourite creating");
             throw new ServiceException("Error during favourite creating", e);
         }
         return isCreated;

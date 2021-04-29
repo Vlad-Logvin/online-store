@@ -17,12 +17,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean addCategory(String name) throws ServiceException {
         CategoryDAO categoryDAO = DAOProvider.getInstance().getCategoryDAO();
-        boolean isAdd = false;
+        boolean isAdd;
         try {
             isAdd = categoryDAO.addCategory(name);
-            logger.info("Category adds: " + isAdd);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during category adding", e);
+            logger.error("DAOException was thrown during category adding");
             throw new ServiceException("Error during category adding", e);
         }
         return isAdd;
@@ -31,12 +30,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean deleteCategory(int categoryID) throws ServiceException {
         CategoryDAO categoryDAO = DAOProvider.getInstance().getCategoryDAO();
-        boolean isDelete = false;
+        boolean isDelete;
         try {
             isDelete = categoryDAO.deleteCategory(categoryID);
-            logger.info("Category deletes: " + isDelete);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during category deleting", e);
+            logger.error("DAOException was thrown during category deleting");
             throw new ServiceException("Error during category deleting", e);
         }
         return isDelete;
@@ -45,12 +43,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category takeCategory(int categoryID) throws ServiceException {
         CategoryDAO categoryDAO = DAOProvider.getInstance().getCategoryDAO();
-        Category category = null;
+        Category category;
         try {
             category = categoryDAO.takeCategory(categoryID);
-            logger.info("Category gets: " + category);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during category getting", e);
+            logger.error("DAOException was thrown during category getting");
             throw new ServiceException("Error during category getting", e);
         }
         return category;
@@ -59,12 +56,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> takeCategories() throws ServiceException {
         CategoryDAO categoryDAO = DAOProvider.getInstance().getCategoryDAO();
-        List<Category> categories = null;
+        List<Category> categories;
         try {
             categories = categoryDAO.takeCategories();
-            logger.info("Categories get: " + categories);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during categories getting", e);
+            logger.error("DAOException was thrown during categories getting");
             throw new ServiceException("Error during categories getting", e);
         }
         return categories;
@@ -73,12 +69,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category takeCategory(String name) throws ServiceException {
         CategoryDAO categoryDAO = DAOProvider.getInstance().getCategoryDAO();
-        Category category = null;
+        Category category;
         try {
             category = categoryDAO.takeCategory(name);
-            logger.info("Category gets: " + category);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during category getting", e);
+            logger.error("DAOException was thrown during category getting");
             throw new ServiceException("Error during category getting", e);
         }
         return category;

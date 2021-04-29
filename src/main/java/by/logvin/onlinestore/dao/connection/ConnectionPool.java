@@ -44,28 +44,29 @@ public final class ConnectionPool {
         try {
             logger.info("Driver name = " + driverName);
             Class.forName(driverName);
-            givenAwayConQueue = new ArrayBlockingQueue<Connection>(poolSize);
-            connectionQueue = new ArrayBlockingQueue<Connection>(poolSize);
+            givenAwayConQueue = new ArrayBlockingQueue<>(poolSize);
+            connectionQueue = new ArrayBlockingQueue<>(poolSize);
             for (int i = 0; i < poolSize; i++) {
                 connectionQueue.add(new PooledConnection(DriverManager.getConnection(url, user, password)));
             }
         } catch (SQLException e) {
-            logger.info("SQLException", e);
-            throw new ConnectionPoolException("SQLException in ConnectionPool", e);
+            logger.error("SQLException thrown during getting connection");
+            throw new ConnectionPoolException("SQLException in ConnectionPool thrown due to getting connection", e);
         } catch (ClassNotFoundException e) {
-            logger.info("ClassNotFoundException", e);
+            logger.error("ClassNotFoundException thrown due to finding driver class");
             throw new ConnectionPoolException("Can't find database driver class", e);
         }
     }
 
     public Connection getConnection() throws ConnectionPoolException {
-        Connection connection = null;
+        Connection connection;
         try {
             synchronized (this) {
                 connection = connectionQueue.take();
                 givenAwayConQueue.add(connection);
             }
         } catch (InterruptedException e) {
+            logger.error("Interrupted exception thrown due to taking connection from connection queue");
             throw new ConnectionPoolException("Interrupted exception while taking connection", e);
         }
         return connection;
@@ -86,17 +87,19 @@ public final class ConnectionPool {
         try {
             closeConnectionQueue(connectionQueue);
         } catch (SQLException e) {
+            logger.error("SQLException threw due to closing connection queue");
             throw new ConnectionPoolException("Connection pool exceptions throws while closing connection queue", e);
         }
         try {
             closeConnectionQueue(givenAwayConQueue);
         } catch (SQLException e) {
+            logger.error("SQLException threw due to closing connection queue");
             throw new ConnectionPoolException("Connection pool exceptions throws while closing given away connection queue", e);
         }
     }
 
     private void closeConnectionQueue(BlockingQueue<Connection> queue) throws SQLException {
-        Connection connection = null;
+        Connection connection;
         while ((connection = queue.poll()) != null) {
             ((PooledConnection)connection).reallyClose();
         }

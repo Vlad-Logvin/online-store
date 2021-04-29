@@ -15,12 +15,11 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public Basket takeBasketByUserID(int userID) throws ServiceException {
         BasketDAO basketDAO = DAOProvider.getInstance().getBasketDAO();
-        Basket basket = null;
+        Basket basket;
         try {
             basket = basketDAO.takeBasketByUserID(userID);
-            logger.info("Basket gets: " + basket);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during basket getting by user id", e);
+            logger.error("DAOException was thrown during basket getting by user id");
             throw new ServiceException("Error during basket getting by user id", e);
         }
         return basket;
@@ -29,12 +28,11 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public boolean addProduct(int basketID, int productID) throws ServiceException {
         BasketDAO basketDAO = DAOProvider.getInstance().getBasketDAO();
-        boolean isAdd = false;
+        boolean isAdd;
         try {
             isAdd = basketDAO.addProduct(basketID, productID);
-            logger.info("Basket product adds: " + isAdd);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during basket product adding", e);
+            logger.error("DAOException was thrown during basket product adding");
             throw new ServiceException("Error during basket product adding", e);
         }
         return isAdd;
@@ -43,12 +41,11 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public boolean removeProduct(int basketID, int productID) throws ServiceException {
         BasketDAO basketDAO = DAOProvider.getInstance().getBasketDAO();
-        boolean isRemove = false;
+        boolean isRemove;
         try {
             isRemove = basketDAO.removeProduct(basketID, productID);
-            logger.info("Basket product removes: " + isRemove);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during basket product removing", e);
+            logger.error("DAOException was thrown during basket product removing");
             throw new ServiceException("Error during basket product removing", e);
         }
         return isRemove;
@@ -57,12 +54,11 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public boolean deleteBasketByUserID(int userID) throws ServiceException {
         BasketDAO basketDAO = DAOProvider.getInstance().getBasketDAO();
-        boolean isDelete = false;
+        boolean isDelete;
         try {
             isDelete = basketDAO.deleteBasketByUserID(userID);
-            logger.info("Basket deletes: " + isDelete);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during basket deleting by user id", e);
+            logger.error("DAOException was thrown during basket deleting by user id");
             throw new ServiceException("Error during basket deleting by user id", e);
         }
         return isDelete;
@@ -71,12 +67,11 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public boolean createBasket(int userID) throws ServiceException {
         BasketDAO basketDAO = DAOProvider.getInstance().getBasketDAO();
-        boolean isCreate = false;
+        boolean isCreate;
         try {
             isCreate = basketDAO.createBasket(userID);
-            logger.info("Basket creates: " + isCreate);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during basket creating", e);
+            logger.error("DAOException was thrown during basket creating");
             throw new ServiceException("Error during basket creating", e);
         }
         return isCreate;

@@ -24,12 +24,11 @@ public class UserServiceImpl implements UserService {
         }
 
         UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
-        boolean isSignUp = false;
+        boolean isSignUp;
         try {
             isSignUp = userDAO.signUp(info);
-            logger.info("User signs up: " + isSignUp);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during user sign up", e);
+            logger.error("DAOException was thrown during user sign up");
             throw new ServiceException("Error during user sign up", e);
         }
         return isSignUp;
@@ -44,12 +43,11 @@ public class UserServiceImpl implements UserService {
         }
 
         UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
-        User user = null;
+        User user;
         try {
             user = userDAO.signIn(email, password);
-            logger.info("User signs in: " + user);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during user sign in", e);
+            logger.error("DAOException was thrown during user sign in");
             throw new ServiceException("Error during user sign in", e);
         }
         return user;
@@ -64,12 +62,11 @@ public class UserServiceImpl implements UserService {
         }
 
         UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
-        boolean isEdit = false;
+        boolean isEdit;
         try {
             isEdit = userDAO.editUserInfo(userID, email, password, firstName, lastName, dateOfBirth);
         } catch (DAOException e) {
-
-            logger.error("DAOException was thrown during editing user information", e);
+            logger.error("DAOException was thrown during editing user information");
             throw new ServiceException("Error during editing user information", e);
         }
 
@@ -79,12 +76,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean editUserRole(int userID, int roleID) throws ServiceException {
         UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
-        boolean isEdit = false;
+        boolean isEdit;
         try {
             isEdit = userDAO.editUserRole(userID, roleID);
-            logger.info("User edits: " + isEdit);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during user editing", e);
+            logger.error("DAOException was thrown during user editing");
             throw new ServiceException("Error during user editing", e);
         }
         return isEdit;
@@ -93,12 +89,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean editUserAccess(int userID, int accessID) throws ServiceException {
         UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
-        boolean isEdit = false;
+        boolean isEdit;
         try {
             isEdit = userDAO.editUserAccess(userID, accessID);
-            logger.info("User edits: " + isEdit);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during user editing", e);
+            logger.error("DAOException was thrown during user editing");
             throw new ServiceException("Error during user editing", e);
         }
         return isEdit;
@@ -107,12 +102,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> takeUsers() throws ServiceException {
         UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
-        List<User> users = null;
+        List<User> users;
         try {
             users = userDAO.takeUsers();
-            logger.info("Users get: " + users);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during users getting", e);
+            logger.error("DAOException was thrown during users getting");
             throw new ServiceException("Error during users getting", e);
         }
         return users;

@@ -18,12 +18,11 @@ public class CardServiceImpl implements CardService {
     @Override
     public Card takeCard(int cardID) throws ServiceException {
         CardDAO cardDAO = DAOProvider.getInstance().getCardDAO();
-        Card card = null;
+        Card card;
         try {
             card = cardDAO.takeCard(cardID);
-            logger.info("Card gets: " + card);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during card getting", e);
+            logger.error("DAOException was thrown during card getting");
             throw new ServiceException("Error during card getting", e);
         }
         return card;
@@ -32,12 +31,11 @@ public class CardServiceImpl implements CardService {
     @Override
     public List<Card> takeCardsByUserID(int userID) throws ServiceException {
         CardDAO cardDAO = DAOProvider.getInstance().getCardDAO();
-        List<Card> cards = null;
+        List<Card> cards;
         try {
             cards = cardDAO.takeCardsByUserID(userID);
-            logger.info("Cards get: " + cards);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during cards getting by user id", e);
+            logger.error("DAOException was thrown during cards getting by user id");
             throw new ServiceException("Error during cards getting by user id", e);
         }
         return cards;
@@ -45,17 +43,16 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public boolean addCard(long number, int validityPeriod, int authenticationCode, String cardholder, int userID) throws ServiceException {
-        if(!ValidatorProvider.getInstance().getCardValidator().validate(number, validityPeriod, authenticationCode)){
+        if (!ValidatorProvider.getInstance().getCardValidator().validate(number, validityPeriod, authenticationCode)) {
             logger.info("Not valid card data");
             return false;
         }
         CardDAO cardDAO = DAOProvider.getInstance().getCardDAO();
-        boolean isAdd = false;
+        boolean isAdd;
         try {
             isAdd = cardDAO.addCard(number, validityPeriod, authenticationCode, cardholder, userID);
-            logger.info("Card adds: " + isAdd);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during card adding", e);
+            logger.error("DAOException was thrown during card adding");
             throw new ServiceException("Error during card adding", e);
         }
         return isAdd;
@@ -64,12 +61,11 @@ public class CardServiceImpl implements CardService {
     @Override
     public boolean deleteCard(int cardID) throws ServiceException {
         CardDAO cardDAO = DAOProvider.getInstance().getCardDAO();
-        boolean isDelete = false;
+        boolean isDelete;
         try {
             isDelete = cardDAO.deleteCard(cardID);
-            logger.info("Card deletes: " + isDelete);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during card deleting", e);
+            logger.error("DAOException was thrown during card deleting");
             throw new ServiceException("DAOException was thrown during card deleting", e);
         }
         return isDelete;
@@ -77,17 +73,16 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public boolean editCardInfo(int cardID, long number, int validityPeriod, int authenticationCode, String cardholder) throws ServiceException {
-        if(!ValidatorProvider.getInstance().getCardValidator().validate(number, validityPeriod, authenticationCode)){
+        if (!ValidatorProvider.getInstance().getCardValidator().validate(number, validityPeriod, authenticationCode)) {
             logger.info("Not valid card data");
             return false;
         }
         CardDAO cardDAO = DAOProvider.getInstance().getCardDAO();
-        boolean isEdit = false;
+        boolean isEdit;
         try {
             isEdit = cardDAO.editCardInfo(cardID, number, validityPeriod, authenticationCode, cardholder);
-            logger.info("Card edits: " + isEdit);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during card editing", e);
+            logger.error("DAOException was thrown during card editing");
             throw new ServiceException("Error during card editing", e);
         }
         return isEdit;

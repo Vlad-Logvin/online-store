@@ -20,12 +20,11 @@ public class AttributeServiceImpl implements AttributeService {
     @Override
     public boolean addAttributes(int productID, Map<String, String> attributes) throws ServiceException {
         AttributeDAO attributeDAO = DAOProvider.getInstance().getAttributeDAO();
-        boolean isAdd = false;
+        boolean isAdd;
         try {
             isAdd = attributeDAO.addAttributes(productID, attributes);
-            logger.info("Attributes add: " + isAdd);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during attributes adding", e);
+            logger.error("DAOException was thrown during attributes adding");
             throw new ServiceException("Error during attributes adding", e);
         }
         return isAdd;
@@ -34,13 +33,12 @@ public class AttributeServiceImpl implements AttributeService {
     @Override
     public boolean updateAttributes(int productID, Map<String, String> attributes) throws ServiceException {
         AttributeDAO attributeDAO = DAOProvider.getInstance().getAttributeDAO();
-        boolean isUpdate = false;
+        boolean isUpdate;
         try {
             isUpdate = attributeDAO.deleteAttributes(productID);
             isUpdate = attributeDAO.addAttributes(productID, attributes) & isUpdate;
-            logger.info("Attributes update: " + isUpdate);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during attributes updating", e);
+            logger.error("DAOException was thrown during attributes updating");
             throw new ServiceException("Error during attributes updating", e);
         }
         return isUpdate;
@@ -49,12 +47,11 @@ public class AttributeServiceImpl implements AttributeService {
     @Override
     public List<Attribute> takeAttributes(int productID) throws ServiceException {
         AttributeDAO attributeDAO = DAOProvider.getInstance().getAttributeDAO();
-        List<Attribute> attributes = null;
+        List<Attribute> attributes;
         try {
             attributes = attributeDAO.takeAttributes(productID);
-            logger.info("Attributes get: " + attributes);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during attributes getting", e);
+            logger.error("DAOException was thrown during attributes getting");
             throw new ServiceException("Error during attributes getting", e);
         }
         return attributes;
@@ -63,12 +60,11 @@ public class AttributeServiceImpl implements AttributeService {
     @Override
     public boolean deleteAttributes(int productID) throws ServiceException {
         AttributeDAO attributeDAO = DAOProvider.getInstance().getAttributeDAO();
-        boolean isDelete = false;
+        boolean isDelete;
         try {
             isDelete = attributeDAO.deleteAttributes(productID);
-            logger.info("Attributes delete: " + isDelete);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during attributes deleting", e);
+            logger.error("DAOException was thrown during attributes deleting");
             throw new ServiceException("Error during attributes deleting", e);
         }
         return isDelete;
@@ -77,15 +73,14 @@ public class AttributeServiceImpl implements AttributeService {
     @Override
     public String takeParsedAttributes(int productID) throws ServiceException {
         AttributeDAO attributeDAO = DAOProvider.getInstance().getAttributeDAO();
-        List<Attribute> attributes = null;
-        String parsedAttributes = null;
+        List<Attribute> attributes;
+        String parsedAttributes;
         AttributeParser parser = new AttributeParserImpl();
         try {
             attributes = attributeDAO.takeAttributes(productID);
             parsedAttributes = parser.unparse(attributes);
-            logger.info("Attributes get: " + parsedAttributes);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during attributes getting", e);
+            logger.error("DAOException was thrown during attributes getting");
             throw new ServiceException("Error during attributes getting", e);
         }
         return parsedAttributes;

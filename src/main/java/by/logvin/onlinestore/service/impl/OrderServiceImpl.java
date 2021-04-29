@@ -20,12 +20,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> takeUserOrders(int userID) throws ServiceException {
         OrderDAO orderDAO = DAOProvider.getInstance().getOrderDAO();
-        List<Order> orders = null;
+        List<Order> orders;
         try {
             orders = orderDAO.takeUserOrders(userID);
-            logger.info("Orders get: " + orders);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during orders getting", e);
+            logger.error("DAOException was thrown during orders getting");
             throw new ServiceException("Error during orders getting", e);
         }
         return orders;
@@ -34,12 +33,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean makeOrder(int userID, Map<Product, Integer> products, int cardID, Timestamp dateOfPurchase) throws ServiceException {
         OrderDAO orderDAO = DAOProvider.getInstance().getOrderDAO();
-        boolean isMade = false;
+        boolean isMade;
         try {
             isMade = orderDAO.makeOrder(userID, products, cardID, dateOfPurchase);
-            logger.info("Order makes: " + isMade);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during order making", e);
+            logger.error("DAOException was thrown during order making");
             throw new ServiceException("Error during order making", e);
         }
         return isMade;
@@ -48,12 +46,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> takeOrderLog() throws ServiceException {
         OrderDAO orderDAO = DAOProvider.getInstance().getOrderDAO();
-        List<Order> orders = null;
+        List<Order> orders;
         try {
             orders = orderDAO.takeOrderLog();
-            logger.info("Orders get: " + orders);
         } catch (DAOException e) {
-            logger.error("DAOException was thrown during orders getting", e);
+            logger.error("DAOException was thrown during orders getting");
             throw new ServiceException("DAOException was thrown during orders getting", e);
         }
         return orders;
