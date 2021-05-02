@@ -13,6 +13,11 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class OrderServiceImpl is used for providing order data
+ * @author bylogvin
+ * @see by.logvin.onlinestore.service.OrderService
+ */
 public class OrderServiceImpl implements OrderService {
 
     private final static Logger logger = Logger.getLogger(OrderServiceImpl.class);

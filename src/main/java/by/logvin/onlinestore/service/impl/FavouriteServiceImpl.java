@@ -8,6 +8,11 @@ import by.logvin.onlinestore.service.FavouriteService;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
+/**
+ * The class FavouriteServiceImpl is used for providing favourite data
+ * @author bylogvin
+ * @see by.logvin.onlinestore.service.FavouriteService
+ */
 public class FavouriteServiceImpl implements FavouriteService {
 
     private final static Logger logger = Logger.getLogger(FavouriteServiceImpl.class);

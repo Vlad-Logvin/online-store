@@ -13,6 +13,11 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The class UserServiceImpl is used for providing user data
+ * @author bylogvin
+ * @see by.logvin.onlinestore.service.UserService
+ */
 public class UserServiceImpl implements UserService {
     private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
 

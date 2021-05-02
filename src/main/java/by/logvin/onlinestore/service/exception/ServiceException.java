@@ -1,5 +1,10 @@
 package by.logvin.onlinestore.service.exception;
 
+/**
+ * The class ServiceException need for throwing exception in Service
+ * @author bylogvin
+ * @see java.lang.Exception
+ */
 public class ServiceException extends Exception {
     public ServiceException() {
         super();

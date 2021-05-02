@@ -12,6 +12,11 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class ProductServiceImpl is used for providing product data
+ * @author bylogvin
+ * @see by.logvin.onlinestore.service.ProductService
+ */
 public class ProductServiceImpl implements ProductService {
 
     private final static Logger logger = Logger.getLogger(ProductServiceImpl.class);

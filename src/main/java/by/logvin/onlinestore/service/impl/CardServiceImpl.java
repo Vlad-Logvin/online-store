@@ -11,6 +11,11 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The class CardServiceImpl is used for providing card data
+ * @author bylogvin
+ * @see by.logvin.onlinestore.service.CardService
+ */
 public class CardServiceImpl implements CardService {
 
     private final static Logger logger = Logger.getLogger(CardServiceImpl.class);

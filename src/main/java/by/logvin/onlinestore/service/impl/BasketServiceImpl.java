@@ -8,6 +8,11 @@ import by.logvin.onlinestore.service.BasketService;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
+/**
+ * The class BasketServiceImpl is used for providing basket data
+ * @author bylogvin
+ * @see by.logvin.onlinestore.service.BasketService
+ */
 public class BasketServiceImpl implements BasketService {
 
     private final static Logger logger = Logger.getLogger(BasketServiceImpl.class);

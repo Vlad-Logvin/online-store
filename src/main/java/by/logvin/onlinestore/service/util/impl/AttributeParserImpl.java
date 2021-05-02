@@ -9,6 +9,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The AttributeParserImpl class provides attributes parsing and unparsing
+ *
+ * @author bylogvin
+ * @see AttributeParser
+ */
 public class AttributeParserImpl implements AttributeParser {
     private final static Pattern ATTRIBUTE_REGEX = Pattern.compile("'(.+?)'\\s*=\\s*'(.+?)'");
     private final static String QUOTE = "'";

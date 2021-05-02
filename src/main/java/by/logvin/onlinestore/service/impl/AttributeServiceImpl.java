@@ -13,6 +13,11 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class AttributeServiceImpl is used for providing attribute data
+ * @author bylogvin
+ * @see by.logvin.onlinestore.service.AttributeService
+ */
 public class AttributeServiceImpl implements AttributeService {
 
     private final static Logger logger = Logger.getLogger(AttributeServiceImpl.class);

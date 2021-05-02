@@ -10,6 +10,11 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The class CategoryServiceImpl is used for providing category data
+ * @author bylogvin
+ * @see by.logvin.onlinestore.service.CategoryService
+ */
 public class CategoryServiceImpl implements CategoryService {
 
     private final static Logger logger = Logger.getLogger(CategoryServiceImpl.class);

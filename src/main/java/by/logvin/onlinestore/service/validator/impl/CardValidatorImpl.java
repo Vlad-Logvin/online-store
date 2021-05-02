@@ -1,9 +1,16 @@
 package by.logvin.onlinestore.service.validator.impl;
 
+import by.logvin.onlinestore.service.validator.AuthorizationValidator;
 import by.logvin.onlinestore.service.validator.CardValidator;
 
 import java.time.LocalDateTime;
 
+/**
+ * The class CardValidatorImpl validate card data
+ *
+ * @author bylogvin
+ * @see CardValidator
+ */
 public class CardValidatorImpl implements CardValidator {
 
     private final static String CARD_NUMBER_REGEX = "[0-9]{16}";

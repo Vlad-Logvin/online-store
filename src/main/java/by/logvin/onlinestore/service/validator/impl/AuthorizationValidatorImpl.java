@@ -7,6 +7,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+/**
+ * The class AuthorizationValidatorImpl validate user data
+ *
+ * @author bylogvin
+ * @see AuthorizationValidator
+ */
 public class AuthorizationValidatorImpl implements AuthorizationValidator {
 
     private final static String EMAIL_REGEX = "([.[^@\\s]]+)@([.[^@\\s]]+)\\.([a-z]+)";
