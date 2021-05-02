@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 
 public class AttributeParserImpl implements AttributeParser {
     private final static Pattern ATTRIBUTE_REGEX = Pattern.compile("'(.+?)'\\s*=\\s*'(.+?)'");
+    private final static String QUOTE = "'";
+    private static final String SPACE = " ";
+    private static final String EQUAL_BETWEEN_SPACES = " = ";
 
     @Override
     public Map<String, String> parse(String input) {
@@ -29,8 +32,7 @@ public class AttributeParserImpl implements AttributeParser {
         }
         StringBuilder attributeBuilder = new StringBuilder();
         for (Attribute a : attributes) {
-            attributeBuilder.append("\'" + a.getName()  + "\'" +" = " + "\'" +a.getValue() + "\'" + " ");
-
+            attributeBuilder.append(QUOTE).append(a.getName()).append(QUOTE).append(EQUAL_BETWEEN_SPACES).append(QUOTE).append(a.getValue()).append(QUOTE).append(SPACE);
         }
         return attributeBuilder.toString();
     }

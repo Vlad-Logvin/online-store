@@ -1,5 +1,9 @@
 package by.logvin.onlinestore.dao.connection;
 
+/**
+ * The class DBParameter contains constants need for DBResourceManager
+ * @author bylogvin
+ */
 public final class DBParameter {
     private DBParameter(){}
 

@@ -1,5 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlparameter;
 
+/**
+ * The class SQLUserParameter contains user parameters
+ * @author bylogvin
+ */
 public final class SQLUserParameter {
 
     public static final String USER_PARAMETER = "u.";

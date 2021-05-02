@@ -25,7 +25,6 @@ public class ManageRole implements Command {
         }
 
         HttpSession session = request.getSession(false);
-        // FIXME: 22.04.2021
 
         try {
             if (ServiceProvider.getInstance().getUserService().editUserRole(
@@ -35,6 +34,7 @@ public class ManageRole implements Command {
             } else {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_ROLE_CHANGING);
             }
+            logger.info("Redirect to show user page");
             response.sendRedirect(GoToPage.REDIRECT_SHOW_USER_PAGE);
         } catch (ServiceException e) {
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);

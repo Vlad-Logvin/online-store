@@ -2,7 +2,7 @@ package by.logvin.onlinestore.service;
 
 import by.logvin.onlinestore.service.impl.*;
 
-public class ServiceProvider {
+public final class ServiceProvider {
     private final static ServiceProvider instance = new ServiceProvider();
     private ServiceProvider(){
 

@@ -1,5 +1,10 @@
 package by.logvin.onlinestore.dao.connection;
 
+/**
+ * The class ConnectionPoolException need for throwing exception in ConnectionPool
+ * @author bylogvin
+ * @see java.lang.Exception
+ */
 public class ConnectionPoolException extends Exception {
     private static final long serialVersionUID = 1L;
 

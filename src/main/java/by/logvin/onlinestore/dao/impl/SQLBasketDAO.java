@@ -19,6 +19,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class SQLBasketDAO is used for manipulating basket data in the database
+ * @author bylogvin
+ * @see by.logvin.onlinestore.dao.BasketDAO
+ */
 public class SQLBasketDAO implements BasketDAO {
 
     private final static Logger logger = Logger.getLogger(SQLBasketDAO.class);

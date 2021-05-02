@@ -5,6 +5,7 @@ import by.logvin.onlinestore.bean.User;
 import by.logvin.onlinestore.dao.DAOProvider;
 import by.logvin.onlinestore.dao.UserDAO;
 import by.logvin.onlinestore.dao.exception.DAOException;
+import by.logvin.onlinestore.dao.impl.SQLUserDAO;
 import by.logvin.onlinestore.service.UserService;
 import by.logvin.onlinestore.service.exception.ServiceException;
 import by.logvin.onlinestore.service.validator.ValidatorProvider;
@@ -22,10 +23,11 @@ public class UserServiceImpl implements UserService {
             logger.info("Not valid registration information");
             return false;
         }
-
         UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
         boolean isSignUp;
         try {
+            SQLUserDAO sqlUserDAO = new SQLUserDAO();
+            sqlUserDAO.signUp(info);
             isSignUp = userDAO.signUp(info);
         } catch (DAOException e) {
             logger.error("DAOException was thrown during user sign up");

@@ -1,6 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
-
+/**
+ * The class BasketSQLRequest contains basket requests
+ * @author bylogvin
+ */
 public final class BasketSQLRequest {
 
     public static final String SELECT_BASKET_BY_USER_ID =

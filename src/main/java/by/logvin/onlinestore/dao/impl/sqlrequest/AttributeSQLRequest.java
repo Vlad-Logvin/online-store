@@ -1,6 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
-
+/**
+ * The class AttributeSQLRequest contains attribute requests
+ * @author bylogvin
+ */
 public final class AttributeSQLRequest {
     public static final String INSERT_ATTRIBUTE =
             "INSERT INTO attributes(a_name, a_value, a_product_id) " +

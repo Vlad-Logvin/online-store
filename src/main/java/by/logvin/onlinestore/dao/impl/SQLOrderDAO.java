@@ -15,6 +15,11 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * The class SQLOrderDAO is used for manipulating order data in the database
+ * @author bylogvin
+ * @see by.logvin.onlinestore.dao.OrderDAO
+ */
 public class SQLOrderDAO implements OrderDAO {
 
     private final static Logger logger = Logger.getLogger(SQLOrderDAO.class);

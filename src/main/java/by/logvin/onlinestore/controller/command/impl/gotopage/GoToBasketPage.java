@@ -41,7 +41,7 @@ public class GoToBasketPage implements Command {
             logger.info("Forward to basket page");
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
-            logger.error("Error while getting user's basket by user id", e);
+            logger.error("Error while getting user basket by user id", e);
             request.getSession(true).setAttribute(Message.MESSAGE, Message.SERVICE_EXCEPTION);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
         }

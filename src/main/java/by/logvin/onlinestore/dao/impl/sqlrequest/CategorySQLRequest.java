@@ -1,5 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
+/**
+ * The class CategorySQLRequest contains category requests
+ * @author bylogvin
+ */
 public final class CategorySQLRequest {
     public static final String INSERT_CATEGORY =
             "INSERT INTO categories(c_name) " +

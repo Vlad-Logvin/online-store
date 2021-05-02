@@ -1,5 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
+/**
+ * The class ProductSQLRequest contains product requests
+ * @author bylogvin
+ */
 public final class ProductSQLRequest {
     public static final String SELECT_N_PRODUCTS =
             "SELECT * " +

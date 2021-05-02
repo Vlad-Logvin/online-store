@@ -16,6 +16,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class SQLCardDAO is used for manipulating card data in the database
+ * @author bylogvin
+ * @see by.logvin.onlinestore.dao.CardDAO
+ */
 public class SQLCardDAO implements CardDAO {
 
     private final static Logger logger = Logger.getLogger(SQLCardDAO.class);

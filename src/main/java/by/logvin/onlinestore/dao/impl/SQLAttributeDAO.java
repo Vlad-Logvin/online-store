@@ -18,6 +18,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The class SQLAttributeDAO is used for manipulating attribute data in the database
+ * @author bylogvin
+ * @see by.logvin.onlinestore.dao.AttributeDAO
+ */
 public class SQLAttributeDAO implements AttributeDAO {
 
     private final static Logger logger = Logger.getLogger(SQLAttributeDAO.class);

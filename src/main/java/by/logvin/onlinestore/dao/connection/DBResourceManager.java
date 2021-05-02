@@ -2,6 +2,10 @@ package by.logvin.onlinestore.dao.connection;
 
 import java.util.ResourceBundle;
 
+/**
+ * The class DBResourceManager is need for get parameters from db.properties
+ * @author bylogvin
+ */
 public class DBResourceManager {
     private final static DBResourceManager instance = new DBResourceManager();
 

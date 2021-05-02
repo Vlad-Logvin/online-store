@@ -2,14 +2,12 @@ package by.logvin.onlinestore.service.validator.impl;
 
 import by.logvin.onlinestore.bean.RegistrationInfo;
 import by.logvin.onlinestore.service.validator.AuthorizationValidator;
-import org.apache.log4j.Logger;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class AuthorizationValidatorImpl implements AuthorizationValidator {
-    private final static Logger logger = Logger.getLogger(AuthorizationValidatorImpl.class);
 
     private final static String EMAIL_REGEX = "([.[^@\\s]]+)@([.[^@\\s]]+)\\.([a-z]+)";
     private final static String PASSWORD_REGEX = "[0-9a-zA-Z_]{5,30}";
@@ -18,6 +16,7 @@ public class AuthorizationValidatorImpl implements AuthorizationValidator {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd") {{
         setLenient(false);
     }};
+    private static final String EMPTY = "";
 
     @Override
     public boolean validate(String email, String password) {
@@ -34,11 +33,7 @@ public class AuthorizationValidatorImpl implements AuthorizationValidator {
         String firstName = info.getFirstName();
         String lastName = info.getLastName();
         String dateOfBirth = info.getDateOfBirth();
-        logger.info(email + " email: " + email.matches(EMAIL_REGEX));
-        logger.info(password + " password: " + password.matches(PASSWORD_REGEX));
-        logger.info(firstName + " first name: " + firstName.matches(FIRST_NAME_REGEX));
-        logger.info(lastName + " last name: " + lastName.matches(LAST_NAME_REGEX));
-        if (dateOfBirth == "") {
+        if (EMPTY.equals(dateOfBirth)) {
             info.setDateOfBirth(null);
         }
         if (email == null || password == null || firstName == null || lastName == null) {
@@ -48,7 +43,7 @@ public class AuthorizationValidatorImpl implements AuthorizationValidator {
                 password.matches(PASSWORD_REGEX) &&
                 firstName.matches(FIRST_NAME_REGEX) &&
                 lastName.matches(LAST_NAME_REGEX) &&
-                ((dateOfBirth != null && dateOfBirth != "") ? isDateOfBirthValid(dateOfBirth) : true);
+                (dateOfBirth == null || EMPTY.equals(dateOfBirth) || isDateOfBirthValid(dateOfBirth));
     }
 
 

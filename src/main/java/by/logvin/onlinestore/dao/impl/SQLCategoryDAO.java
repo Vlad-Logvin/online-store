@@ -13,6 +13,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class SQLCategoryDAO is used for manipulating category data in the database
+ * @author bylogvin
+ * @see by.logvin.onlinestore.dao.CategoryDAO
+ */
 public class SQLCategoryDAO implements CategoryDAO {
 
     private final static Logger logger = Logger.getLogger(SQLCategoryDAO.class);

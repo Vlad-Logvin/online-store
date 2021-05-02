@@ -18,6 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class SQLProductDAO is used for manipulating product data in the database
+ * @author bylogvin
+ * @see by.logvin.onlinestore.dao.ProductDAO
+ */
 public class SQLProductDAO implements ProductDAO {
 
     private static final Logger logger = Logger.getLogger(SQLProductDAO.class);

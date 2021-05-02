@@ -15,6 +15,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class SQLUserDAO is used for manipulating user data in the database
+ * @author bylogvin
+ * @see by.logvin.onlinestore.dao.UserDAO
+ */
 public class SQLUserDAO implements UserDAO {
     private final static Logger logger = Logger.getLogger(SQLUserDAO.class);
 

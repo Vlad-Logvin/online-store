@@ -1,5 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
+/**
+ * The class CardSQLRequest contains card requests
+ * @author bylogvin
+ */
 public final class CardSQLRequest {
     public static final String SELECT_CARD_BY_ID =
             "SELECT * " +

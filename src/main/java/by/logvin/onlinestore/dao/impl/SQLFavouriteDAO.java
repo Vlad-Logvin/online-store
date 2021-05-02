@@ -19,6 +19,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class SQLFavouriteDAO is used for manipulating favourite data in the database
+ * @author bylogvin
+ * @see by.logvin.onlinestore.dao.FavouriteDAO
+ */
 public class SQLFavouriteDAO implements FavouriteDAO {
     private final static Logger logger = Logger.getLogger(SQLFavouriteDAO.class);
 

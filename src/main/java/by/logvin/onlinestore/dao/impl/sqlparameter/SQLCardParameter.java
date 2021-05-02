@@ -1,5 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlparameter;
 
+/**
+ * The class SQLCardParameter contains card parameters
+ * @author bylogvin
+ */
 public final class SQLCardParameter {
     public static final String CARD_ID = "c_id";
     public static final String CARD_NUMBER = "c_number";

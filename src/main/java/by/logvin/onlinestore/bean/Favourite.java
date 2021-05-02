@@ -40,7 +40,7 @@ public class Favourite implements Serializable {
     }
 
     public boolean isProductContains(Product product) {
-        return products != null ? products.contains(product) : false;
+        return products != null && products.contains(product);
     }
 
     public void setProducts(List<Product> products) {

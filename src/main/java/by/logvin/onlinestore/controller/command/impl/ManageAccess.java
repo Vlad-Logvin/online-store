@@ -25,7 +25,6 @@ public class ManageAccess implements Command {
         }
 
         HttpSession session = request.getSession(false);
-        // FIXME: 22.04.2021
 
         try {
             if (ServiceProvider.getInstance().getUserService().editUserAccess(

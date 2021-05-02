@@ -1,5 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlparameter;
 
+/**
+ * The class SQLOrderParameter contains order parameters
+ * @author bylogvin
+ */
 public final class SQLOrderParameter {
     public static final String ORDER_ID = "o_id";
     public static final String ORDER_PRODUCT_ID = "op_product_id";

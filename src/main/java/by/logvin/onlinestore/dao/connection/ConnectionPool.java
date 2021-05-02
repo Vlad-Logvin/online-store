@@ -9,10 +9,15 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
-
+/**
+ * The class ConnectionPool need for database connection storing
+ */
 public final class ConnectionPool {
     private final static Logger logger = Logger.getLogger(ConnectionPool.class);
 
+    /**
+     * ConnectionPool instance
+     */
     private static final ConnectionPool instance = new ConnectionPool();
 
     private BlockingQueue<Connection> connectionQueue;
@@ -23,6 +28,9 @@ public final class ConnectionPool {
     private String password;
     private int poolSize;
 
+    /**
+     * Constructor where initialize inner variables
+     */
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
         this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
@@ -36,13 +44,22 @@ public final class ConnectionPool {
         }
     }
 
+    /**
+     *
+     * @return {@link ConnectionPool} instance
+     */
     public static ConnectionPool getInstance() {
         return instance;
     }
 
+    /**
+     * The method initPoolData need for initializing givenAwayConQueue and connectionQueue
+     *
+     * @throws ConnectionPoolException can be thrown due to {@link SQLException}
+     * or {@link ClassNotFoundException}
+     */
     public void initPoolData() throws ConnectionPoolException {
         try {
-            logger.info("Driver name = " + driverName);
             Class.forName(driverName);
             givenAwayConQueue = new ArrayBlockingQueue<>(poolSize);
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
@@ -58,6 +75,12 @@ public final class ConnectionPool {
         }
     }
 
+    /**
+     * The method getConnection issue connection from database
+     *
+     * @return {@link Connection} from connectionQueue
+     * @throws ConnectionPoolException can be thrown due to {@link InterruptedException}
+     */
     public Connection getConnection() throws ConnectionPoolException {
         Connection connection;
         try {
@@ -72,6 +95,12 @@ public final class ConnectionPool {
         return connection;
     }
 
+    /**
+     * The method removeConnection removes connection to connectionQueue
+     *
+     * @param connection {@link Connection} returns to connectionQueue
+     * @return boolean true if removing is successful
+     */
     public boolean removeConnection(Connection connection) {
         boolean isRemove = false;
         if (connection != null) {
@@ -83,6 +112,11 @@ public final class ConnectionPool {
         return isRemove;
     }
 
+    /**
+     * The method closePoolData closing all connections from connectionQueue and givenAwayConQueue
+     *
+     * @throws ConnectionPoolException can be thrown due to {@link SQLException}
+     */
     public void closePoolData() throws ConnectionPoolException {
         try {
             closeConnectionQueue(connectionQueue);
@@ -105,6 +139,11 @@ public final class ConnectionPool {
         }
     }
 
+    /**
+     * The inner class PooledConnection is a wrapper class for Connection interface
+     * @author bylogvin
+     * @see java.sql.Connection
+     */
     private class PooledConnection implements Connection {
         private Connection connection;
 

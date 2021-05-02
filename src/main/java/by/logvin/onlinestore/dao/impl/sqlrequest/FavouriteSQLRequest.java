@@ -1,5 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
+/**
+ * The class FavouriteSQLRequest contains favourite requests
+ * @author bylogvin
+ */
 public final class FavouriteSQLRequest {
     public static final String SELECT_FAVOURITE_BY_USER_ID =
             "SELECT * " +

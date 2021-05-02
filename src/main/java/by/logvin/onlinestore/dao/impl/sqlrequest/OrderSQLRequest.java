@@ -1,8 +1,10 @@
 package by.logvin.onlinestore.dao.impl.sqlrequest;
 
+/**
+ * The class OrderSQLRequest contains order requests
+ * @author bylogvin
+ */
 public final class OrderSQLRequest {
-
-
     public static final String SELECT_ALL_ORDERS_BY_USER_ID =
             "SELECT * " +
                     "FROM orders o " +

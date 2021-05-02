@@ -1,5 +1,9 @@
 package by.logvin.onlinestore.dao.impl.sqlparameter;
 
+/**
+ * The class SQLProductParameter contains product parameters
+ * @author bylogvin
+ */
 public final class SQLProductParameter {
     public static final String PRODUCT_PARAMETER = "p.";
     public static final String PRODUCT_NAME = "p_name";

@@ -2,12 +2,15 @@ package by.logvin.onlinestore.controller.command;
 
 import by.logvin.onlinestore.controller.command.impl.*;
 import by.logvin.onlinestore.controller.command.impl.gotopage.*;
+import org.apache.log4j.Logger;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class CommandProvider {
-    private Map<CommandName, Command> commands = new HashMap<>();
+    private static final Logger logger = Logger.getLogger(CommandProvider.class);
+
+    private Map<CommandName, Command> commands = new EnumMap<>(CommandName.class);
 
     public CommandProvider() {
         commands.put(CommandName.ADD_CARD, new AddCard());
@@ -49,7 +52,13 @@ public class CommandProvider {
     }
 
     public Command takeCommand(String name) {
-        CommandName commandName = CommandName.valueOf(name.toUpperCase());
+        CommandName commandName = null;
+        try {
+            commandName = CommandName.valueOf(name.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            logger.info("Not correct command");
+            commandName = CommandName.GO_TO_ERROR_PAGE;
+        }
         return commands.get(commandName);
     }
 }
