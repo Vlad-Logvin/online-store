@@ -3,6 +3,12 @@ package by.logvin.onlinestore.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * The class Attribute describes product attribute bean
+ *
+ * @author bylogvin
+ * @see java.io.Serializable
+ */
 public class Attribute implements Serializable {
 
     private static final long serialVersionUID = 1L;

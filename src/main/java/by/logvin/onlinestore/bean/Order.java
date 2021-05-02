@@ -5,6 +5,12 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The class Order describes user order bean
+ *
+ * @author bylogvin
+ * @see java.io.Serializable
+ */
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;

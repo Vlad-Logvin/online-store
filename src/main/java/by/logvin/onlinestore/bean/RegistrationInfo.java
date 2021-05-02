@@ -3,6 +3,12 @@ package by.logvin.onlinestore.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * The class RegistrationInfo describes product user registration information bean
+ *
+ * @author bylogvin
+ * @see java.io.Serializable
+ */
 public class RegistrationInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;

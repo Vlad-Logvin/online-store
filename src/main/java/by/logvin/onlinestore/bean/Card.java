@@ -3,6 +3,12 @@ package by.logvin.onlinestore.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * The class Card describes user card bean
+ *
+ * @author bylogvin
+ * @see java.io.Serializable
+ */
 public class Card implements Serializable {
 
     private static final long serialVersionUID = 1L;

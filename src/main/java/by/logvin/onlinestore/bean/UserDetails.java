@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The class UserDetails describes user details bean
+ *
+ * @author bylogvin
+ * @see java.io.Serializable
+ */
 public class UserDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
