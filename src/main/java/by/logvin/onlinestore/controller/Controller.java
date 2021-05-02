@@ -33,8 +33,8 @@ public class Controller extends HttpServlet {
      *
      * @param request {@link HttpServletRequest} client request
      * @param response {@link HttpServletResponse} server response
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException extends {@link Exception}
+     * @throws IOException extends {@link Exception}
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,8 +47,8 @@ public class Controller extends HttpServlet {
      *
      * @param request {@link HttpServletRequest} client request
      * @param response {@link HttpServletResponse} server response
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException extends {@link Exception}
+     * @throws IOException extends {@link Exception}
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -61,8 +61,8 @@ public class Controller extends HttpServlet {
      *
      * @param request {@link HttpServletRequest} client request
      * @param response {@link HttpServletResponse} server response
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException extends {@link Exception}
+     * @throws IOException extends {@link Exception}
      */
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter(COMMAND);

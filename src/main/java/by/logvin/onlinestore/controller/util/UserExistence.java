@@ -19,7 +19,7 @@ public interface UserExistence {
      * @param request {@link HttpServletRequest} client request
      * @param response {@link HttpServletResponse} server response
      * @return boolean true if user is online
-     * @throws IOException
+     * @throws IOException extends {@link Exception}
      */
     boolean isUserExist(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
@@ -29,7 +29,7 @@ public interface UserExistence {
      * @param request {@link HttpServletRequest} client request
      * @param response {@link HttpServletResponse} server response
      * @return boolean true if admin is online
-     * @throws IOException
+     * @throws IOException extends {@link Exception}
      */
     boolean isAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }

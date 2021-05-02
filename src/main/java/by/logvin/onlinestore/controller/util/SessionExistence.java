@@ -18,7 +18,7 @@ public interface SessionExistence {
      * @param request {@link HttpServletRequest} client request
      * @param response {@link HttpServletResponse} server response
      * @return boolean true if session exist
-     * @throws IOException
+     * @throws IOException extends {@link Exception}
      */
     boolean isSessionExist(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }
