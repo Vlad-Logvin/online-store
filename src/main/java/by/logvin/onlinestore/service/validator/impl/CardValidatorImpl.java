@@ -1,6 +1,5 @@
 package by.logvin.onlinestore.service.validator.impl;
 
-import by.logvin.onlinestore.service.validator.AuthorizationValidator;
 import by.logvin.onlinestore.service.validator.CardValidator;
 
 import java.time.LocalDateTime;
