@@ -20,6 +20,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The MakeOrder class is responsible for making user order
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class MakeOrder implements Command {
 
     private final Logger logger = Logger.getLogger(MakeOrder.class);
