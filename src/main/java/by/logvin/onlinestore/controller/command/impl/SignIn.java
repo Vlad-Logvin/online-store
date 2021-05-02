@@ -13,6 +13,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The SignIn class is responsible for signing in
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class SignIn implements Command {
 
     private final static Logger logger = Logger.getLogger(SignIn.class);
@@ -22,7 +28,7 @@ public class SignIn implements Command {
         String email = request.getParameter(Message.ATTRIBUTE_EMAIL);
         String password = request.getParameter(Message.ATTRIBUTE_PASSWORD);
 
-        User user = null;
+        User user;
         HttpSession session = request.getSession(true);
         try {
             user = ServiceProvider.getInstance().getUserService().signIn(email, password);

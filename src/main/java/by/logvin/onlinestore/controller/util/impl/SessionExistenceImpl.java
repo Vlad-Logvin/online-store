@@ -3,12 +3,19 @@ package by.logvin.onlinestore.controller.util.impl;
 import by.logvin.onlinestore.controller.message.GoToPage;
 import by.logvin.onlinestore.controller.message.Message;
 import by.logvin.onlinestore.controller.util.SessionExistence;
+import by.logvin.onlinestore.controller.util.UserExistence;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+/**
+ * The SessionExistenceImpl class checks session existence
+ *
+ * @author bylogvin
+ * @see SessionExistence
+ */
 public class SessionExistenceImpl implements SessionExistence {
     @Override
     public boolean isSessionExist(HttpServletRequest request, HttpServletResponse response) throws IOException {

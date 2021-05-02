@@ -1,5 +1,10 @@
 package by.logvin.onlinestore.controller.message;
 
+/**
+ * The Message class provides strings using for command implementation
+ *
+ * @author bylogvin
+ */
 public final class Message {
 
     public static final String MESSAGE = "message";

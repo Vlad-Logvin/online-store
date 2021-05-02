@@ -15,6 +15,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The RemoveFromFavourite class is responsible for removing product from favourite
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class RemoveFromFavourite implements Command {
 
     private final static Logger logger = Logger.getLogger(RemoveFromFavourite.class);

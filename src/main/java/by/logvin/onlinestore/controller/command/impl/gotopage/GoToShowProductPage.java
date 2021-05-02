@@ -15,6 +15,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The GoToShowProductPage class is responsible for going to show product page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToShowProductPage implements Command {
 
     private final static Logger logger = Logger.getLogger(GoToShowProductPage.class);
@@ -48,7 +54,6 @@ public class GoToShowProductPage implements Command {
             logger.error("Error while parsing product id", e);
             session.setAttribute(Message.MESSAGE, Message.WRONG_PRODUCT_INPUT);
             response.sendRedirect(GoToPage.REDIRECT_MAIN_PAGE);
-            return;
         }
 
     }

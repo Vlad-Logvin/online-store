@@ -14,6 +14,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The EditProfile class is responsible for profile editing
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class EditProfile implements Command {
 
     private static final Logger logger = Logger.getLogger(EditProfile.class);

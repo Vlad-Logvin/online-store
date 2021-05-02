@@ -16,6 +16,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The GoToEditProductFormPage class is responsible for going to edit product form page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToEditProductFormPage implements Command {
 
     private final static Logger logger = Logger.getLogger(GoToEditProductFormPage.class);
@@ -30,7 +36,7 @@ public class GoToEditProductFormPage implements Command {
         HttpSession session = request.getSession(false);
 
         try {
-            Integer productID = Integer.valueOf(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID));
+            int productID = Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID));
             Product product = ServiceProvider.getInstance().getProductService().takeByProductID(productID);
             if (product == null) {
                 logger.info("Redirect to last page due to non-existing product");

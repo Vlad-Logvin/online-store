@@ -10,6 +10,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The Logout class is responsible for user logout
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class Logout implements Command {
 
     private static final Logger logger = Logger.getLogger(Logout.class);

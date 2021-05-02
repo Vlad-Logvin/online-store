@@ -1,5 +1,10 @@
 package by.logvin.onlinestore.controller.command;
 
+/**
+ * The enum CommandName contains commands
+ *
+ * @author bylogvin
+ */
 public enum CommandName {
     ADD_CARD,
     ADD_PRODUCT,

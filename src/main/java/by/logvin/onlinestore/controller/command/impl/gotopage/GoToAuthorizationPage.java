@@ -9,6 +9,12 @@ import jakarta.servlet.http.*;
 import org.apache.log4j.Logger;
 import java.io.IOException;
 
+/**
+ * The GoToAuthorizationPage class is responsible for going to authorization page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToAuthorizationPage implements Command {
 
     private static final Logger logger = Logger.getLogger(GoToAuthorizationPage.class);

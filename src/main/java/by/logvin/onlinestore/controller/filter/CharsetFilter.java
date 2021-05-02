@@ -4,6 +4,12 @@ import jakarta.servlet.*;
 
 import java.io.IOException;
 
+/**
+ * The CharsetFilter class is responsible for setting character encoding
+ *
+ * @author bylogvin
+ * @see jakarta.servlet.Filter
+ */
 public class CharsetFilter implements Filter {
 
     private String encoding;

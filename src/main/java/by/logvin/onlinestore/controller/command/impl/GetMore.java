@@ -14,6 +14,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The GetMore class is responsible for getting more product
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GetMore implements Command {
 
     private static final Logger logger = Logger.getLogger(GetMore.class);

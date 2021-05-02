@@ -16,6 +16,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The GoToFavouritePage class is responsible for going to favourite page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToFavouritePage implements Command {
 
     private static final Logger logger = Logger.getLogger(GoToFavouritePage.class);

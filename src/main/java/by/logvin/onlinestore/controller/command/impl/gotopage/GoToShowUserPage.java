@@ -14,6 +14,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The GoToShowUserPage class is responsible for going to show user page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToShowUserPage implements Command {
 
     private static final Logger logger = Logger.getLogger(GoToShowUserPage.class);

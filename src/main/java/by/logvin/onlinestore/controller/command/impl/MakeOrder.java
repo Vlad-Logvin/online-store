@@ -47,8 +47,8 @@ public class MakeOrder implements Command {
                 response.sendRedirect(GoToPage.REDIRECT_BASKET_PAGE);
                 return;
             }
-            Product product = null;
-            int quantity = 0;
+            Product product;
+            int quantity;
             for (int i = 0; i < basketSize; i++) {
                 quantity = Integer.parseInt(productQuantity[i]);
                 if (quantity < 1) {

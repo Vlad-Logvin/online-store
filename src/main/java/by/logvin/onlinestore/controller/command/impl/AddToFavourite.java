@@ -15,6 +15,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The AddToFavourite class is responsible for adding product to favourite
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class AddToFavourite implements Command {
 
     private final static Logger logger = Logger.getLogger(AddToFavourite.class);

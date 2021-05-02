@@ -12,6 +12,12 @@ import jakarta.servlet.http.*;
 import org.apache.log4j.Logger;
 import java.io.IOException;
 
+/**
+ * The SignUp class is responsible for signing up
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class SignUp implements Command {
 
     private final static Logger logger = Logger.getLogger(SignUp.class);

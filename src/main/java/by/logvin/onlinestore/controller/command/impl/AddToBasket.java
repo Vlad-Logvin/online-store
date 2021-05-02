@@ -15,6 +15,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The AddToBasket class is responsible for adding product to basket
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class AddToBasket implements Command {
 
     private static final Logger logger = Logger.getLogger(AddToBasket.class);

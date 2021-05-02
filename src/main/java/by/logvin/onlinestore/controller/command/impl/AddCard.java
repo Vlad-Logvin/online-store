@@ -2,7 +2,6 @@ package by.logvin.onlinestore.controller.command.impl;
 
 import by.logvin.onlinestore.bean.User;
 import by.logvin.onlinestore.controller.command.Command;
-import by.logvin.onlinestore.controller.message.GoToPage;
 import by.logvin.onlinestore.controller.message.Message;
 import by.logvin.onlinestore.controller.util.ExistenceProvider;
 import by.logvin.onlinestore.service.ServiceProvider;
@@ -15,6 +14,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The AddCard class is responsible for adding card
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class AddCard implements Command {
 
     private final static Logger logger = Logger.getLogger(AddCard.class);

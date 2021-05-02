@@ -1,6 +1,5 @@
 package by.logvin.onlinestore.controller.command.impl.gotopage;
 
-import by.logvin.onlinestore.bean.Product;
 import by.logvin.onlinestore.controller.command.Command;
 
 import by.logvin.onlinestore.controller.message.GoToPage;
@@ -11,8 +10,13 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import org.apache.log4j.Logger;
 import java.io.IOException;
-import java.util.List;
 
+/**
+ * The GoToMainPage class is responsible for going to main page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToMainPage implements Command {
 
     private static final Logger logger = Logger.getLogger(GoToMainPage.class);

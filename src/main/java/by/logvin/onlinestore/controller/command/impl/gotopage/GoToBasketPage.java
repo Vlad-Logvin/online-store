@@ -16,6 +16,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The GoToBasketPage class is responsible for going to basket page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToBasketPage implements Command {
 
     private final static Logger logger = Logger.getLogger(GoToBasketPage.class);

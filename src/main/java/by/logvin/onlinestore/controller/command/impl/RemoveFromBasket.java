@@ -15,6 +15,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The RemoveFromBasket class is responsible for removing product from basket
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class RemoveFromBasket implements Command {
 
     private static final Logger logger = Logger.getLogger(RemoveFromBasket.class);

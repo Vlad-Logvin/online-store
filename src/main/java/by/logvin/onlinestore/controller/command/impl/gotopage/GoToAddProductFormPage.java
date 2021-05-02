@@ -14,6 +14,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The GoToAddProductFormPage class is responsible for going to add product form page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToAddProductFormPage implements Command {
     private final static Logger logger = Logger.getLogger(GoToAddProductFormPage.class);
     @Override

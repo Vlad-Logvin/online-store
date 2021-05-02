@@ -12,6 +12,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The GoToAddCardFormPage class is responsible for going to add card form page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToAddCardFormPage implements Command {
 
     private static final Logger logger = Logger.getLogger(GoToAddCardFormPage.class);

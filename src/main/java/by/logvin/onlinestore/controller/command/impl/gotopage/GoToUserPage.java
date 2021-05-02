@@ -13,6 +13,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The GoToUserPage class is responsible for going to user page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToUserPage implements Command {
 
     private final static Logger logger = Logger.getLogger(GoToUserPage.class);

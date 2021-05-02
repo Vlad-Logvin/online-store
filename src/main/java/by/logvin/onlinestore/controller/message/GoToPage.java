@@ -1,5 +1,8 @@
 package by.logvin.onlinestore.controller.message;
 
+/**
+ * The GoToPage class contains redirect and forward responses
+ */
 public final class GoToPage {
 
     public static final String REDIRECT_ADD_CARD_FORM_PAGE = "Controller?command=go_to_add_card_form_page";

@@ -17,6 +17,12 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The GoToOrderPage class is responsible for going to order page
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class GoToOrderPage implements Command {
 
     private final static Logger logger = Logger.getLogger(GoToOrderPage.class);
@@ -26,7 +32,7 @@ public class GoToOrderPage implements Command {
         if (!ExistenceProvider.getInstance().getUserExistence().isUserExist(request, response)) {
             return;
         }
-        int userID = 0;
+        int userID;
         try {
             userID = Integer.parseInt(request.getParameter(Message.ATTRIBUTE_USER_ID));
         } catch (NumberFormatException e) {
@@ -36,7 +42,7 @@ public class GoToOrderPage implements Command {
             return;
         }
 
-        List<Order> orders = null;
+        List<Order> orders;
         try {
             if (userID == 0) {
                 if(!ExistenceProvider.getInstance().getUserExistence().isAdmin(request, response)){

@@ -7,6 +7,11 @@ import org.apache.log4j.Logger;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * The class CommandProvider provides command implementations
+ *
+ * @author bylogvin
+ */
 public class CommandProvider {
     private static final Logger logger = Logger.getLogger(CommandProvider.class);
 
@@ -51,6 +56,12 @@ public class CommandProvider {
         commands.put(CommandName.GO_TO_USER_PAGE, new GoToUserPage());
     }
 
+    /**
+     * The method takeCommand taking command from map by {@link CommandName} key
+     *
+     * @param name {@link String} command name
+     * @return {@link Command} from map
+     */
     public Command takeCommand(String name) {
         CommandName commandName = null;
         try {

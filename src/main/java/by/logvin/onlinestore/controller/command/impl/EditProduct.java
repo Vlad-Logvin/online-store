@@ -16,6 +16,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The EditProduct class is responsible for editing product
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class EditProduct implements Command {
 
     private static final Logger logger = Logger.getLogger(EditProduct.class);

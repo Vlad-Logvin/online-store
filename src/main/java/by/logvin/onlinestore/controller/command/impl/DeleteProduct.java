@@ -14,6 +14,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * The DeleteProduct class is responsible for deleting product
+ *
+ * @author bylogvin
+ * @see by.logvin.onlinestore.controller.command.Command
+ */
 public class DeleteProduct implements Command {
 
     private static final Logger logger = Logger.getLogger(DeleteProduct.class);
