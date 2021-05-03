@@ -6,8 +6,8 @@ import by.logvin.onlinestore.dao.CategoryDAO;
 import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -36,12 +36,12 @@ public class SQLCategoryDAOTest {
     @MethodSource("categories")
     void categoryDAOMethodsTest(Category category) {
         try {
-            Assert.assertTrue(categoryDAO.addCategory(category.getName()));
+            Assertions.assertTrue(categoryDAO.addCategory(category.getName()));
             Category actualCategory = categoryDAO.takeCategory(category.getName());
-            Assert.assertEquals(category.getName(), actualCategory.getName());
-            Assert.assertTrue(categoryDAO.deleteCategory(actualCategory.getId()));
+            Assertions.assertEquals(category.getName(), actualCategory.getName());
+            Assertions.assertTrue(categoryDAO.deleteCategory(actualCategory.getId()));
         }catch (Exception e) {
-            Assert.assertEquals(DAOException.class, e.getClass());
+            Assertions.assertEquals(DAOException.class, e.getClass());
         }
     }
 

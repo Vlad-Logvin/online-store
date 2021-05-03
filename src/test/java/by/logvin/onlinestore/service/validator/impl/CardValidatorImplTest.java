@@ -1,7 +1,7 @@
 package by.logvin.onlinestore.service.validator.impl;
 
 import by.logvin.onlinestore.service.validator.CardValidator;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -28,6 +28,6 @@ public class CardValidatorImplTest {
     @ParameterizedTest
     @MethodSource("cardData")
     void validate(long number, int validityPeriod, int authenticationCode, boolean expected) {
-        Assert.assertEquals(expected, validator.validate(number, validityPeriod, authenticationCode));
+        Assertions.assertEquals(expected, validator.validate(number, validityPeriod, authenticationCode));
     }
 }

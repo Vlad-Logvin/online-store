@@ -10,8 +10,8 @@ import by.logvin.onlinestore.dao.UserDAO;
 import by.logvin.onlinestore.dao.connection.ConnectionPool;
 import by.logvin.onlinestore.dao.connection.ConnectionPoolException;
 import by.logvin.onlinestore.dao.exception.DAOException;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -57,11 +57,11 @@ public class SQLFavouriteDAOTest {
     @ParameterizedTest
     @MethodSource("products")
     void favouriteDAOMethodsTest(Product product) throws DAOException {
-        Assert.assertTrue(favouriteDAO.createFavourite(user.getId()));
+        Assertions.assertTrue(favouriteDAO.createFavourite(user.getId()));
         Favourite favourite = favouriteDAO.takeFavouriteByUserID(user.getId());
-        Assert.assertTrue(favouriteDAO.addProduct(favourite.getId(), product.getId()));
-        Assert.assertTrue(favouriteDAO.removeProduct(favourite.getId(), product.getId()));
-        Assert.assertTrue(favouriteDAO.deleteFavouriteByUserID(user.getId()));
+        Assertions.assertTrue(favouriteDAO.addProduct(favourite.getId(), product.getId()));
+        Assertions.assertTrue(favouriteDAO.removeProduct(favourite.getId(), product.getId()));
+        Assertions.assertTrue(favouriteDAO.deleteFavouriteByUserID(user.getId()));
     }
 
     @AfterAll

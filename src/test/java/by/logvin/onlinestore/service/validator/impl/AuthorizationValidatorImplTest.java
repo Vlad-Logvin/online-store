@@ -3,7 +3,7 @@ package by.logvin.onlinestore.service.validator.impl;
 
 import by.logvin.onlinestore.bean.RegistrationInfo;
 import by.logvin.onlinestore.service.validator.AuthorizationValidator;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -31,7 +31,7 @@ public class AuthorizationValidatorImplTest {
     @ParameterizedTest
     @MethodSource("userEmailAndPassword")
     void validate(String email, String password, boolean expected) {
-        Assert.assertEquals(expected, validator.validate(email, password));
+        Assertions.assertEquals(expected, validator.validate(email, password));
     }
 
     private static Stream<Arguments> userRegistrationInfo() {
@@ -60,6 +60,6 @@ public class AuthorizationValidatorImplTest {
     @ParameterizedTest
     @MethodSource("userRegistrationInfo")
     void validate(RegistrationInfo info, boolean expected) {
-        Assert.assertEquals(expected, validator.validate(info));
+        Assertions.assertEquals(expected, validator.validate(info));
     }
 }
