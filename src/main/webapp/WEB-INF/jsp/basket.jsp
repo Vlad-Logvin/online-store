@@ -17,6 +17,15 @@
 <fmt:message bundle="${loc}" key="local.product.remove_from_basket" var="remove_from_basket"/>
 <fmt:message bundle="${loc}" key="local.product.remove_from_favourite" var="remove_from_favourite"/>
 <fmt:message bundle="${loc}" key="local.product.edit" var="edit"/>
+<fmt:message bundle="${loc}" key="local.card.add_card" var="add_card"/>
+<fmt:message bundle="${loc}" key="local.card.bank_card" var="bank_card"/>
+<fmt:message bundle="${loc}" key="local.card.validity_period" var="validity_period"/>
+<fmt:message bundle="${loc}" key="local.card.cardholder" var="cardholder"/>
+<fmt:message bundle="${loc}" key="local.card.card_number" var="card_number"/>
+<fmt:message bundle="${loc}" key="local.product.product_price" var="product_price"/>
+<fmt:message bundle="${loc}" key="local.product.product_quantity" var="product_quantity"/>
+<fmt:message bundle="${loc}" key="local.basket.make_order" var="make_order"/>
+
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -38,8 +47,17 @@
                 <p>
                     <c:if test="${requestScope.message!=null}">
                         <fmt:message bundle="${loc}" key="${requestScope.message}" var="message"/>
-                        <c:out value="${message}"/>
-                    </c:if>
+                    <c:if test="${requestScope.message.contains('local.error')}">
+                <div class="red-text">
+                        ${message}
+                </div>
+                </c:if>
+                <c:if test="${requestScope.message.contains('local.correct')}">
+                    <div class="green-text">
+                            ${message}
+                    </div>
+                </c:if>
+                </c:if>
                 </p>
             </div>
         </div>
@@ -47,7 +65,7 @@
     <form class="text-center container bg-light" action="Controller" method="get">
         <button class="btn btn-sm btn-outline-secondary full-width" type="submit" name="command"
                 value="go_to_add_card_form_page">
-            Добавить карту
+            ${add_card}
         </button>
     </form>
 
@@ -58,11 +76,10 @@
                     <input class="form-check-input" type="radio" name="cardID" value="${card.id}" checked required/>
                     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col p-4 d-flex flex-column position-static">
-                            <h3 class="mb-0">Банковская карточка</h3>
-                            <p class="card-text mb-auto">Cardholder: ${card.cardholder}</p>
-                            <p class="card-text mb-auto">Номер карты: ${card.number}</p>
-                            <p class="card-text mb-auto">Валидационный
-                                период: ${card.validityPeriod}</p>
+                            <h3 class="mb-0">${bank_card}</h3>
+                            <p class="card-text mb-auto">${cardholder}: ${card.cardholder}</p>
+                            <p class="card-text mb-auto">${card_number}: ${card.number}</p>
+                            <p class="card-text mb-auto">${validity_period}: ${card.validityPeriod}</p>
                         </div>
                     </div>
                 </div>
@@ -86,8 +103,8 @@
                                      preserveAspectRatio="xMidYMid slice" role="img" focusable="false"><title>
                                         ${product.name}</title>
                                     <image width="100%" height="100%" href="${product.photoURL}"></image>
-                                    <p class="text-center">Цена: ${product.price}$ </p>
-                                    <p class="text-center">Количество: ${product.quantity} </p>
+                                    <p class="text-center">${product_price}: ${product.price}$ </p>
+                                    <p class="text-center">${product_quantity}: ${product.quantity} </p>
                                     <input type="number" max="${product.quantity}" min="0" class="full-width"
                                            name="productQuantity" value="0" required/>
                                 </svg>
@@ -112,8 +129,8 @@
             </div>
 
             <c:if test="${requestScope.products!=null && requestScope.products.size()!=0}">
-                <button class="text-center container bg-light margin-top-3em" type="submit" name="command" value="make_order">Сделать
-                    заказ
+                <button class="text-center container bg-light margin-top-3em" type="submit" name="command"
+                        value="make_order">${make_order}
                 </button>
             </c:if>
         </div>

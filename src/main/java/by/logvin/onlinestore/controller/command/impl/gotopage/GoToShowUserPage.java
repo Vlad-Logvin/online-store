@@ -10,6 +10,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -28,6 +29,12 @@ public class GoToShowUserPage implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(!ExistenceProvider.getInstance().getUserExistence().isAdmin(request, response)){
             return;
+        }
+        HttpSession session = request.getSession(false);
+        String sessionMessage = (String) session.getAttribute(Message.MESSAGE);
+        if (sessionMessage != null) {
+            request.setAttribute(Message.MESSAGE, sessionMessage);
+            session.removeAttribute(Message.MESSAGE);
         }
 
         try {

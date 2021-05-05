@@ -7,6 +7,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="local" var="loc"/>
+<fmt:message bundle="${loc}" key="local.user.users" var="users"/>
+<fmt:message bundle="${loc}" key="local.registration.email" var="email"/>
+<fmt:message bundle="${loc}" key="local.registration.date" var="date"/>
+<fmt:message bundle="${loc}" key="local.registration.date" var="date"/>
+<fmt:message bundle="${loc}" key="local.user.give_access" var="give_access"/>
+<fmt:message bundle="${loc}" key="local.user.remove_access" var="remove_access"/>
+<fmt:message bundle="${loc}" key="local.user.give_admin" var="give_admin"/>
+<fmt:message bundle="${loc}" key="local.user.remove_admin" var="remove_admin"/>
+<fmt:message bundle="${loc}" key="local.user.user_role" var="user_role"/>
+<fmt:message bundle="${loc}" key="local.user.access" var="access"/>
+
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -25,7 +39,7 @@
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="font-weight-light">Пользователи</h1>
+                <h1 class="font-weight-light">${users}</h1>
                 <p class="lead text-muted">${bylogvin_description}
                 </p>
                 <p>
@@ -60,10 +74,10 @@
                                 <h5 class="font-weight-light text-center">${user.firstName} ${user.lastName}</h5>
 
                                 <div class="card-body max-height-div">
-                                    <p class="card-text max-height-p">Email: ${user.email}</p>
-                                    <p class="card-text max-height-p">Дата рождения: ${user.dateOfBirth}</p>
-                                    <p class="card-text max-height-p">Роль: ${user.userDetails.role}</p>
-                                    <p class="card-text max-height-p">Доступ: ${user.userDetails.access}</p>
+                                    <p class="card-text max-height-p">${email}: ${user.email}</p>
+                                    <p class="card-text max-height-p">${date}: ${user.dateOfBirth}</p>
+                                    <p class="card-text max-height-p">${user_role}: ${user.userDetails.role}</p>
+                                    <p class="card-text max-height-p">${access}: ${user.userDetails.access}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group-lg">
                                             <c:if test="${user.userDetails.role=='admin'}">
@@ -73,7 +87,7 @@
                                                     <input type="hidden" name="userID" value="${user.id}"/>
                                                     <input type="submit"
                                                            class="full-width btn btn-sm btn-outline-secondary"
-                                                           value="Забрать админа"/>
+                                                           value="${remove_admin}"/>
                                                 </form>
                                             </c:if>
                                             <c:if test="${user.userDetails.role=='user'}">
@@ -83,7 +97,7 @@
                                                     <input type="hidden" name="userID" value="${user.id}"/>
                                                     <input type="submit"
                                                            class="full-width btn btn-sm btn-outline-secondary"
-                                                           value="Выдать админа"/>
+                                                           value="${give_admin}"/>
                                                 </form>
                                             </c:if>
                                             <c:if test="${user.userDetails.access}">
@@ -93,7 +107,7 @@
                                                     <input type="hidden" name="userID" value="${user.id}"/>
                                                     <input type="submit"
                                                            class="full-width btn btn-sm btn-outline-secondary"
-                                                           value="Ограничить доступ"/>
+                                                           value="${remove_access}"/>
                                                 </form>
                                             </c:if>
                                             <c:if test="${!user.userDetails.access}">
@@ -103,7 +117,7 @@
                                                     <input type="hidden" name="userID" value="${user.id}"/>
                                                     <input type="submit"
                                                            class="full-width btn btn-sm btn-outline-secondary"
-                                                           value="Выдать доступ"/>
+                                                           value="${give_access}"/>
                                                 </form>
                                             </c:if>
                                         </div>

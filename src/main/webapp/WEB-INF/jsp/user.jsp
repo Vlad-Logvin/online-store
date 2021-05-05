@@ -10,6 +10,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="local" var="loc"/>
+<fmt:message bundle="${loc}" key="local.card.card_number" var="card_number"/>
+<fmt:message bundle="${loc}" key="local.card.cardholder" var="cardholder"/>
+<fmt:message bundle="${loc}" key="local.card.bank_card" var="bank_card"/>
+<fmt:message bundle="${loc}" key="local.card.validity_period" var="validity_period"/>
+<fmt:message bundle="${loc}" key="local.card.delete_card" var="delete_card"/>
+<fmt:message bundle="${loc}" key="local.card.no_card" var="no_card"/>
+<fmt:message bundle="${loc}" key="local.card.add_card" var="add_card"/>
+<fmt:message bundle="${loc}" key="local.card.edit" var="edit"/>
+<fmt:message bundle="${loc}" key="local.header.logout" var="logout"/>
+<fmt:message bundle="${loc}" key="local.user.user_role" var="user_role"/>
+<fmt:message bundle="${loc}" key="local.user.change_user_data" var="change_user_data"/>
+<fmt:message bundle="${loc}" key="local.user.no_date" var="no_date"/>
+<fmt:message bundle="${loc}" key="local.user.user_page" var="user_page"/>
+<fmt:message bundle="${loc}" key="local.registration.email" var="email"/>
+<fmt:message bundle="${loc}" key="local.registration.date" var="date"/>
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -26,18 +41,31 @@
     <section class="py-5 text-center container bg-light margin-top-3em">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="font-weight-light">Пользовательская страница</h1>
+                <h1 class="font-weight-light">${user_page}</h1>
+                <p><c:if test="${requestScope.message!=null}">
+                        <fmt:message bundle="${loc}" key="${requestScope.message}" var="message"/>
+                    <c:if test="${requestScope.message.contains('local.error')}">
+                <div class="red-text">
+                        ${message}
+                </div>
+                </c:if>
+                <c:if test="${requestScope.message.contains('local.correct')}">
+                    <div class="green-text">
+                            ${message}
+                    </div>
+                </c:if>
+                </c:if></p>
                 <p class="lead text-muted">${user.firstName} ${user.lastName}</p>
-                <p class="lead text-muted">Email: ${user.email}</p>
-                <p class="lead text-muted">Дата рождения:
+                <p class="lead text-muted">${email}: ${user.email}</p>
+                <p class="lead text-muted">${date}:
                     <c:if test="${user.dateOfBirth==null}">
-                        Не указано
+                        ${no_date}
                     </c:if>
                     <c:if test="${user.dateOfBirth!=null}">
                         ${user.dateOfBirth}
                     </c:if>
                 </p>
-                <p class="lead text-muted">Role: ${user.userDetails.role}</p>
+                <p class="lead text-muted">${user_role}: ${user.userDetails.role}</p>
 
                 <div class="text-center justify-content-between align-items-center">
                     <div class="btn-group-lg">
@@ -45,18 +73,18 @@
 
                         <form action="Controller" method="get">
                             <input type="hidden" name="command" value="go_to_edit_user_form_page">
-                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary" value="Изменить данные">
+                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary" value="${change_user_data}">
                         </form>
 
 
                         <form action="Controller" method="get">
                             <input type="hidden" name="command" value="go_to_add_card_form_page">
-                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary" value="Добавить карту">
+                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary" value="${add_card}">
                         </form>
 
                         <form action="Controller" method="post">
                             <input type="hidden" name="command" value="logout">
-                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary" value="Выйти">
+                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary" value="${logout}">
                         </form>
 
 
@@ -77,7 +105,7 @@
     <c:if test="${cards==null}">
         <div class="text-center container text-muted margin-top-3em">
             <h3>
-                У вас не добавлены карты!
+                ${no_card}
             </h3>
         </div>
     </c:if>
@@ -87,22 +115,21 @@
             <div class="col-lg-4 container bg-light margin-top-3em">
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
-                        <h3 class="mb-0">Банковская карточка</h3>
-                        <p class="card-text mb-auto">Cardholder: ${card.cardholder}</p>
-                        <p class="card-text mb-auto">Номер карты: ${card.number}</p>
-                        <p class="card-text mb-auto">Валидационный
-                            период: ${card.validityPeriod}</p>
+                        <h3 class="mb-0">${bank_card}</h3>
+                        <p class="card-text mb-auto">${cardholder}: ${card.cardholder}</p>
+                        <p class="card-text mb-auto">${card_number}: ${card.number}</p>
+                        <p class="card-text mb-auto">${validity_period}: ${card.validityPeriod}</p>
 
                         <div class="btn-group">
                             <form action="Controller" method="get">
                                 <input type="hidden" name="command" value="go_to_edit_card_form_page">
                                 <input type="hidden" name="cardID" value="${card.id}">
-                                <button class="btn btn-sm btn-outline-secondary" type="submit">Редактировать</button>
+                                <button class="btn btn-sm btn-outline-secondary" type="submit">${edit}</button>
                             </form>
                             <form action="Controller" method="post">
                                 <input type="hidden" name="command" value="delete_card">
                                 <input type="hidden" name="cardID" value="${card.id}">
-                                <button class="btn btn-sm btn-outline-secondary" type="submit">Удалить карту</button>
+                                <button class="btn btn-sm btn-outline-secondary" type="submit">${delete_card}</button>
                             </form>
                         </div>
 

@@ -7,6 +7,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="local" var="loc"/>
+<fmt:message bundle="${loc}" key="local.main.bylogvin_description" var="bylogvin_description"/>
+<fmt:message bundle="${loc}" key="local.product.show" var="show"/>
+<fmt:message bundle="${loc}" key="local.product.add_to_basket" var="add_to_basket"/>
+<fmt:message bundle="${loc}" key="local.product.remove_from_basket" var="remove_from_basket"/>
+<fmt:message bundle="${loc}" key="local.product.add_to_favourite" var="add_to_favourite"/>
+<fmt:message bundle="${loc}" key="local.product.remove_from_favourite" var="remove_from_favourite"/>
+<fmt:message bundle="${loc}" key="local.product.edit" var="edit"/>
+<fmt:message bundle="${loc}" key="local.product.no_product" var="no_product"/>
+
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -25,8 +37,22 @@
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="font-weight-light">${requestScope.category.name}</h1>
-                <p class="lead text-muted">1ые на рынке по всему миру!!! Самый удобный интерфейс и вообще всё удобное!
-                    Бери у нас!</p>
+                <p class="lead text-muted">${bylogvin_description}</p>
+                <p>
+                    <c:if test="${requestScope.message!=null}">
+                        <fmt:message bundle="${loc}" key="${requestScope.message}" var="message"/>
+                    <c:if test="${requestScope.message.contains('local.error')}">
+                <div class="red-text">
+                        ${message}
+                </div>
+                </c:if>
+                <c:if test="${requestScope.message.contains('local.correct')}">
+                    <div class="green-text">
+                            ${message}
+                    </div>
+                </c:if>
+                </c:if>
+                </p>
             </div>
         </div>
     </section>
@@ -34,7 +60,9 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
+                <c:if test="${requestScope.products==null}">
+                    <h3>${no_product}</h3>
+                </c:if>
                 <c:forEach var="product" items="${requestScope.products}">
                     <div class="col">
                         <div class="card shadow-sm">
@@ -54,27 +82,47 @@
                                             <input type="hidden" name="command" value="go_to_show_product_page"/>
                                             <input type="hidden" name="productID" value="${product.id}"/>
                                             <input class="full-width btn btn-sm btn-outline-secondary" type="submit"
-                                                   value="Просмотреть"/>
+                                                   value="${show}"/>
                                         </form>
-                                        <form action="Controller" method="post">
-                                            <input type="hidden" name="command" value="add_to_basket"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                   value="В корзину"/>
-                                        </form>
-                                        <form action="Controller" method="post">
-                                            <input type="hidden" name="command" value="add_to_favourite"/>
-                                            <input type="hidden" name="productID" value="${product.id}"/>
-                                            <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                   value="В избранное"/>
-                                        </form>
+                                        <c:if test="${sessionScope.user.userDetails.basket.isProductContains(product)}">
+                                            <form action="Controller" method="post">
+                                                <input type="hidden" name="command" value="remove_from_basket"/>
+                                                <input type="hidden" name="productID" value="${product.id}"/>
+                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
+                                                       value="${remove_from_basket}"/>
+                                            </form>
+                                        </c:if>
+                                        <c:if test="${!sessionScope.user.userDetails.basket.isProductContains(product)}">
+                                            <form action="Controller" method="post">
+                                                <input type="hidden" name="command" value="add_to_basket"/>
+                                                <input type="hidden" name="productID" value="${product.id}"/>
+                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
+                                                       value="${add_to_basket}"/>
+                                            </form>
+                                        </c:if>
+                                        <c:if test="${!sessionScope.user.userDetails.favourite.isProductContains(product)}">
+                                            <form action="Controller" method="post">
+                                                <input type="hidden" name="command" value="add_to_favourite"/>
+                                                <input type="hidden" name="productID" value="${product.id}"/>
+                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
+                                                       value="${add_to_favourite}"/>
+                                            </form>
+                                        </c:if>
+                                        <c:if test="${sessionScope.user.userDetails.favourite.isProductContains(product)}">
+                                            <form action="Controller" method="post">
+                                                <input type="hidden" name="command" value="remove_from_favourite"/>
+                                                <input type="hidden" name="productID" value="${product.id}"/>
+                                                <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
+                                                       value="${remove_from_favourite}"/>
+                                            </form>
+                                        </c:if>
                                         <c:if test="${sessionScope.user.userDetails.role=='admin'}">
                                             <form action="Controller" method="get">
                                                 <input type="hidden" name="command"
                                                        value="go_to_edit_product_form_page"/>
                                                 <input type="hidden" name="productID" value="${product.id}"/>
                                                 <input type="submit" class="full-width btn btn-sm btn-outline-secondary"
-                                                       value="Редактировать"/>
+                                                       value="${edit}"/>
                                             </form>
                                         </c:if>
                                     </div>

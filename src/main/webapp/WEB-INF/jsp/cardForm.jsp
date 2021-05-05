@@ -7,6 +7,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="local" var="loc"/>
+<fmt:message bundle="${loc}" key="local.card.card_number" var="card_number"/>
+<fmt:message bundle="${loc}" key="local.card.cardholder" var="cardholder"/>
+<fmt:message bundle="${loc}" key="local.card.card_adding" var="card_adding"/>
+<fmt:message bundle="${loc}" key="local.card.add_card" var="add_card"/>
+<fmt:message bundle="${loc}" key="local.card.bank_card" var="bank_card"/>
+<fmt:message bundle="${loc}" key="local.card.validity_period" var="validity_period"/>
+<fmt:message bundle="${loc}" key="local.card.card_editing" var="card_editing"/>
+<fmt:message bundle="${loc}" key="local.card.edit_card" var="edit_card"/>
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -23,22 +34,22 @@
 
         <div class="col-12">
             <c:if test="${requestScope.action=='addCard'}">
-                <h4 class="mb-3">Добавление карточки</h4>
+                <h4 class="mb-3">${card_adding}</h4>
             </c:if>
             <c:if test="${requestScope.action=='editCard'}">
-                <h4 class="mb-3">Изменение карточки</h4>
+                <h4 class="mb-3">${card_editing}</h4>
             </c:if>
             <div class="needs-validation">
                 <div class="row g-3">
                     <div class="col-12">
-                        <label for="cardCardholder" class="form-label">Cardholder</label>
+                        <label for="cardCardholder" class="form-label">${cardholder}</label>
                         <input type="text" class="form-control" id="cardCardholder" value="${requestScope.card.cardholder}"
                                name="cardCardholder" required>
 
                     </div>
 
                     <div class="col-12">
-                        <label for="cardNumber" class="form-label">Номер карты</label>
+                        <label for="cardNumber" class="form-label">${card_number}</label>
                         <input type="number" class="form-control" id="cardNumber"
                                value="${requestScope.card.number}"
                                name="cardNumber"  minlength="16" maxlength="16" required>
@@ -46,7 +57,7 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <label for="cardValidityPeriod" class="form-label">Валидационный период</label>
+                        <label for="cardValidityPeriod" class="form-label">${validity_period}</label>
                         <input type="number" class="form-control" id="cardValidityPeriod" name="cardValidityPeriod"
                                value="${requestScope.card.validityPeriod}" maxlength="4" minlength="4" required>
                     </div>
@@ -63,12 +74,12 @@
                 <hr class="my-4">
                 <c:if test="${requestScope.action=='addCard'}">
                     <input type="hidden" name="command" value="add_card">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Добавить карту</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">${add_card}</button>
                 </c:if>
                 <c:if test="${requestScope.action=='editCard'}">
                     <input type="hidden" name="command" value="edit_card">
                     <input type="hidden" name="cardID" value="${requestScope.card.id}">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Изменить карту</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">${edit_card}</button>
                 </c:if>
             </div>
         </div>

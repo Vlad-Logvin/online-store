@@ -38,8 +38,17 @@
                 <p>
                     <c:if test="${requestScope.message!=null}">
                         <fmt:message bundle="${loc}" key="${requestScope.message}" var="message"/>
-                        <c:out value="${message}"/>
-                    </c:if>
+                    <c:if test="${requestScope.message.contains('local.error')}">
+                <div class="red-text">
+                        ${message}
+                </div>
+                </c:if>
+                <c:if test="${requestScope.message.contains('local.correct')}">
+                    <div class="green-text">
+                            ${message}
+                    </div>
+                </c:if>
+                </c:if>
                 </p>
             </div>
         </div>

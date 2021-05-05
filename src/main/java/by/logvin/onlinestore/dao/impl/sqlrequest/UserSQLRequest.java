@@ -12,9 +12,9 @@ public final class UserSQLRequest {
     public static final String SELECT_USER_WITH_LOGIN_AND_PASSWORD =
             "SELECT * " +
                     "FROM users u " +
-                    "JOIN user_accesses ua " +
+                    "LEFT JOIN user_accesses ua " +
                     "ON ua.ua_id=u.u_access " +
-                    "JOIN user_roles ur " +
+                    "LEFT JOIN user_roles ur " +
                     "ON ur.ur_id=u.u_role " +
                     "WHERE u.u_email=? AND u.u_password=?";
     public static String UPDATE_USER =

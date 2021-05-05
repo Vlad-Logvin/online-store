@@ -36,7 +36,7 @@ public class RemoveFromFavourite implements Command {
         try {
             if (ServiceProvider.getInstance().getFavouriteService().removeProduct(user.getUserDetails().getFavourite().getId(), Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID)))) {
                 session.setAttribute(Message.MESSAGE, Message.CORRECT_REMOVE_FROM_FAVOURITE);
-                user.getUserDetails().getFavourite().getProducts().add(ServiceProvider.getInstance().getProductService().takeByProductID(Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID))));
+                user.getUserDetails().getFavourite().getProducts().remove(ServiceProvider.getInstance().getProductService().takeByProductID(Integer.parseInt(request.getParameter(Message.ATTRIBUTE_PRODUCT_ID))));
             } else {
                 session.setAttribute(Message.MESSAGE, Message.ERROR_REMOVE_FROM_FAVOURITE);
             }
